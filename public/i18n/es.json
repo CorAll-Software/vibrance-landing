@@ -1,0 +1,239 @@
+{
+  "_comment": "TODO: dato real de la clienta — todos los textos, cifras y nombres son provisionales.",
+  "seo": {
+    "title": "{{brand}} · Fruta peruana del campo al mundo",
+    "description": "Exportamos palta, arándano, mango y uva desde la costa peruana a importadores de todo el mundo."
+  },
+  "common": {
+    "close": "Cerrar",
+    "skip": "Saltar al contenido",
+    "loading": "Cargando",
+    "placeholderNote": "Datos de ejemplo, pendientes de confirmar."
+  },
+  "nav": {
+    "label": "Navegación principal",
+    "origen": "Origen",
+    "proceso": "Proceso",
+    "productos": "Productos",
+    "datos": "Datos",
+    "contacto": "Contacto",
+    "cta": "Solicitar cotización",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "switchLang": "Cambiar idioma a inglés",
+    "home": "Inicio"
+  },
+  "hero": {
+    "title": "Fruta peruana, del campo al mundo",
+    "subtitle": "Palta, arándano, mango y uva cultivados en la costa del Perú y enviados con cadena de frío a importadores de cuatro continentes.",
+    "ctaProducts": "Ver productos",
+    "ctaQuote": "Solicitar cotización",
+    "scroll": "Desliza para descubrir"
+  },
+  "origen": {
+    "heading": "Nace en el desierto que florece",
+    "lines": [
+      "Entre el océano Pacífico y los Andes hay un desierto que, con agua y paciencia, se volvió huerto.",
+      "Ahí empezamos hace más de una década, con pocas hectáreas y una idea simple: cuidar la fruta desde la semilla.",
+      "El sol constante, las noches frescas y el agua de los Andes le dan sabor, color y una vida útil más larga.",
+      "Hoy trabajamos junto a familias de la costa norte y sur para llevar ese sabor a mesas de todo el mundo."
+    ],
+    "imageAlt": "Campos de cultivo verdes en medio del desierto costero peruano",
+    "mapTitle": "Dónde cultivamos",
+    "mapText": "Nuestros fundos están en los valles de la costa, donde el clima permite cosechar casi todo el año.",
+    "mapLabel": "Mapa del Perú con las zonas de cultivo",
+    "zonas": {
+      "piura": {
+        "name": "Piura",
+        "crops": "Mango y uva"
+      },
+      "lambayeque": {
+        "name": "Lambayeque",
+        "crops": "Palta y arándano"
+      },
+      "la_libertad": {
+        "name": "La Libertad",
+        "crops": "Palta y arándano"
+      },
+      "ica": {
+        "name": "Ica",
+        "crops": "Uva y palta"
+      }
+    }
+  },
+  "proceso": {
+    "heading": "Así viaja nuestra fruta",
+    "intro": "Cinco etapas, un mismo cuidado. Controlamos cada paso para que la fruta llegue como salió del campo.",
+    "progress": "Etapa {{current}} de {{total}}",
+    "steps": {
+      "siembra": {
+        "title": "Siembra",
+        "text": "Elegimos variedades adaptadas al clima de la costa y regamos por goteo para usar solo el agua necesaria.",
+        "alt": "Plantones jóvenes alineados en el campo"
+      },
+      "cosecha": {
+        "title": "Cosecha",
+        "text": "Cosechamos a mano en el punto justo de madurez, en las horas más frescas del día.",
+        "alt": "Fruta recién cosechada"
+      },
+      "empaque": {
+        "title": "Empaque",
+        "text": "En planta seleccionamos por calibre y calidad, y empacamos según el formato de cada cliente.",
+        "alt": "Cajas de fruta en la planta de empaque"
+      },
+      "frio": {
+        "title": "Cadena de frío",
+        "text": "La fruta pasa a túneles de pre-frío y se mantiene a temperatura controlada hasta el puerto.",
+        "alt": "Cámara de frío con temperatura controlada"
+      },
+      "envio": {
+        "title": "Envío",
+        "text": "Despachamos en contenedores refrigerados por vía marítima o aérea, con trazabilidad de punta a punta.",
+        "alt": "Barco con contenedores refrigerados"
+      }
+    }
+  },
+  "productos": {
+    "heading": "Qué ofrecemos",
+    "intro": "Fruta fresca seleccionada por calibre, con empaques a la medida de cada mercado.",
+    "viewDetail": "Ver detalle de {{name}}",
+    "season": "Temporada",
+    "varieties": "Variedades",
+    "sizes": "Calibres",
+    "presentations": "Presentaciones",
+    "packaging": "Empaque",
+    "availability": "Disponibilidad",
+    "availableIn": "Disponible en: {{months}}",
+    "available": "disponible",
+    "notAvailable": "sin cosecha",
+    "quoteThis": "Cotizar {{name}}",
+    "months": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    "monthsLong": [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre"
+    ],
+    "items": {
+      "palta": {
+        "name": "Palta Hass",
+        "summary": "Cremosa y de piel rugosa que oscurece al madurar.",
+        "season": "Marzo a septiembre",
+        "varieties": "Hass",
+        "presentations": "Fruta fresca a granel o en malla",
+        "packaging": "Cajas de 4 kg y 10 kg",
+        "alt": "Palta Hass cortada por la mitad"
+      },
+      "arandano": {
+        "name": "Arándano",
+        "summary": "Firme, dulce y de calibre grande.",
+        "season": "Agosto a enero",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "Clamshells de 125 g, 170 g y 500 g",
+        "packaging": "Cajas de 1,5 kg y 3,7 kg",
+        "alt": "Arándanos frescos"
+      },
+      "mango": {
+        "name": "Mango",
+        "summary": "Pulpa sin fibra, aroma intenso y color brillante.",
+        "season": "Noviembre a marzo",
+        "varieties": "Kent, Edward",
+        "presentations": "Fruta fresca seleccionada por calibre",
+        "packaging": "Cajas de 4 kg",
+        "alt": "Mango maduro"
+      },
+      "uva": {
+        "name": "Uva de mesa",
+        "summary": "Racimos crujientes, con y sin semilla.",
+        "season": "Noviembre a abril",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "Bolsas y clamshells",
+        "packaging": "Cajas de 8,2 kg",
+        "alt": "Racimo de uvas verdes"
+      }
+    }
+  },
+  "datos": {
+    "heading": "Nuestra fruta en cifras",
+    "intro": "Crecemos temporada a temporada junto a importadores que confían en el origen peruano.",
+    "stats": {
+      "hectareas": {
+        "label": "hectáreas cultivadas"
+      },
+      "toneladas": {
+        "label": "toneladas exportadas al año"
+      },
+      "paises": {
+        "label": "países de destino"
+      },
+      "anios": {
+        "label": "años de experiencia"
+      }
+    },
+    "mapTitle": "Dónde llega",
+    "mapText": "Enviamos a mercados de Norteamérica, Europa y Asia.",
+    "mapLabel": "Mapa mundial con los destinos de exportación",
+    "destinos": {
+      "usa": "Estados Unidos",
+      "canada": "Canadá",
+      "mexico": "México",
+      "paises_bajos": "Países Bajos",
+      "espana": "España",
+      "reino_unido": "Reino Unido",
+      "china": "China",
+      "corea": "Corea del Sur",
+      "japon": "Japón"
+    },
+    "certTitle": "Certificaciones",
+    "certPlaceholder": "Certificación {{n}}"
+  },
+  "contacto": {
+    "slogan": "Lo mejor del Perú, en cada caja.",
+    "text": "Cuéntanos qué fruta buscas, el volumen y el destino. Te enviamos una propuesta.",
+    "cta": "Solicitar cotización"
+  },
+  "form": {
+    "title": "Solicitar cotización",
+    "intro": "Completa los datos y te responderemos en un plazo de 48 horas hábiles.",
+    "required": "Todos los campos son obligatorios.",
+    "name": "Nombre",
+    "company": "Empresa",
+    "country": "País",
+    "email": "Correo electrónico",
+    "product": "Producto de interés",
+    "productPlaceholder": "Elige un producto",
+    "productSeveral": "Varios productos",
+    "message": "Mensaje",
+    "messagePlaceholder": "Volumen aproximado, destino, fechas…",
+    "errors": {
+      "required": "Completa este campo.",
+      "email": "Escribe un correo válido, por ejemplo nombre@empresa.com.",
+      "minlength": "Escribe al menos {{n}} caracteres.",
+      "summary": "Hay {{n}} campos por corregir. Revisa los mensajes en rojo."
+    },
+    "submit": "Enviar solicitud",
+    "sending": "Enviando…",
+    "successTitle": "¡Solicitud enviada!",
+    "successText": "Recibimos tu solicitud. Te escribiremos a {{email}} en un plazo de 48 horas hábiles.",
+    "errorTitle": "No pudimos enviar tu solicitud",
+    "errorText": "Hubo un problema de conexión y tus datos no se enviaron. Revisa tu internet e inténtalo de nuevo; no perderás lo que escribiste.",
+    "retry": "Intentar de nuevo",
+    "again": "Enviar otra solicitud"
+  },
+  "footer": {
+    "tagline": "Fruta fresca del Perú para importadores y distribuidores de todo el mundo.",
+    "contact": "Contacto",
+    "follow": "Síguenos",
+    "language": "Idioma",
+    "privacy": "Política de privacidad",
+    "rights": "© {{year}} {{brand}}. Todos los derechos reservados."
+  }
+}

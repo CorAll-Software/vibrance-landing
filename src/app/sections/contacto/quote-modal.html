@@ -1,0 +1,143 @@
+<app-modal [open]="ui.quoteOpen()" labelledBy="quote-title" (closed)="close()">
+  <div class="p-6 sm:p-10" *transloco="let t; prefix: 'form'">
+    @if (status() === 'success') {
+      <div class="py-8" role="status">
+        <svg viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" class="text-hoja">
+          <circle cx="24" cy="24" r="22" fill="currentColor" fill-opacity="0.15" />
+          <path
+            d="M14 25l7 7 13-15"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <h2 id="quote-title" class="mt-6 text-4xl font-semibold">{{ t('successTitle') }}</h2>
+        <p class="mt-3 text-lg text-palta/80">{{ t('successText', { email: sentTo() }) }}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <button type="button" class="btn-primary" (click)="close()">
+            {{ 'common.close' | transloco }}
+          </button>
+          <button type="button" class="btn-ghost" (click)="reset()">{{ t('again') }}</button>
+        </div>
+      </div>
+    } @else {
+      <h2 id="quote-title" class="pr-12 text-4xl font-semibold">{{ t('title') }}</h2>
+      <p class="mt-2 text-palta/75">{{ t('intro') }} {{ t('required') }}</p>
+
+      <div aria-live="assertive" class="empty:hidden">
+        @if (showSummary()) {
+          <p class="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-800">
+            {{ t('errors.summary', { n: errorCount() }) }}
+          </p>
+        }
+        @if (status() === 'error') {
+          <div class="mt-6 rounded-xl bg-red-50 px-4 py-3 text-red-900">
+            <p class="font-semibold">{{ t('errorTitle') }}</p>
+            <p class="mt-1 text-sm">{{ t('errorText') }}</p>
+          </div>
+        }
+      </div>
+
+      <form
+        class="mt-6 grid gap-5 sm:grid-cols-2"
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+        novalidate
+      >
+        @for (f of fields; track f.name) {
+          <div class="flex flex-col gap-1.5">
+            <label [for]="'q-' + f.name" class="text-sm font-semibold">{{ t(f.name) }}</label>
+            <input
+              [id]="'q-' + f.name"
+              [type]="f.type"
+              [formControlName]="f.name"
+              [autocomplete]="f.autocomplete"
+              [attr.aria-invalid]="showError(f.name)"
+              [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
+              class="field"
+            />
+            @if (showError(f.name)) {
+              <p [id]="'q-' + f.name + '-err'" class="text-sm text-red-700">
+                {{ t('errors.' + firstError(f.name)) }}
+              </p>
+            }
+          </div>
+        }
+
+        <div class="flex flex-col gap-1.5 sm:col-span-2">
+          <label for="q-product" class="text-sm font-semibold">{{ t('product') }}</label>
+          <select
+            id="q-product"
+            formControlName="product"
+            class="field"
+            [attr.aria-invalid]="showError('product')"
+            [attr.aria-describedby]="showError('product') ? 'q-product-err' : null"
+          >
+            <option value="" disabled>{{ t('productPlaceholder') }}</option>
+            @for (p of products; track p.id) {
+              <option [value]="p.id">{{ 'productos.items.' + p.id + '.name' | transloco }}</option>
+            }
+            <option value="varios">{{ t('productSeveral') }}</option>
+          </select>
+          @if (showError('product')) {
+            <p id="q-product-err" class="text-sm text-red-700">{{ t('errors.required') }}</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5 sm:col-span-2">
+          <label for="q-message" class="text-sm font-semibold">{{ t('message') }}</label>
+          <textarea
+            id="q-message"
+            rows="4"
+            formControlName="message"
+            class="field resize-y"
+            [placeholder]="t('messagePlaceholder')"
+            [attr.aria-invalid]="showError('message')"
+            [attr.aria-describedby]="showError('message') ? 'q-message-err' : null"
+          ></textarea>
+          @if (showError('message')) {
+            <p id="q-message-err" class="text-sm text-red-700">
+              {{ t('errors.' + firstError('message'), { n: messageMin }) }}
+            </p>
+          }
+        </div>
+
+        <div class="sm:col-span-2">
+          <button
+            type="submit"
+            class="btn-primary w-full sm:w-auto"
+            [disabled]="status() === 'sending'"
+          >
+            @if (status() === 'sending') {
+              <svg class="size-5 animate-spin" viewBox="0 0 24 24" aria-hidden="true">
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="9"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-opacity="0.25"
+                />
+                <path
+                  d="M21 12a9 9 0 00-9-9"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+              {{ t('sending') }}
+            } @else if (status() === 'error') {
+              {{ t('retry') }}
+            } @else {
+              {{ t('submit') }}
+            }
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</app-modal>

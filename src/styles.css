@@ -1,1 +1,184 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+ * Design tokens (provisionales, se ajustan cuando exista la marca)
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-palta: #1e3b2f;
+  --color-palta-deep: #142a20;
+  --color-hoja: #4f7a3a;
+  --color-arena: #d8c49b;
+  --color-mango: #f2a33a;
+  --color-mango-dark: #d9871c;
+  --color-arandano: #3b3f7a;
+  --color-niebla: #f7f8f5;
+
+  --font-display:
+    'Bricolage Grotesque Variable', 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Figtree Variable', 'Figtree', ui-sans-serif, system-ui, sans-serif;
+
+  /* Escala tipográfica: 14 / 16 / 20 / 28 / 40 / 64 / 96–140 */
+  --text-xs: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-2xl: 1.75rem;
+  --text-4xl: 2.5rem;
+  --text-6xl: 4rem;
+  --text-hero: clamp(3.25rem, 9vw, 8.75rem);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-niebla);
+    color: var(--color-palta);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-mango);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-mango);
+    color: var(--color-palta);
+  }
+
+  dialog::backdrop {
+    background: rgb(20 42 32 / 0.6);
+    backdrop-filter: blur(4px);
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
+  }
+
+  .measure {
+    max-width: 70ch;
+  }
+
+  /* Botón principal: el mango se reserva para las acciones */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    background: var(--color-mango);
+    color: var(--color-palta);
+    font-weight: 600;
+    transition:
+      background-color 200ms ease,
+      transform 200ms var(--ease-out-soft);
+  }
+  .btn-primary:hover {
+    background: var(--color-mango-dark);
+  }
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    border: 1.5px solid currentColor;
+    font-weight: 600;
+    transition: background-color 200ms ease;
+  }
+  .btn-ghost:hover {
+    background: rgb(30 59 47 / 0.08);
+  }
+
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid rgb(30 59 47 / 0.25);
+    background: white;
+    color: var(--color-palta);
+    transition: border-color 150ms ease;
+  }
+  .field:hover {
+    border-color: rgb(30 59 47 / 0.5);
+  }
+  .field:focus-visible {
+    outline: 3px solid var(--color-mango);
+    outline-offset: 1px;
+    border-color: var(--color-palta);
+  }
+  .field[aria-invalid='true'] {
+    border-color: #b91c1c;
+  }
+}
+
+/* Lenis (scroll suave) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Subrayado de navegación: crece desde la izquierda al hover */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.2rem;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms var(--ease-out-soft);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}

@@ -1,0 +1,52 @@
+<section
+  id="origen"
+  class="bg-arena py-24 text-palta md:py-36"
+  aria-labelledby="origen-title"
+  *transloco="let t; prefix: 'origen'"
+>
+  <div class="container-page grid gap-16 lg:grid-cols-12 lg:gap-10">
+    <div class="lg:col-span-7">
+      <h2 id="origen-title" class="text-4xl leading-[1.05] font-bold md:text-6xl">
+        {{ t('heading') }}
+      </h2>
+      <div
+        class="story mt-10 flex max-w-[34ch] flex-col gap-6 font-display text-2xl leading-snug font-medium md:max-w-[30ch] md:text-[2.1rem]"
+      >
+        @for (line of lines(); track $index) {
+          <p class="story-line">{{ line }}</p>
+        }
+      </div>
+    </div>
+
+    <div class="lg:col-span-5 lg:pt-28">
+      <div class="origen-frame relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+        <img
+          [ngSrc]="image"
+          [alt]="t('imageAlt')"
+          fill
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          class="origen-photo scale-[1.2] object-cover"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Dónde cultivamos -->
+  <div class="container-page mt-24 grid items-center gap-12 md:mt-32 md:grid-cols-12">
+    <div class="md:col-span-5 md:col-start-2 md:row-start-1">
+      <app-map-peru />
+    </div>
+    <div class="md:col-span-5 md:col-start-7 md:row-start-1">
+      <h3 class="text-2xl font-semibold md:text-4xl">{{ t('mapTitle') }}</h3>
+      <p class="measure mt-4 text-lg text-palta/80">{{ t('mapText') }}</p>
+      <dl class="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-palta/20 pt-6">
+        @for (z of zones; track z.id) {
+          <div>
+            <dt class="font-semibold">{{ t('zonas.' + z.id + '.name') }}</dt>
+            <dd class="text-palta/75">{{ t('zonas.' + z.id + '.crops') }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+  </div>
+</section>

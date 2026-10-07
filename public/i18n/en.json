@@ -1,0 +1,239 @@
+{
+  "_comment": "TODO: real client data — all copy, figures and names are placeholders.",
+  "seo": {
+    "title": "{{brand}} · Peruvian fruit from farm to world",
+    "description": "We export avocado, blueberry, mango and grapes from the Peruvian coast to importers worldwide."
+  },
+  "common": {
+    "close": "Close",
+    "skip": "Skip to content",
+    "loading": "Loading",
+    "placeholderNote": "Sample data, pending confirmation."
+  },
+  "nav": {
+    "label": "Main navigation",
+    "origen": "Origin",
+    "proceso": "Process",
+    "productos": "Products",
+    "datos": "Facts",
+    "contacto": "Contact",
+    "cta": "Request a quote",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLang": "Switch language to Spanish",
+    "home": "Home"
+  },
+  "hero": {
+    "title": "Peruvian fruit, from farm to world",
+    "subtitle": "Avocado, blueberry, mango and grapes grown on the Peruvian coast and shipped cold-chain to importers on four continents.",
+    "ctaProducts": "See products",
+    "ctaQuote": "Request a quote",
+    "scroll": "Scroll to discover"
+  },
+  "origen": {
+    "heading": "Born in a blooming desert",
+    "lines": [
+      "Between the Pacific Ocean and the Andes lies a desert that, with water and patience, became an orchard.",
+      "That is where we started over a decade ago, with a few hectares and a simple idea: care for the fruit from the seed.",
+      "Constant sun, cool nights and Andean water give it flavour, colour and a longer shelf life.",
+      "Today we work alongside families on the northern and southern coast to bring that flavour to tables around the world."
+    ],
+    "imageAlt": "Green farmland in the middle of the Peruvian coastal desert",
+    "mapTitle": "Where we grow",
+    "mapText": "Our farms sit in the coastal valleys, where the climate allows harvests almost all year round.",
+    "mapLabel": "Map of Peru showing the growing regions",
+    "zonas": {
+      "piura": {
+        "name": "Piura",
+        "crops": "Mango and grapes"
+      },
+      "lambayeque": {
+        "name": "Lambayeque",
+        "crops": "Avocado and blueberry"
+      },
+      "la_libertad": {
+        "name": "La Libertad",
+        "crops": "Avocado and blueberry"
+      },
+      "ica": {
+        "name": "Ica",
+        "crops": "Grapes and avocado"
+      }
+    }
+  },
+  "proceso": {
+    "heading": "How our fruit travels",
+    "intro": "Five stages, the same care. We control every step so the fruit arrives just as it left the field.",
+    "progress": "Stage {{current}} of {{total}}",
+    "steps": {
+      "siembra": {
+        "title": "Planting",
+        "text": "We choose varieties suited to the coastal climate and use drip irrigation to use only the water needed.",
+        "alt": "Young seedlings lined up in the field"
+      },
+      "cosecha": {
+        "title": "Harvest",
+        "text": "We hand-pick at the right ripeness, during the coolest hours of the day.",
+        "alt": "Freshly harvested fruit"
+      },
+      "empaque": {
+        "title": "Packing",
+        "text": "At the packhouse we grade by size and quality and pack to each customer's format.",
+        "alt": "Fruit boxes at the packhouse"
+      },
+      "frio": {
+        "title": "Cold chain",
+        "text": "Fruit goes into pre-cooling tunnels and stays temperature-controlled all the way to port.",
+        "alt": "Temperature-controlled cold room"
+      },
+      "envio": {
+        "title": "Shipping",
+        "text": "We ship in reefer containers by sea or air, with end-to-end traceability.",
+        "alt": "Ship carrying refrigerated containers"
+      }
+    }
+  },
+  "productos": {
+    "heading": "What we offer",
+    "intro": "Fresh fruit graded by size, with packaging tailored to each market.",
+    "viewDetail": "View {{name}} details",
+    "season": "Season",
+    "varieties": "Varieties",
+    "sizes": "Sizes",
+    "presentations": "Presentations",
+    "packaging": "Packaging",
+    "availability": "Availability",
+    "availableIn": "Available in: {{months}}",
+    "available": "available",
+    "notAvailable": "no harvest",
+    "quoteThis": "Quote {{name}}",
+    "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "monthsLong": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "items": {
+      "palta": {
+        "name": "Hass avocado",
+        "summary": "Creamy, with pebbly skin that darkens as it ripens.",
+        "season": "March to September",
+        "varieties": "Hass",
+        "presentations": "Fresh fruit, bulk or mesh bags",
+        "packaging": "4 kg and 10 kg boxes",
+        "alt": "Hass avocado cut in half"
+      },
+      "arandano": {
+        "name": "Blueberry",
+        "summary": "Firm, sweet and large-sized.",
+        "season": "August to January",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "125 g, 170 g and 500 g clamshells",
+        "packaging": "1.5 kg and 3.7 kg boxes",
+        "alt": "Fresh blueberries"
+      },
+      "mango": {
+        "name": "Mango",
+        "summary": "Fibreless flesh, rich aroma and bright colour.",
+        "season": "November to March",
+        "varieties": "Kent, Edward",
+        "presentations": "Fresh fruit graded by size",
+        "packaging": "4 kg boxes",
+        "alt": "Ripe mango"
+      },
+      "uva": {
+        "name": "Table grapes",
+        "summary": "Crisp bunches, seeded and seedless.",
+        "season": "November to April",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "Bags and clamshells",
+        "packaging": "8.2 kg boxes",
+        "alt": "Bunch of green grapes"
+      }
+    }
+  },
+  "datos": {
+    "heading": "Our fruit in numbers",
+    "intro": "We grow season after season alongside importers who trust Peruvian origin.",
+    "stats": {
+      "hectareas": {
+        "label": "hectares farmed"
+      },
+      "toneladas": {
+        "label": "tonnes exported per year"
+      },
+      "paises": {
+        "label": "destination countries"
+      },
+      "anios": {
+        "label": "years of experience"
+      }
+    },
+    "mapTitle": "Where we ship",
+    "mapText": "We ship to markets in North America, Europe and Asia.",
+    "mapLabel": "World map showing export destinations",
+    "destinos": {
+      "usa": "United States",
+      "canada": "Canada",
+      "mexico": "Mexico",
+      "paises_bajos": "Netherlands",
+      "espana": "Spain",
+      "reino_unido": "United Kingdom",
+      "china": "China",
+      "corea": "South Korea",
+      "japon": "Japan"
+    },
+    "certTitle": "Certifications",
+    "certPlaceholder": "Certification {{n}}"
+  },
+  "contacto": {
+    "slogan": "The best of Peru, in every box.",
+    "text": "Tell us which fruit you need, the volume and the destination. We'll send you a proposal.",
+    "cta": "Request a quote"
+  },
+  "form": {
+    "title": "Request a quote",
+    "intro": "Fill in your details and we'll reply within 48 business hours.",
+    "required": "All fields are required.",
+    "name": "Name",
+    "company": "Company",
+    "country": "Country",
+    "email": "Email",
+    "product": "Product of interest",
+    "productPlaceholder": "Choose a product",
+    "productSeveral": "Several products",
+    "message": "Message",
+    "messagePlaceholder": "Approximate volume, destination, dates…",
+    "errors": {
+      "required": "Please fill in this field.",
+      "email": "Enter a valid email, e.g. name@company.com.",
+      "minlength": "Enter at least {{n}} characters.",
+      "summary": "{{n}} fields need attention. Check the messages in red."
+    },
+    "submit": "Send request",
+    "sending": "Sending…",
+    "successTitle": "Request sent!",
+    "successText": "We received your request. We'll write to {{email}} within 48 business hours.",
+    "errorTitle": "We couldn't send your request",
+    "errorText": "There was a connection problem and your details weren't sent. Check your internet and try again; you won't lose what you wrote.",
+    "retry": "Try again",
+    "again": "Send another request"
+  },
+  "footer": {
+    "tagline": "Fresh fruit from Peru for importers and distributors worldwide.",
+    "contact": "Contact",
+    "follow": "Follow us",
+    "language": "Language",
+    "privacy": "Privacy policy",
+    "rights": "© {{year}} {{brand}}. All rights reserved."
+  }
+}
