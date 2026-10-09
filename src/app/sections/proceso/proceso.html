@@ -12,7 +12,7 @@
       <p class="measure text-lg text-niebla/75 md:col-span-5 md:col-start-8">{{ t('intro') }}</p>
 
       <!-- Progreso (solo en modo horizontal) -->
-      <div class="progress md:col-span-12" aria-hidden="true">
+      <div class="progress md:col-span-12" aria-hidden="true" dir="ltr">
         <div class="relative h-0.5 w-full bg-niebla/15">
           <div class="progress-fill absolute inset-0 origin-left scale-x-0 bg-hoja"></div>
         </div>
@@ -23,14 +23,17 @@
               [class]="i <= active() ? 'text-niebla' : 'text-niebla/45'"
             >
               <span class="tabular-nums">0{{ i + 1 }}</span>
-              <span class="ml-2 font-medium">{{ t('steps.' + s.id + '.title') }}</span>
+              <span class="ms-2 font-medium" [attr.dir]="lang.dir()">{{
+                t('steps.' + s.id + '.title')
+              }}</span>
             </li>
           }
         </ol>
       </div>
     </div>
 
-    <ol class="track">
+    <!-- El recorrido horizontal es siempre LTR (también en árabe/hebreo); el texto conserva su dirección -->
+    <ol class="track" dir="ltr">
       @for (s of steps; track s.id; let i = $index) {
         <li class="step" [class.is-active]="i === active()">
           <div class="step__media relative overflow-hidden rounded-[1.75rem] bg-palta-deep">
@@ -41,8 +44,29 @@
               sizes="(min-width: 1024px) 34vw, 100vw"
               class="object-cover"
             />
+            <!-- Video opcional de la etapa: se reproduce solo mientras está a la vista -->
+            @if (s.video && !scroll.reducedMotion()) {
+              <video
+                class="step-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+                [muted]="true"
+                muted
+                loop
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                aria-hidden="true"
+                (playing)="$any($event.target).classList.remove('opacity-0')"
+              >
+                @if (s.video.webm) {
+                  <source [src]="s.video.webm" type="video/webm" />
+                }
+                @if (s.video.mp4) {
+                  <source [src]="s.video.mp4" type="video/mp4" />
+                }
+              </video>
+            }
           </div>
-          <div class="step__body">
+          <div class="step__body" [attr.dir]="lang.dir()">
             <span class="step__num font-display font-bold tabular-nums" aria-hidden="true"
               >0{{ i + 1 }}</span
             >

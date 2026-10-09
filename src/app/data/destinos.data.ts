@@ -9,13 +9,15 @@ export interface GeoPoint {
   lon: number;
 }
 
-/** Destinos de exportación (mapa mundial). */
-export const DESTINATIONS: GeoPoint[] = [
+/** Mercados (un punto por mercado; la Unión Europea se muestra en Róterdam). */
+export type MarketId =
+  'usa' | 'canada' | 'mexico' | 'ue' | 'reino_unido' | 'china' | 'corea' | 'japon';
+
+export const DESTINATIONS: (GeoPoint & { id: MarketId })[] = [
   { id: 'usa', lat: 39.5, lon: -98 },
   { id: 'canada', lat: 56, lon: -106 },
   { id: 'mexico', lat: 23.6, lon: -102.5 },
-  { id: 'paises_bajos', lat: 52.2, lon: 5.3 },
-  { id: 'espana', lat: 40.4, lon: -3.7 },
+  { id: 'ue', lat: 51.9, lon: 4.5 },
   { id: 'reino_unido', lat: 54, lon: -2 },
   { id: 'china', lat: 35, lon: 104 },
   { id: 'corea', lat: 36.5, lon: 127.8 },
@@ -25,10 +27,14 @@ export const DESTINATIONS: GeoPoint[] = [
 /** Punto de salida (Perú) para las rutas del mapa mundial. */
 export const ORIGIN: GeoPoint = { id: 'peru', lat: -9.2, lon: -75 };
 
-/** Zonas de cultivo (mapa del Perú). */
+/**
+ * Regiones de origen de los productores con los que se trabaja (mapa del Perú).
+ * La empresa no cultiva: son zonas de abastecimiento.
+ */
 export const GROWING_ZONES: GeoPoint[] = [
   { id: 'piura', lat: -5.0, lon: -80.6 },
-  { id: 'lambayeque', lat: -6.0, lon: -79.8 },
   { id: 'la_libertad', lat: -8.2, lon: -78.9 },
+  { id: 'lima', lat: -11.5, lon: -77.2 },
+  { id: 'junin', lat: -11.1, lon: -75.3 },
   { id: 'ica', lat: -14.1, lon: -75.7 },
 ];

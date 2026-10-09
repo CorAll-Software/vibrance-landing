@@ -10,7 +10,7 @@
 >
   <a
     href="#contenido"
-    class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:rounded-full focus:bg-mango focus:px-4 focus:py-2 focus:text-palta"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:rounded-full focus:bg-mandarina focus:px-4 focus:py-2 focus:text-palta"
   >
     {{ 'common.skip' | transloco }}
   </a>
@@ -18,19 +18,33 @@
   <div class="container-page flex h-[4.5rem] items-center justify-between gap-6">
     <a
       href="#inicio"
-      class="flex items-center gap-2.5"
+      class="flex items-center gap-3"
       (click)="go($event, 'inicio')"
       [attr.aria-label]="brand + ' — ' + t('home')"
     >
-      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
-        <circle cx="16" cy="16" r="15" fill="currentColor" fill-opacity="0.12" />
-        <path d="M16 6c6 4 8 10 4 16-2 3-6 4-8 2-3-3-1-11 4-18z" fill="#4F7A3A" />
-        <path d="M16 6c-1 6-2 11-3 17" stroke="currentColor" stroke-width="1.4" fill="none" />
-      </svg>
-      <span class="font-display text-xl font-bold tracking-tight">{{ brand }}</span>
+      <!-- Logo: símbolo (ruta en brand.ts) + wordmark. Versión clara/oscura según el fondo -->
+      <img
+        [src]="solid() || menuOpen() ? logo.light : logo.dark"
+        alt=""
+        [width]="logo.width"
+        [height]="logo.height"
+        class="h-11 w-auto"
+        fetchpriority="high"
+        data-brand-symbol
+      />
+      <span class="flex flex-col gap-[3px] leading-none" data-intro-fade>
+        <span class="font-brand text-[1.6rem] leading-none font-semibold tracking-[-0.01em]">{{
+          brand
+        }}</span>
+        <span
+          class="text-xs font-medium tracking-[0.02em]"
+          [class]="solid() || menuOpen() ? 'text-hoja' : 'text-[#C9D9B8]'"
+          >{{ descriptor }}</span
+        >
+      </span>
     </a>
 
-    <nav class="hidden lg:block" [attr.aria-label]="t('label')">
+    <nav class="hidden lg:block" [attr.aria-label]="t('label')" data-intro-fade>
       <ul class="flex items-center gap-8 text-[0.95rem] font-medium">
         @for (id of items; track id) {
           <li>
@@ -42,7 +56,7 @@
       </ul>
     </nav>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-3" data-intro-fade>
       <app-lang-switch class="hidden sm:block" />
       <button
         type="button"
@@ -102,7 +116,7 @@
           }
         </ul>
         <div class="flex flex-col gap-4">
-          <app-lang-switch class="self-start" />
+          <app-lang-switch class="self-start" [dropUp]="true" />
           <button type="button" class="btn-primary w-full" (click)="quote()">{{ t('cta') }}</button>
         </div>
       </nav>

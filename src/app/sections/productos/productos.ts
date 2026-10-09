@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { TranslocoDirective } from '@jsverse/transloco';
-import { PRODUCTS, Product } from '../../data/productos.data';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
+import { PRODUCTS, Product, ProductId } from '../../data/productos.data';
+import { MARKET_ACCESS } from '../../data/mercados.data';
 import { UiStateService } from '../../core/services/ui-state.service';
 import { ModalComponent } from '../../shared/components/modal/modal';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card';
@@ -23,19 +24,27 @@ import { AvailabilityCalendarComponent } from '../../shared/components/availabil
 export class ProductosComponent {
   protected readonly products = PRODUCTS;
   private readonly ui = inject(UiStateService);
+  private readonly transloco = inject(TranslocoService);
 
   protected readonly selected = signal<Product | null>(null);
   /** Se conserva el último producto para que el contenido no desaparezca durante la animación de cierre. */
   private readonly lastSelected = signal<Product | null>(null);
   protected readonly detail = computed(() => this.selected() ?? this.lastSelected());
 
-  /** Composición asimétrica: la primera card es alta y la última ancha (escritorio). */
+  /** Composición asimétrica: la primera card es alta; las tres últimas comparten fila (escritorio). */
   protected readonly layout = [
     'lg:col-span-5 lg:row-span-2 min-h-[26rem] lg:min-h-[44rem]',
     'lg:col-span-7 min-h-[22rem]',
     'lg:col-span-7 min-h-[22rem]',
-    'lg:col-span-12 min-h-[22rem] lg:min-h-[26rem]',
+    'lg:col-span-4 min-h-[22rem] lg:min-h-[26rem]',
+    'lg:col-span-4 min-h-[22rem] lg:min-h-[26rem]',
+    'lg:col-span-4 min-h-[22rem] lg:min-h-[26rem]',
   ];
+
+  /** Mercados con protocolo vigente para el producto, ya traducidos. */
+  protected marketNames(id: ProductId): string {
+    return MARKET_ACCESS[id].map((m) => this.transloco.translate('datos.destinos.' + m)).join(', ');
+  }
 
   protected open(product: Product): void {
     this.lastSelected.set(product);

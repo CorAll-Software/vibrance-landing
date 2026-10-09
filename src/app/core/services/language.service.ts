@@ -3,12 +3,13 @@ import { DOCUMENT } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { TranslocoService } from '@jsverse/transloco';
-import { filter, switchMap } from 'rxjs';
-import { AVAILABLE_LANGS, BRAND_NAME, DEFAULT_LANG, Lang } from '../config/brand';
+import { Observable, filter, switchMap } from 'rxjs';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AVAILABLE_LANGS, BRAND_NAME, DEFAULT_LANG, LANG_META, Lang } from '../config/brand';
 
 const STORAGE_KEY = 'lang';
 
-/** Cambio ES/EN en tiempo real + título, meta descripción y Open Graph por idioma. */
+/** Cambio de idioma en tiempo real (8 idiomas, incluidos RTL) + título, metas, lang y dir del documento. */
 @Injectable({ providedIn: 'root' })
 export class LanguageService {
   private readonly transloco = inject(TranslocoService);
@@ -17,11 +18,14 @@ export class LanguageService {
   private readonly meta = inject(Meta);
 
   readonly langs = AVAILABLE_LANGS;
-  readonly current = toSignal(this.transloco.langChanges$, {
-    initialValue: this.transloco.getActiveLang(),
+  readonly current = toSignal(this.transloco.langChanges$ as Observable<Lang>, {
+    initialValue: this.transloco.getActiveLang() as Lang,
   });
+  readonly info = computed(() => LANG_META[this.current()] ?? LANG_META[DEFAULT_LANG]);
   /** Locale para Intl (formato de números en contadores). */
-  readonly locale = computed(() => (this.current() === 'en' ? 'en-US' : 'es-PE'));
+  readonly locale = computed(() => this.info().locale);
+  /** Dirección del texto: 'rtl' para árabe y hebreo. */
+  readonly dir = computed(() => this.info().dir);
 
   constructor() {
     this.transloco.setActiveLang(this.initialLang());
@@ -44,10 +48,6 @@ export class LanguageService {
     }
   }
 
-  toggle(): void {
-    this.set(this.current() === 'es' ? 'en' : 'es');
-  }
-
   private initialLang(): Lang {
     try {
       const saved = localStorage.getItem(STORAGE_KEY) as Lang | null;
@@ -55,19 +55,28 @@ export class LanguageService {
     } catch {
       /* almacenamiento no disponible */
     }
-    const nav = this.document.defaultView?.navigator.language?.slice(0, 2);
-    return nav === 'en' ? 'en' : DEFAULT_LANG;
+    // Primer idioma del navegador que tengamos disponible
+    const prefs = this.document.defaultView?.navigator.languages ?? [];
+    for (const pref of prefs) {
+      const code = pref.slice(0, 2).toLowerCase() as Lang;
+      if (AVAILABLE_LANGS.includes(code)) return code;
+    }
+    return DEFAULT_LANG;
   }
 
   private updateHead(): void {
-    const lang = this.transloco.getActiveLang();
+    const lang = this.transloco.getActiveLang() as Lang;
+    const meta = LANG_META[lang] ?? LANG_META[DEFAULT_LANG];
     const pageTitle = this.transloco.translate('seo.title', { brand: BRAND_NAME });
     const description = this.transloco.translate('seo.description');
     this.document.documentElement.lang = lang;
+    this.document.documentElement.dir = meta.dir;
     this.title.setTitle(pageTitle);
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ property: 'og:title', content: pageTitle });
     this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:locale', content: lang === 'en' ? 'en_US' : 'es_PE' });
+    this.meta.updateTag({ property: 'og:locale', content: meta.ogLocale });
+    // Los textos cambian de largo (y de dirección): recalcula las animaciones por scroll
+    this.document.defaultView?.requestAnimationFrame(() => ScrollTrigger.refresh());
   }
 }

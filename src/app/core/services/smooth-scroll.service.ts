@@ -70,7 +70,11 @@ export class SmoothScrollService {
 
   start(): void {
     this.stopRequests = Math.max(0, this.stopRequests - 1);
-    if (this.stopRequests === 0) this.lenis?.start();
+    if (this.stopRequests === 0) {
+      this.lenis?.start();
+      // Al liberar el scroll puede aparecer la barra y cambiar el ancho: recalcula pins y triggers
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
   }
 
   private destroy(): void {

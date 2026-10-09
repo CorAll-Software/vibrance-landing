@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { BRAND_NAME, CONTACT } from '../../core/config/brand';
+import { BRAND_DESCRIPTOR, BRAND_NAME, CONTACT, LEGAL_NAME, LOGO } from '../../core/config/brand';
 import { LangSwitchComponent } from '../header/lang-switch';
 
 @Component({
@@ -11,7 +11,20 @@ import { LangSwitchComponent } from '../header/lang-switch';
     <footer class="bg-palta-deep text-niebla" *transloco="let t; prefix: 'footer'">
       <div class="container-page grid gap-12 py-16 md:grid-cols-12">
         <div class="md:col-span-5">
-          <p class="font-display text-2xl font-bold">{{ brand }}</p>
+          <div class="flex items-center gap-3">
+            <img
+              [src]="logo.dark"
+              alt=""
+              [width]="logo.width"
+              [height]="logo.height"
+              class="h-12 w-auto"
+              loading="lazy"
+            />
+            <div class="flex flex-col gap-[3px] leading-none">
+              <p class="font-brand text-[1.75rem] leading-none font-semibold">{{ brand }}</p>
+              <p class="text-sm font-medium text-[#C9D9B8]">{{ descriptor }}</p>
+            </div>
+          </div>
           <p class="mt-3 max-w-[36ch] text-niebla/75">{{ t('tagline') }}</p>
         </div>
 
@@ -79,7 +92,7 @@ import { LangSwitchComponent } from '../header/lang-switch';
           </div>
           <div>
             <h2 class="font-sans text-base font-semibold">{{ t('language') }}</h2>
-            <app-lang-switch class="mt-3 inline-block" />
+            <app-lang-switch class="mt-3" [dropUp]="true" />
           </div>
         </div>
       </div>
@@ -88,7 +101,7 @@ import { LangSwitchComponent } from '../header/lang-switch';
         <div
           class="container-page flex flex-col gap-3 py-6 text-sm text-niebla/60 sm:flex-row sm:justify-between"
         >
-          <p>{{ t('rights', { year: year, brand: brand }) }}</p>
+          <p>{{ t('rights', { year: year, brand: legalName }) }}</p>
           <a [href]="contact.privacyHref" class="hover:text-niebla hover:underline">{{
             t('privacy')
           }}</a>
@@ -99,6 +112,9 @@ import { LangSwitchComponent } from '../header/lang-switch';
 })
 export class FooterComponent {
   protected readonly brand = BRAND_NAME;
+  protected readonly descriptor = BRAND_DESCRIPTOR;
+  protected readonly legalName = LEGAL_NAME;
+  protected readonly logo = LOGO;
   protected readonly contact = CONTACT;
   protected readonly year = new Date().getFullYear();
 }

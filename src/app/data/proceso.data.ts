@@ -1,17 +1,17 @@
+import { PROCESO } from '../core/config/media.config';
+
 /**
- * Etapas del proceso (secuencia real: aquí sí se usa numeración 01–05).
- * TODO: dato real de la clienta — imágenes provisionales; textos en i18n `proceso.steps.<id>`.
+ * Etapas del proceso de una comercializadora (la empresa no cultiva): del productor al importador.
+ * Secuencia real, por eso sí usa numeración 01–05.
+ * Imágenes y videos: core/config/media.config.ts. Textos en i18n `proceso.steps.<id>`.
  */
 export interface ProcessStep {
-  id: 'siembra' | 'cosecha' | 'empaque' | 'frio' | 'envio';
+  id: 'productores' | 'calidad' | 'empaque' | 'frio' | 'envio';
   image: string;
   video?: { webm?: string; mp4?: string };
 }
 
-export const PROCESS_STEPS: ProcessStep[] = [
-  { id: 'siembra', image: 'media/proceso-1-siembra.webp' },
-  { id: 'cosecha', image: 'media/proceso-2-cosecha.webp' },
-  { id: 'empaque', image: 'media/proceso-3-empaque.webp' },
-  { id: 'frio', image: 'media/proceso-4-frio.webp' },
-  { id: 'envio', image: 'media/proceso-5-envio.webp' },
-];
+const IDS: ProcessStep['id'][] = ['productores', 'calidad', 'empaque', 'frio', 'envio'];
+
+/** Imagen y video de cada etapa: se editan en core/config/media.config.ts */
+export const PROCESS_STEPS: ProcessStep[] = IDS.map((id) => ({ id, ...PROCESO[id] }));

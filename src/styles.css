@@ -1,5 +1,17 @@
 @import 'tailwindcss';
 
+/* Outfit (wordmark de Vibrance), servida desde public/fonts para no agregar dependencias */
+@font-face {
+  font-family: 'Outfit Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/outfit-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ------------------------------------------------------------------
  * Design tokens (provisionales, se ajustan cuando exista la marca)
  * ------------------------------------------------------------------ */
@@ -8,14 +20,16 @@
   --color-palta-deep: #142a20;
   --color-hoja: #4f7a3a;
   --color-arena: #d8c49b;
-  --color-mango: #f2a33a;
-  --color-mango-dark: #d9871c;
+  --color-mandarina: #f28c28;
+  --color-mandarina-hover: #f6a24f;
   --color-arandano: #3b3f7a;
   --color-niebla: #f7f8f5;
 
   --font-display:
     'Bricolage Grotesque Variable', 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Figtree Variable', 'Figtree', ui-sans-serif, system-ui, sans-serif;
+  /* Wordmark de la marca (Vibrance) */
+  --font-brand: 'Outfit Variable', 'Outfit', ui-sans-serif, system-ui, sans-serif;
 
   /* Escala tipográfica: 14 / 16 / 20 / 28 / 40 / 64 / 96–140 */
   --text-xs: 0.875rem;
@@ -31,11 +45,19 @@
 
 @layer base {
   html {
+    /* Reserva el espacio de la barra de scroll: evita saltos de ancho (y desbordes)
+       cuando el loader bloquea y luego libera el scroll en Windows */
+    scrollbar-gutter: stable;
     background: var(--color-niebla);
     color: var(--color-palta);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  body {
+    /* Red de seguridad contra cualquier desborde horizontal */
+    overflow-x: clip;
   }
 
   h1,
@@ -51,13 +73,13 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-mango);
+    outline: 3px solid var(--color-mandarina);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
   ::selection {
-    background: var(--color-mango);
+    background: var(--color-mandarina);
     color: var(--color-palta);
   }
 
@@ -79,7 +101,7 @@
     max-width: 70ch;
   }
 
-  /* Botón principal: el mango se reserva para las acciones */
+  /* Botón principal: la mandarina se reserva para las acciones */
   .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -88,7 +110,7 @@
     min-height: 3rem;
     padding: 0.75rem 1.5rem;
     border-radius: 999px;
-    background: var(--color-mango);
+    background: var(--color-mandarina);
     color: var(--color-palta);
     font-weight: 600;
     transition:
@@ -96,7 +118,7 @@
       transform 200ms var(--ease-out-soft);
   }
   .btn-primary:hover {
-    background: var(--color-mango-dark);
+    background: var(--color-mandarina-hover);
   }
   .btn-primary:active {
     transform: scale(0.97);
@@ -131,7 +153,7 @@
     border-color: rgb(30 59 47 / 0.5);
   }
   .field:focus-visible {
-    outline: 3px solid var(--color-mango);
+    outline: 3px solid var(--color-mandarina);
     outline-offset: 1px;
     border-color: var(--color-palta);
   }
@@ -181,4 +203,39 @@ html.lenis body {
 .nav-link:hover::after,
 .nav-link:focus-visible::after {
   transform: scaleX(1);
+}
+
+/* ------------------------------------------------------------------
+ * Idiomas con otros alfabetos: fuentes del sistema que sí tienen esos glifos
+ * (Bricolage, Figtree y Outfit solo cubren el alfabeto latino) y ajustes de lectura.
+ * ------------------------------------------------------------------ */
+html:lang(ja) {
+  --font-display: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', 'Noto Sans JP', system-ui, sans-serif;
+  --font-sans: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', 'Noto Sans JP', system-ui, sans-serif;
+}
+html:lang(ko) {
+  --font-display: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif;
+  --font-sans: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif;
+}
+html:lang(ar) {
+  --font-display: 'Segoe UI', 'Noto Sans Arabic', 'Geeza Pro', Tahoma, sans-serif;
+  --font-sans: 'Segoe UI', 'Noto Sans Arabic', 'Geeza Pro', Tahoma, sans-serif;
+}
+html:lang(he) {
+  --font-display: 'Segoe UI', 'Noto Sans Hebrew', 'Arial Hebrew', Arial, sans-serif;
+  --font-sans: 'Segoe UI', 'Noto Sans Hebrew', 'Arial Hebrew', Arial, sans-serif;
+}
+/* Interletrado negativo e interlineado muy cerrado solo funcionan bien en latino */
+html:is(:lang(ar), :lang(he), :lang(ja), :lang(ko)) :is(h1, h2, h3, .tracking-tight) {
+  letter-spacing: 0;
+}
+html:is(:lang(ar), :lang(he), :lang(ja), :lang(ko)) h1 {
+  line-height: 1.2;
+}
+html:is(:lang(ar), :lang(he)) :is(h1, h2, h3) {
+  font-weight: 700;
+}
+/* El wordmark de la marca siempre en Outfit */
+.font-brand {
+  font-family: var(--font-brand);
 }

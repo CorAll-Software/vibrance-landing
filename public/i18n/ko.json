@@ -1,0 +1,283 @@
+{
+  "_comment": "TODO: revisar con un traductor nativo — traducción inicial de la versión en inglés.",
+  "seo": {
+    "title": "{{brand}} · 수입업체를 위해 엄선한 페루산 과일",
+    "description": "블루베리, 아보카도, 포도, 망고, 만다린, 생강을 해외 수입업체와 유통업체에 공급하는 페루 무역회사입니다."
+  },
+  "common": {
+    "close": "닫기",
+    "skip": "본문으로 건너뛰기",
+    "loading": "로딩 중",
+    "placeholderNote": "예시 데이터입니다(확인 대기 중).",
+    "skip_intro": "인트로 건너뛰기"
+  },
+  "nav": {
+    "label": "주요 메뉴",
+    "origen": "원산지",
+    "proceso": "프로세스",
+    "productos": "제품",
+    "datos": "데이터",
+    "contacto": "문의",
+    "cta": "견적 요청",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "switchLang": "언어 변경",
+    "home": "홈"
+  },
+  "hero": {
+    "title": "세계를 위해 엄선한 페루 과일",
+    "subtitle": "생산자를 선정하고 품질을 관리하며 블루베리, 아보카도, 포도, 망고, 만다린, 생강의 수출을 책임집니다.",
+    "ctaProducts": "제품 보기",
+    "ctaQuote": "견적 요청",
+    "scroll": "스크롤하여 알아보기"
+  },
+  "origen": {
+    "heading": "꽃피는 사막에서 태어나다",
+    "lines": [
+      "태평양과 안데스 산맥 사이, 페루에는 햇살과 산의 물이 과일에 맛과 색, 뛰어난 저장성을 주는 계곡이 있습니다.",
+      "우리는 재배하지 않습니다. 선별합니다. 우리의 기준을 충족하는 해안과 중부 정글의 생산자와 협력합니다.",
+      "우리가 공급하는 모든 로트는 고객에게 도착하기 전에 우리의 검수를 거칩니다.",
+      "수입업체는 페루의 여러 과일과 산지를 하나의 파트너로 관리할 수 있습니다."
+    ],
+    "imageAlt": "페루 해안 사막 한가운데의 푸른 농지",
+    "mapTitle": "우리 과일의 산지",
+    "mapText": "각 작물에 맞는 기후를 가진 이 지역의 생산자로부터 조달합니다.",
+    "mapLabel": "제품의 원산지를 표시한 페루 지도",
+    "zonas": {
+      "piura": {
+        "name": "피우라",
+        "crops": "망고, 포도"
+      },
+      "la_libertad": {
+        "name": "라리베르타드",
+        "crops": "블루베리, 아보카도"
+      },
+      "lima": {
+        "name": "리마",
+        "crops": "만다린, 아보카도"
+      },
+      "junin": {
+        "name": "후닌",
+        "crops": "생강, 만다린"
+      },
+      "ica": {
+        "name": "이카",
+        "crops": "포도, 아보카도, 만다린"
+      }
+    }
+  },
+  "proceso": {
+    "heading": "생산자에서 귀사의 창고까지",
+    "intro": "모든 화물이 빠짐없이, 제때, 서류까지 완비되어 도착하도록 다섯 단계를 관리합니다.",
+    "progress": "{{total}}단계 중 {{current}}단계",
+    "steps": {
+      "productores": {
+        "title": "생산자 선정",
+        "text": "품질, 이력 추적성, 각 시장의 요건 준수 여부로 생산자를 선정합니다.",
+        "alt": "협력 생산자의 농장"
+      },
+      "calidad": {
+        "title": "품질 관리",
+        "text": "수출 승인 전에 각 로트의 크기, 숙도, 상태를 확인합니다.",
+        "alt": "품질 검사 중인 과일"
+      },
+      "empaque": {
+        "title": "포장",
+        "text": "인증된 포장 시설에서 고객별 규격과 라벨에 맞춰 포장을 진행합니다.",
+        "alt": "포장 시설의 과일 상자"
+      },
+      "frio": {
+        "title": "콜드체인",
+        "text": "과일은 예냉 후 항구나 공항까지 온도가 관리된 상태로 운송됩니다.",
+        "alt": "온도가 관리되는 냉장실"
+      },
+      "envio": {
+        "title": "서류 및 선적",
+        "text": "식물검역증명서와 원산지증명서, 통관 서류를 처리하고 해상 또는 항공으로 선적합니다.",
+        "alt": "출고 트럭에 과일 상자를 싣는 모습"
+      }
+    }
+  },
+  "productos": {
+    "heading": "취급 제품",
+    "intro": "크기별로 선별하고 시장에 맞게 포장한 페루산 신선 농산물입니다.",
+    "viewDetail": "{{name}} 상세 보기",
+    "season": "시즌",
+    "varieties": "품종",
+    "sizes": "규격",
+    "presentations": "포장 형태",
+    "packaging": "포장",
+    "availability": "공급 시기",
+    "availableIn": "공급 월: {{months}}",
+    "available": "공급 가능",
+    "notAvailable": "수확 없음",
+    "quoteThis": "{{name}} 견적 요청",
+    "months": [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월"
+    ],
+    "monthsLong": [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월"
+    ],
+    "items": {
+      "arandano": {
+        "name": "블루베리",
+        "summary": "단단하고 달콤하며 알이 큽니다.",
+        "season": "8월~1월",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "125 g, 170 g, 500 g 클램셸",
+        "packaging": "1.5 kg, 3.7 kg 상자",
+        "alt": "신선한 블루베리"
+      },
+      "palta": {
+        "name": "하스 아보카도",
+        "summary": "크리미하며 익을수록 껍질이 짙어집니다.",
+        "season": "3월~9월",
+        "varieties": "Hass",
+        "presentations": "벌크 또는 망 포장 생과",
+        "packaging": "4 kg, 10 kg 상자",
+        "alt": "반으로 자른 하스 아보카도"
+      },
+      "uva": {
+        "name": "생식용 포도",
+        "summary": "아삭한 송이, 씨 있는 품종과 씨 없는 품종.",
+        "season": "11월~4월",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "봉지 및 클램셸",
+        "packaging": "8.2 kg 상자",
+        "alt": "청포도 송이"
+      },
+      "mango": {
+        "name": "망고",
+        "summary": "섬유질이 없는 과육, 진한 향과 선명한 색.",
+        "season": "11월~3월",
+        "varieties": "Kent, Edward",
+        "presentations": "크기별 선별 생과",
+        "packaging": "4 kg 상자",
+        "alt": "잘 익은 망고"
+      },
+      "mandarina": {
+        "name": "만다린",
+        "summary": "껍질이 잘 벗겨지고 즙이 많으며 색이 진합니다.",
+        "season": "3월~10월",
+        "varieties": "W. Murcott, Tango, Satsuma",
+        "presentations": "크기별 선별 생과",
+        "packaging": "10 kg 상자",
+        "alt": "신선한 만다린"
+      },
+      "kion": {
+        "name": "생강",
+        "summary": "향긋하고 매콤한 뿌리줄기, 세척 및 선별 완료.",
+        "season": "연중",
+        "varieties": "황생강",
+        "presentations": "생것, 세척 및 자연 건조",
+        "packaging": "13.6 kg(30 lb) 상자",
+        "alt": "신선한 생강"
+      }
+    },
+    "markets": "검역 협정이 유효한 시장",
+    "marketsNote": "다른 목적지는 문의해 주세요. 견적 전에 협정을 확인합니다."
+  },
+  "datos": {
+    "heading": "숫자로 보는 공급",
+    "intro": "하나의 파트너로 여러 페루 제품을 연중 조달하세요.",
+    "stats": {
+      "productos": {
+        "label": "신선 제품"
+      },
+      "meses": {
+        "label": "연간 공급 개월 수"
+      },
+      "regiones": {
+        "label": "원산 지역"
+      },
+      "mercados": {
+        "label": "수출 가능 시장"
+      }
+    },
+    "mapTitle": "수출 가능한 곳",
+    "mapText": "최소 한 가지 제품에 대해 식물검역 협정이 유효한 시장입니다. 각 지점에 마우스를 올리면 제품 수를 볼 수 있습니다.",
+    "mapLabel": "제품을 수출할 수 있는 시장을 표시한 세계 지도",
+    "destinos": {
+      "usa": "미국",
+      "canada": "캐나다",
+      "mexico": "멕시코",
+      "ue": "유럽연합",
+      "reino_unido": "영국",
+      "china": "중국",
+      "corea": "대한민국",
+      "japon": "일본"
+    },
+    "certTitle": "인증",
+    "certPlaceholder": "인증 {{n}}",
+    "marketProducts": "수출 가능 제품 {{n}}개",
+    "accessTitle": "제품별 시장 접근",
+    "accessText": "모든 제품이 모든 국가에 들어갈 수 있는 것은 아닙니다. 이 표는 협정이 유효한 곳을 보여 주며, 그 외의 경우에는 견적 전에 상황을 확인합니다.",
+    "accessCaption": "제품별 식물검역 협정이 유효한 시장",
+    "accessProduct": "제품",
+    "accessYes": "수출 가능",
+    "accessAsk": "문의"
+  },
+  "contacto": {
+    "slogan": "페루 최고의 맛을, 한 상자마다.",
+    "text": "원하시는 과일, 물량, 목적지를 알려 주세요. 제안서를 보내 드립니다.",
+    "cta": "견적 요청"
+  },
+  "form": {
+    "title": "견적 요청",
+    "intro": "정보를 입력해 주시면 영업시간 기준 48시간 이내에 회신드립니다.",
+    "required": "모든 항목은 필수입니다.",
+    "name": "이름",
+    "company": "회사",
+    "country": "목적 국가",
+    "email": "이메일",
+    "product": "관심 제품",
+    "productPlaceholder": "제품 선택",
+    "productSeveral": "여러 제품",
+    "message": "메시지",
+    "messagePlaceholder": "대략적인 물량, 목적지, 일정…",
+    "errors": {
+      "required": "이 항목을 입력해 주세요.",
+      "email": "올바른 이메일을 입력해 주세요(예: name@company.com).",
+      "minlength": "{{n}}자 이상 입력해 주세요.",
+      "summary": "{{n}}개 항목을 수정해야 합니다. 빨간색 메시지를 확인하세요."
+    },
+    "submit": "요청 보내기",
+    "sending": "전송 중…",
+    "successTitle": "요청이 전송되었습니다!",
+    "successText": "요청을 접수했습니다. 영업시간 기준 48시간 이내에 {{email}}(으)로 귀국의 최신 협정과 함께 연락드리겠습니다.",
+    "errorTitle": "요청을 보내지 못했습니다",
+    "errorText": "연결 문제로 전송되지 않았습니다. 인터넷 연결을 확인하고 다시 시도해 주세요. 입력하신 내용은 유지됩니다.",
+    "retry": "다시 시도",
+    "again": "다른 요청 보내기"
+  },
+  "footer": {
+    "tagline": "전 세계 수입업체와 유통업체를 위한 페루산 신선 과일 무역회사.",
+    "contact": "문의",
+    "follow": "팔로우",
+    "language": "언어",
+    "privacy": "개인정보 처리방침",
+    "rights": "© {{year}} {{brand}}. All rights reserved."
+  }
+}

@@ -60,6 +60,12 @@
           </dl>
 
           <div class="mt-8 border-t border-palta/15 pt-6">
+            <h3 class="font-sans text-sm font-semibold text-palta/60">{{ t('markets') }}</h3>
+            <p class="mt-1">{{ marketNames(p.id) }}</p>
+            <p class="mt-1 text-sm text-palta/60">{{ t('marketsNote') }}</p>
+          </div>
+
+          <div class="mt-8 border-t border-palta/15 pt-6">
             <h3 class="font-sans text-sm font-semibold text-palta/60">
               {{ t('availability') }} · {{ t('items.' + p.id + '.season') }}
             </h3>

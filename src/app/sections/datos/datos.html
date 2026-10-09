@@ -28,12 +28,23 @@
 
     <!-- Mapa mundial -->
     <div class="mt-28 grid gap-10 lg:grid-cols-12 lg:items-center">
-      <div class="lg:col-span-3">
+      <div class="lg:col-span-4">
         <h3 class="text-2xl font-semibold md:text-4xl">{{ t('mapTitle') }}</h3>
         <p class="mt-4 text-lg text-palta/75">{{ t('mapText') }}</p>
       </div>
-      <div class="-mx-4 lg:col-span-9 lg:mx-0">
+      <div class="-mx-4 lg:col-span-8 lg:mx-0">
         <app-map-world />
+      </div>
+    </div>
+
+    <!-- Acceso por producto: responde a la duda principal del importador (¿puede entrar a mi país?) -->
+    <div class="mt-20">
+      <div class="grid gap-4 md:grid-cols-12 md:items-end">
+        <h3 class="text-2xl font-semibold md:col-span-6 md:text-4xl">{{ t('accessTitle') }}</h3>
+        <p class="text-palta/75 md:col-span-5 md:col-start-8">{{ t('accessText') }}</p>
+      </div>
+      <div class="mt-8">
+        <app-access-table />
       </div>
     </div>
   </div>
@@ -46,6 +57,7 @@
     <!-- TODO: dato real de la clienta — reemplazar por los logos de certificaciones confirmadas -->
     <div
       class="marquee mt-6 overflow-hidden"
+      dir="ltr"
       tabindex="0"
       [attr.aria-label]="t('certTitle')"
       role="region"

@@ -4,11 +4,18 @@ import { CERTIFICATIONS, STATS } from '../../data/cifras.data';
 import { SHOW_PLACEHOLDER_NOTES } from '../../core/config/brand';
 import { CounterComponent } from '../../shared/components/counter/counter';
 import { MapWorldComponent } from '../../shared/components/map-world/map-world';
+import { AccessTableComponent } from '../../shared/components/access-table/access-table';
 
-/** Datos: contadores, mapa mundial de destinos y franja de certificaciones. */
+/** Datos: cifras de la oferta, mapa de mercados, tabla de acceso por producto y certificaciones. */
 @Component({
   selector: 'app-datos',
-  imports: [TranslocoDirective, TranslocoPipe, CounterComponent, MapWorldComponent],
+  imports: [
+    TranslocoDirective,
+    TranslocoPipe,
+    CounterComponent,
+    MapWorldComponent,
+    AccessTableComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './datos.html',
   styles: `

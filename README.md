@@ -1,7 +1,7 @@
-# MelanieFruit — Landing exportadora (Propuesta 1)
+# MelanieFruit — Landing de Vibrance Inca Harvest (Propuesta 1)
 
-Landing interactiva "Del campo al mundo" en Angular 22 (standalone, signals, zoneless),
-Tailwind CSS v4, GSAP + ScrollTrigger, Lenis y Transloco (ES/EN en tiempo real).
+Landing interactiva de una comercializadora de fruta peruana (no cultiva; solo exportación) en Angular 22 (standalone, signals, zoneless),
+Tailwind CSS v4, GSAP + ScrollTrigger, Lenis y Transloco (8 idiomas en tiempo real: es, en, fr, it, ar, he, ja, ko; árabe y hebreo de derecha a izquierda).
 
 ## Comandos
 
@@ -18,8 +18,8 @@ npm test           # pruebas unitarias (Vitest)
 
 | Qué | Dónde |
 |---|---|
-| Nombre de marca, contacto, redes, nota de "datos de ejemplo" | `src/app/core/config/brand.ts` |
-| Textos ES / EN | `public/i18n/es.json`, `public/i18n/en.json` |
+| Marca (Vibrance), descriptor (Inca Harvest), razón social, contacto, redes | `src/app/core/config/brand.ts` |
+| Textos (8 idiomas) | `public/i18n/{es,en,fr,it,ar,he,ja,ko}.json` — idiomas y nombres en `brand.ts` (`LANG_META`) |
 | Productos, meses de cosecha, calibres | `src/app/data/productos.data.ts` |
 | Etapas del proceso | `src/app/data/proceso.data.ts` |
 | Cifras y certificaciones | `src/app/data/cifras.data.ts` |

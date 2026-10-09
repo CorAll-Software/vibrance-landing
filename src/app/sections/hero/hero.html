@@ -4,26 +4,36 @@
   *transloco="let t; prefix: 'hero'"
   aria-labelledby="hero-title"
 >
-  <!-- Fondo: video del campo (escritorio) o imagen (móvil / movimiento reducido) -->
+  <!-- Fondo: cadena de hasta 3 videos con fundido (core/config/media.config.ts) -->
   <div class="hero-bg absolute inset-0 -z-10 scale-110">
     <img [ngSrc]="media.poster" alt="" fill priority sizes="100vw" class="object-cover" />
     @if (showVideo()) {
-      <video
-        class="absolute inset-0 h-full w-full object-cover"
-        [poster]="media.poster"
-        autoplay
-        muted
-        loop
-        playsinline
-        aria-hidden="true"
-      >
-        @if (media.webm) {
-          <source [src]="media.webm" type="video/webm" />
-        }
-        @if (media.mp4) {
-          <source [src]="media.mp4" type="video/mp4" />
-        }
-      </video>
+      @for (v of videos; track $index; let i = $index) {
+        <video
+          class="hero-video absolute inset-0 h-full w-full object-cover transition-opacity ease-in-out"
+          [style.transition-duration.s]="media.fade"
+          [style.z-index]="i === current() ? 2 : 1"
+          [class.opacity-0]="!(i === current() && visible()) && i !== previous()"
+          [muted]="true"
+          muted
+          playsinline
+          [loop]="videos.length === 1"
+          [attr.preload]="i === 0 ? 'auto' : 'none'"
+          [attr.autoplay]="i === 0 ? '' : null"
+          disablepictureinpicture
+          aria-hidden="true"
+          (playing)="onPlaying(i)"
+          (timeupdate)="onTime(i)"
+          (ended)="next(i)"
+        >
+          @if (v.webm) {
+            <source [src]="v.webm" type="video/webm" />
+          }
+          @if (v.mp4) {
+            <source [src]="v.mp4" type="video/mp4" />
+          }
+        </video>
+      }
     }
   </div>
   <!-- Capa oscura para legibilidad -->
@@ -36,9 +46,12 @@
       <span class="sr-only">{{ t('title') }}</span>
       <span aria-hidden="true">
         @for (w of words(); track $index) {
-          <span class="inline-block overflow-hidden pb-[0.08em] align-bottom"
+          <!-- el espacio entre palabras va como margen (japonés no lleva espacios) -->
+          <span
+            class="inline-block overflow-hidden pb-[0.08em] align-bottom"
+            [style.margin-inline-end.em]="spaced() ? 0.24 : 0"
             ><span class="word inline-block">{{ w }}</span></span
-          >{{ ' ' }}
+          >
         }
       </span>
     </h1>

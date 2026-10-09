@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
-import { BRAND_NAME } from '../../core/config/brand';
+import { BRAND_DESCRIPTOR, BRAND_NAME, LOGO } from '../../core/config/brand';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { UiStateService } from '../../core/services/ui-state.service';
 import { LangSwitchComponent } from './lang-switch';
@@ -25,6 +25,8 @@ export const NAV_ITEMS = ['origen', 'proceso', 'productos', 'datos', 'contacto']
 })
 export class HeaderComponent {
   protected readonly brand = BRAND_NAME;
+  protected readonly descriptor = BRAND_DESCRIPTOR;
+  protected readonly logo = LOGO;
   protected readonly items = NAV_ITEMS;
   protected readonly solid = signal(false);
   protected readonly menuOpen = signal(false);

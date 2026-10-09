@@ -1,17 +1,32 @@
-# Medios provisionales
+# Medios de la web
 
-Las imágenes `.webp` de esta carpeta son **ilustraciones provisionales** generadas para la propuesta.
-Reemplázalas por fotos/videos reales (o material libre de Pexels / Unsplash) **con el mismo nombre**,
-o cambia las rutas en `src/app/data/*.data.ts`.
+**Todo se configura en un solo archivo: `src/app/core/config/media.config.ts`.**
+Ahí están, por sección, la imagen y el video (ruta local o link directo `https://…/video.mp4`):
 
-| Archivo | Uso | Sugerencia de búsqueda | Tamaño recomendado |
-|---|---|---|---|
-| `hero-campo.webp` (+ `.webm`/`.mp4`) | Fondo del hero / poster del video | "avocado farm aerial", "peru farm drone" | 1920×1080, video ≤ 4 MB sin audio |
-| `origen-campo.webp` | Foto de Origen (parallax) | "peru desert agriculture", "irrigated field desert" | 1200×1500 |
-| `proceso-1-siembra.webp` … `proceso-5-envio.webp` | Etapas del Proceso | "seedlings", "fruit harvest", "packing house", "cold storage", "reefer container ship" | 1200×800 |
-| `producto-*.webp` | Cards y modal de producto | "hass avocado", "blueberries", "mango", "green grapes" | 900×1100 |
+- `HERO` — cadena de hasta 3 videos que pasan de uno a otro con fundido.
+- `ORIGEN` — foto de "Nace en el desierto que florece" (video opcional).
+- `PROCESO` — imagen + video de cada etapa (se reproducen solo a la vista).
+- `PRODUCTOS` — imagen de cada tarjeta + video opcional al pasar el mouse.
 
-Videos del hero: al tener los archivos, descomenta las rutas en `src/app/data/media.data.ts`.
+Recomendado para videos: 1080p (Full HD), sin audio. Un link 4K pesa 10–20 veces más y
+hace lenta la carga, sobre todo en celular.
+
+Los originales en 4K que se guarden en `public/media/videos/` **no se publican** (excluidos en
+`angular.json` → assets → ignore) ni se suben a git (`.gitignore`).
+
+## Comprimir un video local (opcional)
+
+Para usar otro video como fondo del hero (desde la carpeta del proyecto):
+
+```bash
+# 1) MP4 liviano (2 pasadas, ~2,6 Mbps)
+ffmpeg -i public/media/videos/ORIGINAL.mp4 -an -vf "fps=30,scale=-2:1080" -c:v libx264 -preset slow -b:v 2600k -pass 1 -f null NUL
+ffmpeg -i public/media/videos/ORIGINAL.mp4 -an -vf "fps=30,scale=-2:1080" -c:v libx264 -preset slow -b:v 2600k -pass 2 -movflags +faststart public/media/hero-campo.mp4
+# 2) WebM
+ffmpeg -i public/media/hero-campo.mp4 -an -c:v libvpx-vp9 -b:v 2000k -row-mt 1 -cpu-used 5 public/media/hero-campo.webm
+# 3) Póster
+ffmpeg -ss 0.5 -i public/media/hero-campo.mp4 -frames:v 1 -vf scale=1600:-2 -quality 50 public/media/hero-campo-poster.webp
+```
 Loops de producto (opcional): agrega `video: { webm, mp4 }` al producto en `productos.data.ts`.
 
 Comprime antes de subir:

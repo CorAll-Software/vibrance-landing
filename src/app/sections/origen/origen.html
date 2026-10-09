@@ -20,13 +20,38 @@
 
     <div class="lg:col-span-5 lg:pt-28">
       <div class="origen-frame relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-        <img
-          [ngSrc]="image"
-          [alt]="t('imageAlt')"
-          fill
-          sizes="(min-width: 1024px) 40vw, 100vw"
-          class="origen-photo scale-[1.2] object-cover"
-        />
+        <div class="origen-photo absolute inset-0 scale-[1.2]">
+          <img
+            [ngSrc]="media.image"
+            [alt]="t('imageAlt')"
+            fill
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            class="object-cover"
+          />
+          <!-- Video opcional (core/config/media.config.ts): se reproduce solo a la vista -->
+          @if (media.video; as v) {
+            @if (!scroll.reducedMotion()) {
+              <video
+                class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+                [muted]="true"
+                muted
+                loop
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                aria-hidden="true"
+                (playing)="$any($event.target).classList.remove('opacity-0')"
+              >
+                @if (v.webm) {
+                  <source [src]="v.webm" type="video/webm" />
+                }
+                @if (v.mp4) {
+                  <source [src]="v.mp4" type="video/mp4" />
+                }
+              </video>
+            }
+          }
+        </div>
       </div>
     </div>
   </div>

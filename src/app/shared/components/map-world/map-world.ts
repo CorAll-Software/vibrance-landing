@@ -10,6 +10,7 @@ import {
 import { TranslocoDirective } from '@jsverse/transloco';
 import { gsap } from 'gsap';
 import { DESTINATIONS, GeoPoint, ORIGIN } from '../../../data/destinos.data';
+import { productsForMarket } from '../../../data/mercados.data';
 import { SmoothScrollService } from '../../../core/services/smooth-scroll.service';
 
 // Debe coincidir con public/svg/world-dots.svg (equirectangular, lat 84 → -58)
@@ -23,7 +24,7 @@ const project = (p: GeoPoint) => ({
   y: ((LAT_TOP - p.lat) / (LAT_TOP - LAT_BOTTOM)) * VB_H,
 });
 
-/** Mapa mundial de puntos con los destinos de exportación y rutas desde el Perú. */
+/** Mapa mundial de puntos con los mercados (y cuántos productos tienen acceso) y rutas desde el Perú. */
 @Component({
   selector: 'app-map-world',
   imports: [TranslocoDirective],
@@ -71,7 +72,9 @@ const project = (p: GeoPoint) => ({
             <button
               type="button"
               class="group relative grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full"
-              [attr.aria-label]="t('destinos.' + d.id)"
+              [attr.aria-label]="
+                t('destinos.' + d.id) + ': ' + t('marketProducts', { n: d.products })
+              "
             >
               <span
                 class="size-3 rounded-full bg-arandano ring-4 ring-arandano/20 transition-transform duration-200 group-hover:scale-150"
@@ -80,7 +83,10 @@ const project = (p: GeoPoint) => ({
                 role="tooltip"
                 class="pointer-events-none absolute bottom-full left-1/2 w-max -translate-x-1/2 translate-y-1 rounded-md bg-arandano px-2.5 py-1 text-sm font-medium text-white opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
               >
-                {{ t('destinos.' + d.id) }}
+                <strong class="block font-semibold">{{ t('destinos.' + d.id) }}</strong>
+                <span class="text-xs text-white/85">{{
+                  t('marketProducts', { n: d.products })
+                }}</span>
               </span>
             </button>
           </li>
@@ -95,7 +101,12 @@ export class MapWorldComponent {
   protected readonly origin = project(ORIGIN);
   protected readonly markers = DESTINATIONS.map((d) => {
     const p = project(d);
-    return { id: d.id, left: (p.x / VB_W) * 100, top: (p.y / VB_H) * 100 };
+    return {
+      id: d.id,
+      left: (p.x / VB_W) * 100,
+      top: (p.y / VB_H) * 100,
+      products: productsForMarket(d.id).length,
+    };
   });
   /** Curvas cuadráticas desde Perú a cada destino. */
   protected readonly routes = DESTINATIONS.map((d) => {

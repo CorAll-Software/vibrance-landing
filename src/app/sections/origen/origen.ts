@@ -10,7 +10,7 @@ import {
 import { NgOptimizedImage } from '@angular/common';
 import { TranslocoDirective, translateObjectSignal } from '@jsverse/transloco';
 import { gsap } from 'gsap';
-import { ORIGEN_IMAGE } from '../../data/media.data';
+import { ORIGEN } from '../../core/config/media.config';
 import { GROWING_ZONES } from '../../data/destinos.data';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { MapPeruComponent } from '../../shared/components/map-peru/map-peru';
@@ -26,17 +26,28 @@ import { MapPeruComponent } from '../../shared/components/map-peru/map-peru';
   templateUrl: './origen.html',
 })
 export class OrigenComponent {
-  protected readonly image = ORIGEN_IMAGE;
+  protected readonly media = ORIGEN;
   protected readonly zones = GROWING_ZONES;
+  protected readonly scroll = inject(SmoothScrollService);
   protected readonly lines = translateObjectSignal('origen.lines') as unknown as () => string[];
 
   constructor() {
     const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
     const zone = inject(NgZone);
-    const scroll = inject(SmoothScrollService);
+    const scroll = this.scroll;
     let ctx: gsap.Context | undefined;
+    let io: IntersectionObserver | undefined;
 
     afterNextRender(() => {
+      // Video opcional: solo se descarga y reproduce mientras está a la vista
+      const video = host.querySelector<HTMLVideoElement>('.origen-frame video');
+      if (video) {
+        io = new IntersectionObserver(
+          ([e]) => (e.isIntersecting ? video.play().catch(() => {}) : video.pause()),
+          { threshold: 0.25 },
+        );
+        io.observe(video);
+      }
       if (scroll.reducedMotion()) return;
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
@@ -69,6 +80,9 @@ export class OrigenComponent {
         }, host);
       });
     });
-    inject(DestroyRef).onDestroy(() => ctx?.revert());
+    inject(DestroyRef).onDestroy(() => {
+      ctx?.revert();
+      io?.disconnect();
+    });
   }
 }
