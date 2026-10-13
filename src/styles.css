@@ -39,7 +39,7 @@
   --text-2xl: 1.75rem;
   --text-4xl: 2.5rem;
   --text-6xl: 4rem;
-  --text-hero: clamp(3.25rem, 9vw, 8.75rem);
+  --text-hero: clamp(2.5rem, min(9vw, 13svh), 8.75rem);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
