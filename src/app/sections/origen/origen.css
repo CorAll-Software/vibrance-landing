@@ -1,3 +1,85 @@
+/* ---------- Parte 1: "Nace en el desierto que florece" ---------- */
+.origen-intro {
+  position: relative;
+  overflow: hidden;
+  padding-block: 6rem 5rem;
+}
+/* Montañas del Perú: se ven en los bordes y se difuminan hacia el centro */
+.origen-mountains {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: min(60%, 34rem);
+  background: url('/svg/andes.svg') center bottom / 100% 100% no-repeat;
+  opacity: 0.9;
+  --fade: linear-gradient(
+    to right,
+    #000 0%,
+    rgb(0 0 0 / 0.9) 8%,
+    rgb(0 0 0 / 0.5) 17%,
+    rgb(0 0 0 / 0.15) 26%,
+    transparent 33%,
+    transparent 67%,
+    rgb(0 0 0 / 0.15) 74%,
+    rgb(0 0 0 / 0.5) 83%,
+    rgb(0 0 0 / 0.9) 92%,
+    #000 100%
+  );
+  -webkit-mask-image: var(--fade);
+  mask-image: var(--fade);
+  pointer-events: none;
+}
+.intro-grid {
+  position: relative; /* por encima de las montañas */
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+.intro-title {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1.05;
+}
+.intro-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.75rem;
+  max-width: 34rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  line-height: 1.5;
+}
+.origen-frame {
+  position: relative;
+  width: min(100%, 24rem);
+  aspect-ratio: 4 / 5;
+  max-height: 70svh;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 2rem;
+  box-shadow: 0 24px 60px rgb(20 42 32 / 0.25);
+}
+.origen-photo {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+@media (min-width: 1024px) {
+  .origen-intro {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-block: calc(72px + 2rem) 3rem; /* header fijo */
+  }
+  .intro-grid {
+    width: 100%;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 5rem;
+  }
+  .origen-frame {
+    margin-inline: 0 auto;
+  }
+}
+
+/* ---------- Parte 2: de dónde viene nuestra fruta (móvil y "reducir movimiento": una columna) ---------- */
 /* ---------- Base (móvil y "reducir movimiento"): todo en una columna ---------- */
 .origen-pin {
   position: relative;
@@ -26,13 +108,11 @@
 .beats {
   display: none;
 }
-.story {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 42ch;
-  font-size: 1.125rem;
-  line-height: 1.55;
+.caption {
+  max-width: 34ch;
+  text-align: center;
+  font-size: 1.0625rem;
+  line-height: 1.5;
   color: rgb(30 59 47 / 0.8);
 }
 .origen-stage {
@@ -58,7 +138,7 @@
 .carrier {
   order: 1;
 }
-.story {
+.caption {
   order: 2;
 }
 .markets {
@@ -227,15 +307,10 @@
     padding: 1.25rem 1.5rem;
     visibility: hidden;
   }
-  /* Una frase a la vez, apiladas en la misma celda, debajo de la mariposa */
-  .story {
-    display: grid;
+  .caption {
     width: 27rem;
     max-width: 100%;
     font-size: clamp(0.95rem, 1.05vw, 1.05rem);
-  }
-  .story-line {
-    grid-area: 1 / 1;
   }
 
   /* Mariposas viajeras con su estela punteada */

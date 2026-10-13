@@ -5,14 +5,67 @@
   *transloco="let t; prefix: 'origen'"
 >
   <!--
-    Escena de Origen. En escritorio se queda fija y el scroll avanza 4 momentos
-    (uno por cada frase de la historia):
-    1. Aparece el Perú y la mariposa llega volando con la cesta Vibrance vacía.
-    2. Aparecen las frutas en sus regiones.
-    3. De cada región sale su fruta y entra en la cesta.
-    4. La mariposa se lleva la cesta y aparece "Dónde puede llegar" con los botones de acción.
+    Origen tiene dos partes:
+    1. "Nace en el desierto que florece": la historia y la foto, con las montañas del Perú
+       difuminadas a los lados.
+    2. "De dónde viene nuestra fruta": el mapa del Perú y la mariposa con la cesta Vibrance.
+       Cuatro momentos que siguen al scroll (barritas de avance):
+       1) llega la mariposa con la cesta vacía, 2) aparecen las frutas en sus regiones,
+       3) de cada región sale su fruta y entra en la cesta, 4) la mariposa se la lleva y
+       aparece "Dónde puede llegar" con los botones de acción.
     En móvil o con "reducir movimiento" todo va en una columna.
   -->
+  <!-- Parte 1: historia y foto -->
+  <div class="origen-intro">
+    <div class="origen-mountains" aria-hidden="true"></div>
+    <div class="container-page intro-grid">
+      <div class="intro-text">
+        <h2 id="origen-title" class="intro-title font-bold">{{ t('heading') }}</h2>
+        <div class="intro-lines">
+          @for (line of lines(); track $index) {
+            <p class="intro-line">{{ line }}</p>
+          }
+        </div>
+      </div>
+
+      <div class="origen-frame">
+        <div class="origen-photo">
+          <img
+            [ngSrc]="media.image"
+            [alt]="t('imageAlt')"
+            fill
+            sizes="(min-width: 1024px) 30vw, 100vw"
+            class="object-cover"
+          />
+          <!-- Video opcional: se reproduce solo a la vista -->
+          @if (media.video; as v) {
+            @if (!scroll.reducedMotion()) {
+              <video
+                class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+                [muted]="true"
+                muted
+                loop
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                aria-hidden="true"
+                (playing)="$any($event.target).classList.remove('opacity-0')"
+              >
+                @if (v.webm) {
+                  <source [src]="v.webm" type="video/webm" />
+                }
+                @if (v.mp4) {
+                  <source [src]="v.mp4" type="video/mp4" />
+                }
+              </video>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parte 2: de dónde viene nuestra fruta -->
   <div class="origen-pin">
     <!-- Fondo: mapa del mundo que se desvanece hacia el centro -->
     <div class="origen-world" aria-hidden="true"></div>
@@ -41,9 +94,9 @@
     <div class="container-page origen-inner">
       <!-- Cabecera: título + indicador de momentos -->
       <header class="origen-head">
-        <h2 id="origen-title" class="origen-title font-bold">{{ t('heading') }}</h2>
+        <h2 class="origen-title font-bold">{{ t('mapTitle') }}</h2>
         <ol class="beats" aria-hidden="true">
-          @for (line of lines(); track $index) {
+          @for (m of moments; track m) {
             <li class="beat"><span class="beat-fill"></span></li>
           }
         </ol>
@@ -108,12 +161,7 @@
             </div>
           </div>
 
-          <!-- La frase de cada momento, debajo de la mariposa -->
-          <div class="story">
-            @for (line of lines(); track $index) {
-              <p class="story-line">{{ line }}</p>
-            }
-          </div>
+          <p class="caption">{{ t('mapText') }}</p>
         </div>
 
         <!-- Frutas que viajan de su región del mapa a la cesta (solo escena fija) -->
@@ -129,47 +177,4 @@
       </div>
     </div>
   </div>
-
-  <!--
-    Foto / video de Origen (core/config/media.config.ts → ORIGEN). Se quitó de la escena
-    pero se deja aquí por si se necesita en otra parte. Para usarla: descomentar, volver a
-    importar NgOptimizedImage en origen.ts y exponer `media = ORIGEN`.
-
-    <div class="lg:col-span-5 lg:pt-28">
-      <div class="origen-frame relative aspect-[4/5] overflow-hidden rounded-[2rem]">
-        <div class="origen-photo absolute inset-0 scale-[1.2]">
-          <img
-            [ngSrc]="media.image"
-            [alt]="t('imageAlt')"
-            fill
-            sizes="(min-width: 1024px) 40vw, 100vw"
-            class="object-cover"
-          />
-          [Video opcional: se reproduce solo a la vista]
-          @if (media.video; as v) {
-            @if (!scroll.reducedMotion()) {
-              <video
-                class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
-                [muted]="true"
-                muted
-                loop
-                playsinline
-                preload="none"
-                disablepictureinpicture
-                aria-hidden="true"
-                (playing)="$any($event.target).classList.remove('opacity-0')"
-              >
-                @if (v.webm) {
-                  <source [src]="v.webm" type="video/webm" />
-                }
-                @if (v.mp4) {
-                  <source [src]="v.mp4" type="video/mp4" />
-                }
-              </video>
-            }
-          }
-        </div>
-      </div>
-    </div>
-  -->
 </section>
