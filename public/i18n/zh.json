@@ -251,6 +251,30 @@
         "q": "出运港口",
         "a": "卡亚俄(Callao)。"
       }
+    },
+    "inco": {
+      "hint": "选择一个国际贸易术语，查看 Vibrance 负责的运输段。",
+      "insurance": "海运保险",
+      "us": "由 Vibrance 承担",
+      "you": "由您承担",
+      "stops": {
+        "plant": "包装厂",
+        "port": "卡亚俄港",
+        "board": "装上船",
+        "dest": "您的目的港"
+      },
+      "fob": {
+        "name": "Free On Board",
+        "desc": "我们在卡亚俄港将货物交付至船上。此后的运费和保险由您承担。"
+      },
+      "cfr": {
+        "name": "Cost and Freight",
+        "desc": "我们还支付至您目的港的海运费。货物装船后，风险转移给您。"
+      },
+      "cif": {
+        "name": "Cost, Insurance and Freight",
+        "desc": "我们支付至您目的港的海运费和海运保险。货物装船后，风险转移给您。"
+      }
     }
   },
   "contacto": {

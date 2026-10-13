@@ -306,6 +306,30 @@
         "q": "Port of departure",
         "a": "Callao."
       }
+    },
+    "inco": {
+      "hint": "Pick an Incoterm to see which leg Vibrance covers.",
+      "insurance": "Marine insurance",
+      "us": "Covered by Vibrance",
+      "you": "Covered by you",
+      "stops": {
+        "plant": "Packing plant",
+        "port": "Port of Callao",
+        "board": "On board the vessel",
+        "dest": "Your destination port"
+      },
+      "fob": {
+        "name": "Free On Board",
+        "desc": "We deliver the cargo on board the vessel at Callao. From there, freight and insurance are on you."
+      },
+      "cfr": {
+        "name": "Cost and Freight",
+        "desc": "We also pay ocean freight to your destination port. Risk passes to you once the cargo is on board."
+      },
+      "cif": {
+        "name": "Cost, Insurance and Freight",
+        "desc": "We pay ocean freight and marine insurance to your destination port. Risk passes to you once the cargo is on board."
+      }
     }
   },
   "contacto": {

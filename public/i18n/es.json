@@ -306,6 +306,30 @@
         "q": "Puerto de salida",
         "a": "Callao."
       }
+    },
+    "inco": {
+      "hint": "Elige un incoterm y mira qué tramo cubre Vibrance.",
+      "insurance": "Seguro marítimo",
+      "us": "Lo cubre Vibrance",
+      "you": "Lo cubres tú",
+      "stops": {
+        "plant": "Planta de empaque",
+        "port": "Puerto del Callao",
+        "board": "A bordo del buque",
+        "dest": "Tu puerto de destino"
+      },
+      "fob": {
+        "name": "Free On Board",
+        "desc": "Entregamos la carga a bordo del buque en el Callao. Desde ahí, el flete y el seguro van por tu cuenta."
+      },
+      "cfr": {
+        "name": "Cost and Freight",
+        "desc": "Además pagamos el flete marítimo hasta tu puerto de destino. El riesgo pasa a ti cuando la carga está a bordo."
+      },
+      "cif": {
+        "name": "Cost, Insurance and Freight",
+        "desc": "Pagamos el flete y el seguro marítimo hasta tu puerto de destino. El riesgo pasa a ti cuando la carga está a bordo."
+      }
     }
   },
   "contacto": {
