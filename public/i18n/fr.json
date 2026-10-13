@@ -1,0 +1,325 @@
+{
+  "_comment": "TODO: revisar con un traductor nativo — traducción inicial de la versión en inglés.",
+  "seo": {
+    "title": "{{brand}} · Fruits péruviens sélectionnés pour les importateurs",
+    "description": "Société de négoce péruvienne de myrtilles, avocats, raisins, mangues, mandarines et gingembre pour importateurs et distributeurs internationaux."
+  },
+  "common": {
+    "close": "Fermer",
+    "skip": "Aller au contenu",
+    "loading": "Chargement",
+    "placeholderNote": "Données d'exemple, en attente de confirmation.",
+    "skip_intro": "Passer l'intro",
+    "whatsapp": "Écrivez-nous sur WhatsApp",
+    "whatsappMessage": "Bonjour, je souhaite un devis pour des fruits péruviens avec Vibrance."
+  },
+  "nav": {
+    "label": "Navigation principale",
+    "origen": "Origine",
+    "proceso": "Processus",
+    "productos": "Produits",
+    "datos": "Chiffres",
+    "contacto": "Contact",
+    "cta": "Demander un devis",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "switchLang": "Changer de langue",
+    "home": "Accueil"
+  },
+  "hero": {
+    "title": "Fruits du Pérou, sélectionnés pour le monde",
+    "subtitle": "Nous choisissons les producteurs, contrôlons la qualité et gérons l'exportation de myrtilles, avocats, raisins, mangues, mandarines et gingembre.",
+    "ctaProducts": "Voir les produits",
+    "ctaQuote": "Demander un devis",
+    "scroll": "Faites défiler pour découvrir"
+  },
+  "origen": {
+    "heading": "Né d'un désert en fleurs",
+    "lines": [
+      "Entre l'océan Pacifique et les Andes, le Pérou possède des vallées où le soleil et l'eau des montagnes donnent aux fruits saveur, couleur et une bonne conservation.",
+      "Nous ne cultivons pas : nous sélectionnons. Nous travaillons avec des producteurs de la côte et de la forêt centrale qui respectent nos standards.",
+      "Chaque lot que nous proposons passe par notre contrôle avant de vous parvenir.",
+      "Ainsi, un importateur dispose d'un seul partenaire pour plusieurs fruits et régions du Pérou."
+    ],
+    "imageAlt": "Champs verts au milieu du désert côtier péruvien",
+    "mapTitle": "D'où viennent nos fruits",
+    "mapText": "Nous nous approvisionnons auprès de producteurs de ces régions, chacune au climat idéal pour sa culture.",
+    "mapLabel": "Carte du Pérou indiquant les régions d'origine des produits",
+    "zonas": {
+      "piura": {
+        "name": "Piura",
+        "crops": "Mangues et raisins"
+      },
+      "la_libertad": {
+        "name": "La Libertad",
+        "crops": "Myrtilles et avocats"
+      },
+      "lima": {
+        "name": "Lima",
+        "crops": "Mandarines et avocats"
+      },
+      "junin": {
+        "name": "Junín",
+        "crops": "Gingembre et mandarines"
+      },
+      "ica": {
+        "name": "Ica",
+        "crops": "Raisins, avocats et mandarines"
+      }
+    },
+    "regions": {
+      "costa": "Côte",
+      "sierra": "Andes",
+      "selva": "Amazonie"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Port d’embarquement",
+    "legendRoute": "Route vers le port",
+    "treeLabel": "Arbre illustré où poussent myrtilles, avocats, raisins, mangues, mandarines et gingembre, qui tombent dans un panier Vibrance.",
+    "marketsText": "Marchés avec un protocole phytosanitaire en vigueur pour au moins un de nos produits."
+  },
+  "proceso": {
+    "heading": "Du producteur à votre entrepôt",
+    "intro": "Cinq étapes que nous maîtrisons pour que chaque envoi arrive complet, à temps et avec ses documents en règle.",
+    "progress": "Étape {{current}} sur {{total}}",
+    "steps": {
+      "productores": {
+        "title": "Sélection des producteurs",
+        "text": "Nous choisissons les producteurs selon la qualité, la traçabilité et le respect des exigences de chaque marché.",
+        "alt": "Champ d'un producteur partenaire"
+      },
+      "calidad": {
+        "title": "Contrôle qualité",
+        "text": "Nous vérifions le calibre, le degré Brix (taux de sucre), la maturité et l’état de chaque lot avant de l’approuver pour l’export.",
+        "alt": "Fruits en contrôle qualité"
+      },
+      "empaque": {
+        "title": "Conditionnement",
+        "text": "Nous coordonnons le conditionnement dans des stations certifiées, au format et à l'étiquetage demandés par chaque client.",
+        "alt": "Caisses de fruits à la station de conditionnement"
+      },
+      "frio": {
+        "title": "Chaîne du froid",
+        "text": "Les fruits sont pré-refroidis et voyagent à température contrôlée jusqu'au port ou à l'aéroport.",
+        "alt": "Chambre froide à température contrôlée"
+      },
+      "envio": {
+        "title": "Documents et expédition",
+        "text": "Nous gérons les certificats phytosanitaires et d'origine ainsi que les formalités douanières, et expédions par mer ou par air.",
+        "alt": "Chargement de caisses de fruits dans le camion d’expédition"
+      }
+    }
+  },
+  "productos": {
+    "heading": "Ce que nous proposons",
+    "intro": "Produits frais du Pérou, calibrés et conditionnés selon chaque marché.",
+    "viewDetail": "Voir le détail : {{name}}",
+    "season": "Saison",
+    "varieties": "Variétés",
+    "sizes": "Calibres",
+    "presentations": "Présentations",
+    "packaging": "Emballage",
+    "availability": "Disponibilité",
+    "availableIn": "Disponible en : {{months}}",
+    "available": "disponible",
+    "notAvailable": "hors récolte",
+    "quoteThis": "Demander un devis : {{name}}",
+    "months": [
+      "Janv",
+      "Févr",
+      "Mars",
+      "Avr",
+      "Mai",
+      "Juin",
+      "Juil",
+      "Août",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Déc"
+    ],
+    "monthsLong": [
+      "janvier",
+      "février",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "août",
+      "septembre",
+      "octobre",
+      "novembre",
+      "décembre"
+    ],
+    "items": {
+      "arandano": {
+        "name": "Myrtille",
+        "summary": "Ferme, sucrée et de gros calibre.",
+        "season": "D'août à janvier",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "Barquettes de 125 g, 170 g et 500 g",
+        "packaging": "Caisses de 1,5 kg et 3,7 kg",
+        "alt": "Myrtilles fraîches"
+      },
+      "palta": {
+        "name": "Avocat Hass",
+        "summary": "Crémeux, à la peau granuleuse qui fonce en mûrissant.",
+        "season": "De mars à septembre",
+        "varieties": "Hass",
+        "presentations": "Fruit frais, en vrac ou en filet",
+        "packaging": "Caisses de 4 kg et 10 kg",
+        "alt": "Avocat Hass coupé en deux"
+      },
+      "uva": {
+        "name": "Raisin de table",
+        "summary": "Grappes croquantes, avec ou sans pépins.",
+        "season": "De novembre à avril",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "Sachets et barquettes",
+        "packaging": "Caisses de 8,2 kg",
+        "alt": "Grappe de raisin vert"
+      },
+      "mango": {
+        "name": "Mangue",
+        "summary": "Chair sans fibres, arôme intense et couleur éclatante.",
+        "season": "De novembre à mars",
+        "varieties": "Kent, Edward",
+        "presentations": "Fruit frais calibré",
+        "packaging": "Caisses de 4 kg",
+        "alt": "Mangue mûre"
+      },
+      "mandarina": {
+        "name": "Mandarine",
+        "summary": "Facile à éplucher, juteuse et d'une couleur intense.",
+        "season": "De mars à octobre",
+        "varieties": "W. Murcott, Tango, Satsuma",
+        "presentations": "Fruit frais calibré",
+        "packaging": "Caisses de 10 kg",
+        "alt": "Mandarines fraîches"
+      },
+      "kion": {
+        "name": "Gingembre",
+        "summary": "Rhizome aromatique et piquant, lavé et calibré.",
+        "season": "Toute l'année",
+        "varieties": "Gingembre jaune",
+        "presentations": "Frais, lavé et séché à l'air",
+        "packaging": "Caisses de 13,6 kg (30 lb)",
+        "alt": "Rhizomes de gingembre frais"
+      }
+    },
+    "markets": "Marchés avec protocole en vigueur",
+    "marketsNote": "Pour d'autres destinations, contactez-nous : nous vérifions le protocole avant de chiffrer.",
+    "quoteNote": "Variétés, calibres et présentations sont ajustés dans chaque devis."
+  },
+  "datos": {
+    "heading": "Notre offre en chiffres",
+    "intro": "Un seul partenaire pour vous approvisionner en plusieurs produits péruviens toute l'année.",
+    "stats": {
+      "productos": {
+        "label": "produits frais"
+      },
+      "meses": {
+        "label": "mois par an avec offre"
+      },
+      "regiones": {
+        "label": "régions d'origine"
+      },
+      "mercados": {
+        "label": "marchés avec un protocole phytosanitaire en vigueur pour les fruits péruviens"
+      }
+    },
+    "mapTitle": "Où nos produits peuvent aller",
+    "mapText": "Marchés disposant d'un protocole phytosanitaire en vigueur pour au moins un de nos produits. Survolez chaque point pour voir combien.",
+    "mapLabel": "Carte du monde des marchés où nos produits peuvent être exportés",
+    "destinos": {
+      "usa": "États-Unis",
+      "canada": "Canada",
+      "mexico": "Mexique",
+      "ue": "Union européenne",
+      "reino_unido": "Royaume-Uni",
+      "china": "Chine",
+      "corea": "Corée du Sud",
+      "japon": "Japon"
+    },
+    "certTitle": "Certifications",
+    "marketProducts": "{{n}} produits autorisés",
+    "accessTitle": "Accès par produit",
+    "accessText": "Tous les produits ne peuvent pas entrer dans tous les pays. Ce tableau indique où un protocole est en vigueur ; pour les autres cas, nous confirmons la situation avant de chiffrer.",
+    "accessCaption": "Marchés disposant d'un protocole phytosanitaire en vigueur pour chaque produit",
+    "accessProduct": "Produit",
+    "accessYes": "Autorisé",
+    "accessAsk": "Nous consulter",
+    "certText": "Nous travaillons avec des stations de conditionnement certifiées (BRCGS, HACCP, BPF), agréées par le SENASA et enregistrées auprès de la FDA. La station et les certifications de chaque expédition sont confirmées dans le devis.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Sécurité des aliments"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Points critiques de contrôle"
+      },
+      "bpm": {
+        "name": "BPF",
+        "desc": "Bonnes pratiques de fabrication"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Station agréée"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Installation enregistrée (É.-U.)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Commerce éthique"
+      }
+    }
+  },
+  "contacto": {
+    "slogan": "Le meilleur du Pérou, dans chaque caisse.",
+    "text": "Dites-nous quel fruit vous cherchez, le volume et la destination. Nous vous enverrons une proposition.",
+    "cta": "Demander un devis"
+  },
+  "form": {
+    "title": "Demander un devis",
+    "intro": "Remplissez vos coordonnées, nous vous répondrons sous 48 heures ouvrées.",
+    "required": "Tous les champs sont obligatoires.",
+    "name": "Nom",
+    "company": "Entreprise",
+    "country": "Pays de destination",
+    "email": "E-mail",
+    "product": "Produit d'intérêt",
+    "productPlaceholder": "Choisissez un produit",
+    "productSeveral": "Plusieurs produits",
+    "message": "Message",
+    "messagePlaceholder": "Volume approximatif, destination, dates…",
+    "errors": {
+      "required": "Veuillez remplir ce champ.",
+      "email": "Saisissez un e-mail valide, par ex. nom@entreprise.com.",
+      "minlength": "Saisissez au moins {{n}} caractères.",
+      "summary": "{{n}} champs à corriger. Vérifiez les messages en rouge."
+    },
+    "submit": "Envoyer la demande",
+    "sending": "Envoi…",
+    "successTitle": "Demande envoyée !",
+    "successText": "Nous avons bien reçu votre demande. Nous écrirons à {{email}} sous 48 heures ouvrées et confirmerons le protocole en vigueur pour votre pays.",
+    "errorTitle": "Nous n'avons pas pu envoyer votre demande",
+    "errorText": "Un problème de connexion a empêché l'envoi. Vérifiez votre connexion et réessayez ; vous ne perdrez pas ce que vous avez écrit.",
+    "retry": "Réessayer",
+    "again": "Envoyer une autre demande"
+  },
+  "footer": {
+    "tagline": "Négoce de fruits frais du Pérou pour importateurs et distributeurs du monde entier.",
+    "contact": "Contact",
+    "follow": "Suivez-nous",
+    "language": "Langue",
+    "privacy": "Politique de confidentialité",
+    "rights": "Tous droits réservés."
+  }
+}

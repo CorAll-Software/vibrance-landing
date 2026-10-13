@@ -1,0 +1,312 @@
+{
+  "_comment": "TODO: real client data — sample copy for a trading company (it does not farm).",
+  "seo": {
+    "title": "{{brand}} · Selected Peruvian fruit for importers",
+    "description": "Peruvian trading company supplying blueberries, avocados, grapes, mangoes, mandarins and ginger to international importers and distributors."
+  },
+  "common": {
+    "close": "Close",
+    "skip": "Skip to content",
+    "loading": "Loading",
+    "placeholderNote": "Sample data, pending confirmation.",
+    "skip_intro": "Skip intro",
+    "whatsapp": "Message us on WhatsApp",
+    "whatsappMessage": "Hello, I'd like a quote for Peruvian fruit from Vibrance."
+  },
+  "nav": {
+    "label": "Main navigation",
+    "origen": "Origin",
+    "proceso": "Process",
+    "productos": "Products",
+    "datos": "Facts",
+    "contacto": "Contact",
+    "cta": "Request a quote",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLang": "Switch language to Spanish",
+    "home": "Home"
+  },
+  "hero": {
+    "title": "Peruvian fruit, selected for the world",
+    "subtitle": "We choose the growers, control quality and manage the export of blueberries, avocados, grapes, mangoes, mandarins and ginger.",
+    "ctaProducts": "See products",
+    "ctaQuote": "Request a quote",
+    "scroll": "Scroll to discover"
+  },
+  "origen": {
+    "heading": "Born in a blooming desert",
+    "lines": [
+      "Between the Pacific Ocean and the Andes, Peru has valleys where sun and mountain water give fruit flavour, colour and good post-harvest life.",
+      "We don't farm: we select. We work with growers on the coast and in the central jungle who meet our standards.",
+      "Every lot we offer goes through our review before it reaches you.",
+      "So an importer has a single partner for several fruits and regions of Peru."
+    ],
+    "imageAlt": "Green farmland in the middle of the Peruvian coastal desert",
+    "mapTitle": "Where our fruit comes from",
+    "mapText": "We source from growers in these regions, each with the right climate for its crop.",
+    "mapLabel": "Map of Peru showing where the products are sourced",
+    "zonas": {
+      "piura": {
+        "name": "Piura",
+        "crops": "Mangoes and grapes"
+      },
+      "la_libertad": {
+        "name": "La Libertad",
+        "crops": "Blueberries and avocados"
+      },
+      "lima": {
+        "name": "Lima",
+        "crops": "Mandarins and avocados"
+      },
+      "junin": {
+        "name": "Junín",
+        "crops": "Ginger and mandarins"
+      },
+      "ica": {
+        "name": "Ica",
+        "crops": "Grapes, avocados and mandarins"
+      }
+    },
+    "regions": {
+      "costa": "Coast",
+      "sierra": "Andes",
+      "selva": "Amazon"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Shipping port",
+    "legendRoute": "Route to port",
+    "treeLabel": "Illustrated tree growing blueberries, avocados, grapes, mangoes, mandarins and ginger, which fall into a Vibrance basket.",
+    "marketsText": "Markets with an active phytosanitary protocol for at least one of our products."
+  },
+  "proceso": {
+    "heading": "From the grower to your warehouse",
+    "intro": "Five steps we control so every shipment arrives complete, on time and with its paperwork in order.",
+    "progress": "Stage {{current}} of {{total}}",
+    "steps": {
+      "productores": {
+        "title": "Grower selection",
+        "text": "We choose growers for quality, traceability and compliance with each market's requirements.",
+        "alt": "Partner grower's field"
+      },
+      "calidad": {
+        "title": "Quality control",
+        "text": "We check size, Brix (sweetness), ripeness and condition of every lot before approving it for export.",
+        "alt": "Fruit being checked in quality control"
+      },
+      "empaque": {
+        "title": "Packing",
+        "text": "We coordinate packing in certified packhouses, in the format and labelling each customer needs.",
+        "alt": "Fruit boxes at the packhouse"
+      },
+      "frio": {
+        "title": "Cold chain",
+        "text": "Fruit is pre-cooled and travels temperature-controlled to the port or airport.",
+        "alt": "Temperature-controlled cold room"
+      },
+      "envio": {
+        "title": "Documents and shipping",
+        "text": "We handle phytosanitary and origin certificates and customs paperwork, and ship by sea or air.",
+        "alt": "Fruit crates being loaded onto the dispatch truck"
+      }
+    }
+  },
+  "productos": {
+    "heading": "What we offer",
+    "intro": "Fresh Peruvian produce, graded by size and packed to suit each market.",
+    "viewDetail": "View {{name}} details",
+    "season": "Season",
+    "varieties": "Varieties",
+    "sizes": "Sizes",
+    "presentations": "Presentations",
+    "packaging": "Packaging",
+    "availability": "Availability",
+    "availableIn": "Available in: {{months}}",
+    "available": "available",
+    "notAvailable": "no harvest",
+    "quoteThis": "Quote {{name}}",
+    "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "monthsLong": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "items": {
+      "arandano": {
+        "name": "Blueberry",
+        "summary": "Firm, sweet and large-sized.",
+        "season": "August to January",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "125 g, 170 g and 500 g clamshells",
+        "packaging": "1.5 kg and 3.7 kg boxes",
+        "alt": "Fresh blueberries"
+      },
+      "palta": {
+        "name": "Hass avocado",
+        "summary": "Creamy, with pebbly skin that darkens as it ripens.",
+        "season": "March to September",
+        "varieties": "Hass",
+        "presentations": "Fresh fruit, bulk or mesh bags",
+        "packaging": "4 kg and 10 kg boxes",
+        "alt": "Hass avocado cut in half"
+      },
+      "uva": {
+        "name": "Table grapes",
+        "summary": "Crisp bunches, seeded and seedless.",
+        "season": "November to April",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "Bags and clamshells",
+        "packaging": "8.2 kg boxes",
+        "alt": "Bunch of green grapes"
+      },
+      "mango": {
+        "name": "Mango",
+        "summary": "Fibreless flesh, rich aroma and bright colour.",
+        "season": "November to March",
+        "varieties": "Kent, Edward",
+        "presentations": "Fresh fruit graded by size",
+        "packaging": "4 kg boxes",
+        "alt": "Ripe mango"
+      },
+      "mandarina": {
+        "name": "Mandarin",
+        "summary": "Easy to peel, juicy and deeply coloured.",
+        "season": "March to October",
+        "varieties": "W. Murcott, Tango, Satsuma",
+        "presentations": "Fresh fruit graded by size",
+        "packaging": "10 kg boxes",
+        "alt": "Fresh mandarins"
+      },
+      "kion": {
+        "name": "Ginger",
+        "summary": "Aromatic, spicy rhizome, washed and graded.",
+        "season": "All year round",
+        "varieties": "Yellow ginger",
+        "presentations": "Fresh, washed and air-dried",
+        "packaging": "13.6 kg (30 lb) boxes",
+        "alt": "Fresh ginger rhizomes"
+      }
+    },
+    "markets": "Markets with an active protocol",
+    "marketsNote": "For other destinations, ask us: we check the protocol before quoting.",
+    "quoteNote": "Varieties, sizes and presentations are tailored in each quote."
+  },
+  "datos": {
+    "heading": "Our offer at a glance",
+    "intro": "One trading partner to source several Peruvian products all year round.",
+    "stats": {
+      "productos": {
+        "label": "fresh products"
+      },
+      "meses": {
+        "label": "months a year with supply"
+      },
+      "regiones": {
+        "label": "sourcing regions"
+      },
+      "mercados": {
+        "label": "markets with an active phytosanitary protocol for Peruvian fruit"
+      }
+    },
+    "mapTitle": "Where it can go",
+    "mapText": "Markets with an active phytosanitary protocol for at least one of our products. Hover over each point to see how many.",
+    "mapLabel": "World map showing the markets our products can be exported to",
+    "destinos": {
+      "usa": "United States",
+      "canada": "Canada",
+      "mexico": "Mexico",
+      "ue": "European Union",
+      "reino_unido": "United Kingdom",
+      "china": "China",
+      "corea": "South Korea",
+      "japon": "Japan"
+    },
+    "certTitle": "Certifications",
+    "marketProducts": "{{n}} products allowed",
+    "accessTitle": "Access by product",
+    "accessText": "Not every product can enter every country. This table shows where an active protocol exists; for anything else we confirm the situation before quoting.",
+    "accessCaption": "Markets with an active phytosanitary protocol for each product",
+    "accessProduct": "Product",
+    "accessYes": "Allowed",
+    "accessAsk": "Ask us",
+    "certText": "We work with certified packing houses (BRCGS, HACCP, GMP), authorized by SENASA and registered with the FDA. The packing house and certifications for each shipment are confirmed in the quote.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Food safety"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Critical control points"
+      },
+      "bpm": {
+        "name": "GMP",
+        "desc": "Good Manufacturing Practices"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Authorized plant"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Registered facility (USA)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Ethical trade"
+      }
+    }
+  },
+  "contacto": {
+    "slogan": "The best of Peru, in every box.",
+    "text": "Tell us which fruit you need, the volume and the destination. We'll send you a proposal.",
+    "cta": "Request a quote"
+  },
+  "form": {
+    "title": "Request a quote",
+    "intro": "Fill in your details and we'll reply within 48 business hours.",
+    "required": "All fields are required.",
+    "name": "Name",
+    "company": "Company",
+    "country": "Destination country",
+    "email": "Email",
+    "product": "Product of interest",
+    "productPlaceholder": "Choose a product",
+    "productSeveral": "Several products",
+    "message": "Message",
+    "messagePlaceholder": "Approximate volume, destination, dates…",
+    "errors": {
+      "required": "Please fill in this field.",
+      "email": "Enter a valid email, e.g. name@company.com.",
+      "minlength": "Enter at least {{n}} characters.",
+      "summary": "{{n}} fields need attention. Check the messages in red."
+    },
+    "submit": "Send request",
+    "sending": "Sending…",
+    "successTitle": "Request sent!",
+    "successText": "We received your request. We'll write to {{email}} within 48 business hours and confirm the current protocol for your country.",
+    "errorTitle": "We couldn't send your request",
+    "errorText": "There was a connection problem and your details weren't sent. Check your internet and try again; you won't lose what you wrote.",
+    "retry": "Try again",
+    "again": "Send another request"
+  },
+  "footer": {
+    "tagline": "Peruvian fresh fruit trading company for importers and distributors worldwide.",
+    "contact": "Contact",
+    "follow": "Follow us",
+    "language": "Language",
+    "privacy": "Privacy policy",
+    "rights": "All rights reserved."
+  }
+}

@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "3e522480-7654-4b9d-a1b0-890e259f45f1"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -21,10 +22,15 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "ignore": [
+                  "media/videos/**"
+                ]
               }
             ],
             "styles": [
+              "node_modules/@fontsource-variable/bricolage-grotesque/opsz.css",
+              "node_modules/@fontsource-variable/figtree/index.css",
               "src/styles.css"
             ]
           },
@@ -33,7 +39,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "700kB",
                   "maximumError": "1MB"
                 },
                 {
@@ -65,7 +71,12 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "setupFiles": [
+              "src/test-setup.ts"
+            ]
+          }
         }
       }
     }

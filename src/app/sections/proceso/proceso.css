@@ -1,0 +1,113 @@
+/* ---------- Base (móvil y movimiento reducido): línea de tiempo vertical ---------- */
+.progress {
+  display: none;
+}
+
+.track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 4rem auto 0;
+  padding-inline: clamp(1.25rem, 5vw, 4rem);
+  padding-left: calc(clamp(1.25rem, 5vw, 4rem) + 2.5rem);
+}
+/* Línea vertical */
+.track::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: calc(clamp(1.25rem, 5vw, 4rem) + 0.45rem);
+  width: 2px;
+  background: var(--color-hoja);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+}
+/* Punto de la línea de tiempo */
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0.3rem;
+  left: -2.5rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: var(--color-palta);
+  border: 3px solid var(--color-hoja);
+}
+
+.step__media {
+  aspect-ratio: 3 / 2;
+}
+
+.step__num {
+  display: block;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--color-hoja);
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .step {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+
+/* ---------- Escritorio: pin + scroll horizontal ---------- */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .pin {
+    height: 100vh;
+    height: 100svh;
+    justify-content: center;
+    gap: 3.5rem;
+    overflow: hidden;
+  }
+  .head {
+    padding-top: 4.5rem; /* altura del header fijo */
+  }
+  .progress {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  .track {
+    flex-direction: row;
+    gap: 6vw;
+    max-width: none;
+    margin: 0;
+    padding-inline: max(4rem, calc((100vw - 1280px) / 2 + 4rem));
+    will-change: transform;
+  }
+  .track::before,
+  .step::before {
+    display: none;
+  }
+
+  .step {
+    flex: 0 0 min(68vw, 1000px);
+    grid-template-columns: 1.15fr 1fr;
+    opacity: 0.4;
+    transition: opacity 400ms ease;
+  }
+  .step.is-active {
+    opacity: 1;
+  }
+  .step__media {
+    aspect-ratio: 4 / 3;
+    max-height: 52vh;
+  }
+  .step__num {
+    font-size: clamp(5rem, 9vw, 8.5rem);
+    margin-bottom: 1rem;
+  }
+}

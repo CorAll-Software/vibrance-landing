@@ -1,0 +1,312 @@
+{
+  "_comment": "TODO: revisar con un traductor nativo — traducción inicial de la versión en inglés.",
+  "seo": {
+    "title": "{{brand}} · Frutta peruviana selezionata per importatori",
+    "description": "Società commerciale peruviana di mirtilli, avocado, uva, mango, mandarini e zenzero per importatori e distributori internazionali."
+  },
+  "common": {
+    "close": "Chiudi",
+    "skip": "Vai al contenuto",
+    "loading": "Caricamento",
+    "placeholderNote": "Dati di esempio, in attesa di conferma.",
+    "skip_intro": "Salta intro",
+    "whatsapp": "Scrivici su WhatsApp",
+    "whatsappMessage": "Buongiorno, vorrei un preventivo per frutta peruviana da Vibrance."
+  },
+  "nav": {
+    "label": "Navigazione principale",
+    "origen": "Origine",
+    "proceso": "Processo",
+    "productos": "Prodotti",
+    "datos": "Dati",
+    "contacto": "Contatti",
+    "cta": "Richiedi un preventivo",
+    "openMenu": "Apri menu",
+    "closeMenu": "Chiudi menu",
+    "switchLang": "Cambia lingua",
+    "home": "Home"
+  },
+  "hero": {
+    "title": "Frutta peruviana, selezionata per il mondo",
+    "subtitle": "Scegliamo i produttori, controlliamo la qualità e gestiamo l'esportazione di mirtilli, avocado, uva, mango, mandarini e zenzero.",
+    "ctaProducts": "Vedi i prodotti",
+    "ctaQuote": "Richiedi un preventivo",
+    "scroll": "Scorri per scoprire"
+  },
+  "origen": {
+    "heading": "Nasce in un deserto che fiorisce",
+    "lines": [
+      "Tra l'Oceano Pacifico e le Ande, il Perù ha valli dove il sole e l'acqua delle montagne danno alla frutta sapore, colore e una buona conservazione.",
+      "Non coltiviamo: selezioniamo. Lavoriamo con produttori della costa e della selva centrale che rispettano i nostri standard.",
+      "Ogni lotto che offriamo passa il nostro controllo prima di arrivare a te.",
+      "Così un importatore ha un unico partner per diversi frutti e regioni del Perù."
+    ],
+    "imageAlt": "Campi verdi nel mezzo del deserto costiero peruviano",
+    "mapTitle": "Da dove viene la nostra frutta",
+    "mapText": "Ci riforniamo da produttori di queste regioni, ognuna con il clima ideale per la sua coltura.",
+    "mapLabel": "Mappa del Perù con le regioni di origine dei prodotti",
+    "zonas": {
+      "piura": {
+        "name": "Piura",
+        "crops": "Mango e uva"
+      },
+      "la_libertad": {
+        "name": "La Libertad",
+        "crops": "Mirtilli e avocado"
+      },
+      "lima": {
+        "name": "Lima",
+        "crops": "Mandarini e avocado"
+      },
+      "junin": {
+        "name": "Junín",
+        "crops": "Zenzero e mandarini"
+      },
+      "ica": {
+        "name": "Ica",
+        "crops": "Uva, avocado e mandarini"
+      }
+    },
+    "regions": {
+      "costa": "Costa",
+      "sierra": "Ande",
+      "selva": "Amazzonia"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Porto d’imbarco",
+    "legendRoute": "Percorso al porto",
+    "treeLabel": "Albero illustrato su cui crescono mirtilli, avocado, uva, mango, mandarini e zenzero, che cadono in un cesto Vibrance.",
+    "marketsText": "Mercati con protocollo fitosanitario vigente per almeno uno dei nostri prodotti."
+  },
+  "proceso": {
+    "heading": "Dal produttore al tuo magazzino",
+    "intro": "Cinque passaggi che controlliamo perché ogni spedizione arrivi completa, puntuale e con i documenti in regola.",
+    "progress": "Fase {{current}} di {{total}}",
+    "steps": {
+      "productores": {
+        "title": "Selezione dei produttori",
+        "text": "Scegliamo i produttori per qualità, tracciabilità e rispetto dei requisiti di ogni mercato.",
+        "alt": "Campo di un produttore partner"
+      },
+      "calidad": {
+        "title": "Controllo qualità",
+        "text": "Controlliamo calibro, gradi Brix (dolcezza), maturazione e stato di ogni lotto prima di approvarlo per l’export.",
+        "alt": "Frutta durante il controllo qualità"
+      },
+      "empaque": {
+        "title": "Confezionamento",
+        "text": "Coordiniamo il confezionamento in impianti certificati, con il formato e l'etichettatura richiesti da ogni cliente.",
+        "alt": "Casse di frutta nell'impianto di confezionamento"
+      },
+      "frio": {
+        "title": "Catena del freddo",
+        "text": "La frutta viene pre-raffreddata e viaggia a temperatura controllata fino al porto o all'aeroporto.",
+        "alt": "Cella frigorifera a temperatura controllata"
+      },
+      "envio": {
+        "title": "Documenti e spedizione",
+        "text": "Gestiamo certificati fitosanitari e di origine e le pratiche doganali, e spediamo via mare o via aerea.",
+        "alt": "Carico di casse di frutta sul camion di spedizione"
+      }
+    }
+  },
+  "productos": {
+    "heading": "Cosa offriamo",
+    "intro": "Prodotti freschi del Perù, calibrati e confezionati su misura per ogni mercato.",
+    "viewDetail": "Vedi dettagli: {{name}}",
+    "season": "Stagione",
+    "varieties": "Varietà",
+    "sizes": "Calibri",
+    "presentations": "Presentazioni",
+    "packaging": "Imballaggio",
+    "availability": "Disponibilità",
+    "availableIn": "Disponibile in: {{months}}",
+    "available": "disponibile",
+    "notAvailable": "fuori stagione",
+    "quoteThis": "Preventivo per {{name}}",
+    "months": ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
+    "monthsLong": [
+      "gennaio",
+      "febbraio",
+      "marzo",
+      "aprile",
+      "maggio",
+      "giugno",
+      "luglio",
+      "agosto",
+      "settembre",
+      "ottobre",
+      "novembre",
+      "dicembre"
+    ],
+    "items": {
+      "arandano": {
+        "name": "Mirtillo",
+        "summary": "Sodo, dolce e di grosso calibro.",
+        "season": "Da agosto a gennaio",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "Vaschette da 125 g, 170 g e 500 g",
+        "packaging": "Casse da 1,5 kg e 3,7 kg",
+        "alt": "Mirtilli freschi"
+      },
+      "palta": {
+        "name": "Avocado Hass",
+        "summary": "Cremoso, con buccia rugosa che scurisce maturando.",
+        "season": "Da marzo a settembre",
+        "varieties": "Hass",
+        "presentations": "Frutto fresco sfuso o in rete",
+        "packaging": "Casse da 4 kg e 10 kg",
+        "alt": "Avocado Hass tagliato a metà"
+      },
+      "uva": {
+        "name": "Uva da tavola",
+        "summary": "Grappoli croccanti, con e senza semi.",
+        "season": "Da novembre ad aprile",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "Sacchetti e vaschette",
+        "packaging": "Casse da 8,2 kg",
+        "alt": "Grappolo di uva bianca"
+      },
+      "mango": {
+        "name": "Mango",
+        "summary": "Polpa senza fibre, aroma intenso e colore brillante.",
+        "season": "Da novembre a marzo",
+        "varieties": "Kent, Edward",
+        "presentations": "Frutto fresco calibrato",
+        "packaging": "Casse da 4 kg",
+        "alt": "Mango maturo"
+      },
+      "mandarina": {
+        "name": "Mandarino",
+        "summary": "Facile da sbucciare, succoso e dal colore intenso.",
+        "season": "Da marzo a ottobre",
+        "varieties": "W. Murcott, Tango, Satsuma",
+        "presentations": "Frutto fresco calibrato",
+        "packaging": "Casse da 10 kg",
+        "alt": "Mandarini freschi"
+      },
+      "kion": {
+        "name": "Zenzero",
+        "summary": "Rizoma aromatico e piccante, lavato e calibrato.",
+        "season": "Tutto l'anno",
+        "varieties": "Zenzero giallo",
+        "presentations": "Fresco, lavato e asciugato all'aria",
+        "packaging": "Casse da 13,6 kg (30 lb)",
+        "alt": "Rizomi di zenzero freschi"
+      }
+    },
+    "markets": "Mercati con protocollo vigente",
+    "marketsNote": "Per altre destinazioni, contattaci: verifichiamo il protocollo prima del preventivo.",
+    "quoteNote": "Varietà, calibri e confezioni si definiscono in ogni preventivo."
+  },
+  "datos": {
+    "heading": "La nostra offerta in cifre",
+    "intro": "Un unico partner per rifornirti di diversi prodotti peruviani tutto l'anno.",
+    "stats": {
+      "productos": {
+        "label": "prodotti freschi"
+      },
+      "meses": {
+        "label": "mesi all'anno con offerta"
+      },
+      "regiones": {
+        "label": "regioni di origine"
+      },
+      "mercados": {
+        "label": "mercati con protocollo fitosanitario vigente per la frutta peruviana"
+      }
+    },
+    "mapTitle": "Dove può arrivare",
+    "mapText": "Mercati con un protocollo fitosanitario vigente per almeno uno dei nostri prodotti. Passa sopra ogni punto per vedere quanti.",
+    "mapLabel": "Mappa del mondo con i mercati in cui i nostri prodotti possono essere esportati",
+    "destinos": {
+      "usa": "Stati Uniti",
+      "canada": "Canada",
+      "mexico": "Messico",
+      "ue": "Unione Europea",
+      "reino_unido": "Regno Unito",
+      "china": "Cina",
+      "corea": "Corea del Sud",
+      "japon": "Giappone"
+    },
+    "certTitle": "Certificazioni",
+    "marketProducts": "{{n}} prodotti ammessi",
+    "accessTitle": "Accesso per prodotto",
+    "accessText": "Non tutti i prodotti possono entrare in tutti i paesi. Questa tabella mostra dove esiste un protocollo vigente; negli altri casi confermiamo la situazione prima del preventivo.",
+    "accessCaption": "Mercati con protocollo fitosanitario vigente per ogni prodotto",
+    "accessProduct": "Prodotto",
+    "accessYes": "Ammesso",
+    "accessAsk": "Chiedici",
+    "certText": "Lavoriamo con centri di confezionamento certificati (BRCGS, HACCP, GMP), autorizzati dal SENASA e registrati presso la FDA. Il centro e le certificazioni di ogni spedizione vengono confermati nel preventivo.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Sicurezza alimentare"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Punti critici di controllo"
+      },
+      "bpm": {
+        "name": "GMP",
+        "desc": "Buone pratiche di fabbricazione"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Impianto autorizzato"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Impianto registrato (USA)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Commercio etico"
+      }
+    }
+  },
+  "contacto": {
+    "slogan": "Il meglio del Perù, in ogni cassa.",
+    "text": "Dicci quale frutta cerchi, il volume e la destinazione. Ti invieremo una proposta.",
+    "cta": "Richiedi un preventivo"
+  },
+  "form": {
+    "title": "Richiedi un preventivo",
+    "intro": "Compila i tuoi dati e ti risponderemo entro 48 ore lavorative.",
+    "required": "Tutti i campi sono obbligatori.",
+    "name": "Nome",
+    "company": "Azienda",
+    "country": "Paese di destinazione",
+    "email": "E-mail",
+    "product": "Prodotto di interesse",
+    "productPlaceholder": "Scegli un prodotto",
+    "productSeveral": "Più prodotti",
+    "message": "Messaggio",
+    "messagePlaceholder": "Volume indicativo, destinazione, date…",
+    "errors": {
+      "required": "Compila questo campo.",
+      "email": "Inserisci un'e-mail valida, ad es. nome@azienda.com.",
+      "minlength": "Inserisci almeno {{n}} caratteri.",
+      "summary": "{{n}} campi da correggere. Controlla i messaggi in rosso."
+    },
+    "submit": "Invia richiesta",
+    "sending": "Invio…",
+    "successTitle": "Richiesta inviata!",
+    "successText": "Abbiamo ricevuto la tua richiesta. Scriveremo a {{email}} entro 48 ore lavorative confermando il protocollo vigente per il tuo paese.",
+    "errorTitle": "Non è stato possibile inviare la richiesta",
+    "errorText": "Un problema di connessione ha impedito l'invio. Controlla la connessione e riprova: non perderai ciò che hai scritto.",
+    "retry": "Riprova",
+    "again": "Invia un'altra richiesta"
+  },
+  "footer": {
+    "tagline": "Commercio di frutta fresca peruviana per importatori e distributori di tutto il mondo.",
+    "contact": "Contatti",
+    "follow": "Seguici",
+    "language": "Lingua",
+    "privacy": "Informativa sulla privacy",
+    "rights": "Tutti i diritti riservati."
+  }
+}

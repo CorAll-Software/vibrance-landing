@@ -1,0 +1,127 @@
+<header
+  *transloco="let t; prefix: 'nav'"
+  class="fixed inset-x-0 top-0 z-50 transition-[background-color,color,box-shadow] duration-300"
+  [class]="
+    solid() || menuOpen()
+      ? 'bg-niebla/90 text-palta shadow-[0_1px_0_rgb(30_59_47/0.1)] backdrop-blur-md'
+      : 'bg-transparent text-niebla'
+  "
+  (keydown.escape)="menuOpen.set(false)"
+>
+  <a
+    href="#contenido"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:rounded-full focus:bg-mandarina focus:px-4 focus:py-2 focus:text-palta"
+  >
+    {{ 'common.skip' | transloco }}
+  </a>
+
+  <div class="container-page flex h-[4.5rem] items-center justify-between gap-6">
+    <a
+      href="#inicio"
+      class="flex items-center gap-3"
+      (click)="go($event, 'inicio')"
+      [attr.aria-label]="brand + ' — ' + t('home')"
+    >
+      <!-- Logo: símbolo (ruta en brand.ts) + wordmark. Versión clara/oscura según el fondo -->
+      <img
+        [src]="solid() || menuOpen() ? logo.light : logo.dark"
+        alt=""
+        [width]="logo.width"
+        [height]="logo.height"
+        class="h-11 w-auto"
+        fetchpriority="high"
+        data-brand-symbol
+      />
+      <span class="flex flex-col gap-[3px] leading-none" data-intro-fade>
+        <span class="font-brand text-[1.6rem] leading-none font-semibold tracking-[-0.01em]">{{
+          brand
+        }}</span>
+        <span
+          class="text-xs font-medium tracking-[0.02em]"
+          [class]="solid() || menuOpen() ? 'text-hoja' : 'text-[#C9D9B8]'"
+          >{{ descriptor }}</span
+        >
+      </span>
+    </a>
+
+    <nav class="hidden lg:block" [attr.aria-label]="t('label')" data-intro-fade>
+      <ul class="flex items-center gap-8 text-[0.95rem] font-medium">
+        @for (id of items; track id) {
+          <li>
+            <a [href]="'#' + id" class="nav-link relative py-2" (click)="go($event, id)">{{
+              t(id)
+            }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3" data-intro-fade>
+      <app-lang-switch class="hidden sm:block" />
+      <button
+        type="button"
+        class="btn-primary hidden min-h-11 !px-5 !py-2 text-sm md:inline-flex"
+        (click)="quote()"
+      >
+        {{ t('cta') }}
+      </button>
+      <button
+        type="button"
+        class="grid size-11 place-items-center rounded-full lg:hidden"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobile-menu"
+        [attr.aria-label]="menuOpen() ? t('closeMenu') : t('openMenu')"
+        (click)="menuOpen.set(!menuOpen())"
+      >
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+          @if (menuOpen()) {
+            <path
+              d="M6 6l12 12M18 6L6 18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          } @else {
+            <path
+              d="M4 8h16M4 16h16"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          }
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  @if (menuOpen()) {
+    <div
+      id="mobile-menu"
+      class="mobile-menu h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-palta/10 bg-niebla lg:hidden"
+    >
+      <nav
+        class="container-page flex h-full flex-col justify-between py-8"
+        [attr.aria-label]="t('label')"
+      >
+        <ul class="flex flex-col gap-1">
+          @for (id of items; track id) {
+            <li>
+              <a
+                [href]="'#' + id"
+                class="block py-2 font-display text-4xl font-semibold"
+                (click)="go($event, id)"
+                >{{ t(id) }}</a
+              >
+            </li>
+          }
+        </ul>
+        <div class="flex flex-col gap-4">
+          <app-lang-switch class="self-start" [dropUp]="true" />
+          <button type="button" class="btn-primary w-full" (click)="quote()">
+            {{ t('cta') }}
+          </button>
+        </div>
+      </nav>
+    </div>
+  }
+</header>

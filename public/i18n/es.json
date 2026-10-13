@@ -1,0 +1,312 @@
+{
+  "_comment": "TODO: dato real de la clienta — textos de ejemplo alineados a una comercializadora (no cultiva).",
+  "seo": {
+    "title": "{{brand}} · Fruta peruana seleccionada para importadores",
+    "description": "Comercializadora peruana de arándano, palta, uva, mango, mandarina y kion para importadores y distribuidores internacionales."
+  },
+  "common": {
+    "close": "Cerrar",
+    "skip": "Saltar al contenido",
+    "loading": "Cargando",
+    "placeholderNote": "Datos de ejemplo, pendientes de confirmar.",
+    "skip_intro": "Saltar intro",
+    "whatsapp": "Escríbenos por WhatsApp",
+    "whatsappMessage": "Hola, me interesa cotizar fruta peruana con Vibrance."
+  },
+  "nav": {
+    "label": "Navegación principal",
+    "origen": "Origen",
+    "proceso": "Proceso",
+    "productos": "Productos",
+    "datos": "Datos",
+    "contacto": "Contacto",
+    "cta": "Solicitar cotización",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "switchLang": "Cambiar idioma a inglés",
+    "home": "Inicio"
+  },
+  "hero": {
+    "title": "Fruta peruana, seleccionada para el mundo",
+    "subtitle": "Elegimos a los productores, controlamos la calidad y gestionamos la exportación de arándano, palta, uva, mango, mandarina y kion.",
+    "ctaProducts": "Ver productos",
+    "ctaQuote": "Solicitar cotización",
+    "scroll": "Desliza para descubrir"
+  },
+  "origen": {
+    "heading": "Nace en el desierto que florece",
+    "lines": [
+      "Entre el océano Pacífico y los Andes, el Perú tiene valles donde el sol y el agua de la sierra dan fruta con sabor, color y buena vida poscosecha.",
+      "No cultivamos: elegimos. Trabajamos con productores de la costa y la selva central que cumplen nuestros estándares.",
+      "Cada lote que ofrecemos pasa por nuestra revisión antes de llegar a ti.",
+      "Así un importador tiene un solo interlocutor para varias frutas y regiones del Perú."
+    ],
+    "imageAlt": "Campos de cultivo verdes en medio del desierto costero peruano",
+    "mapTitle": "De dónde viene nuestra fruta",
+    "mapText": "Nos abastecemos de productores en estas regiones, cada una con el clima ideal para su cultivo.",
+    "mapLabel": "Mapa del Perú con las regiones de origen de los productos",
+    "zonas": {
+      "piura": {
+        "name": "Piura",
+        "crops": "Mango y uva"
+      },
+      "la_libertad": {
+        "name": "La Libertad",
+        "crops": "Arándano y palta"
+      },
+      "lima": {
+        "name": "Lima",
+        "crops": "Mandarina y palta"
+      },
+      "junin": {
+        "name": "Junín",
+        "crops": "Kion y mandarina"
+      },
+      "ica": {
+        "name": "Ica",
+        "crops": "Uva, palta y mandarina"
+      }
+    },
+    "regions": {
+      "costa": "Costa",
+      "sierra": "Sierra",
+      "selva": "Selva"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Puerto de embarque",
+    "legendRoute": "Ruta al puerto",
+    "treeLabel": "Árbol ilustrado del que brotan arándano, palta, uva, mango, mandarina y kion, que caen en una cesta de Vibrance.",
+    "marketsText": "Mercados con protocolo fitosanitario vigente para al menos uno de nuestros productos."
+  },
+  "proceso": {
+    "heading": "Del productor a tu almacén",
+    "intro": "Cinco pasos que controlamos para que cada envío llegue completo, a tiempo y con sus papeles en regla.",
+    "progress": "Etapa {{current}} de {{total}}",
+    "steps": {
+      "productores": {
+        "title": "Selección de productores",
+        "text": "Elegimos productores por calidad, trazabilidad y cumplimiento de los requisitos de cada mercado.",
+        "alt": "Campo de cultivo de un productor aliado"
+      },
+      "calidad": {
+        "title": "Control de calidad",
+        "text": "Revisamos calibre, grados Brix (dulzor), madurez y estado de cada lote antes de aprobarlo para exportación.",
+        "alt": "Fruta revisada en control de calidad"
+      },
+      "empaque": {
+        "title": "Empaque",
+        "text": "Coordinamos el empaque en plantas certificadas, con el formato y el etiquetado que pide cada cliente.",
+        "alt": "Cajas de fruta en la planta de empaque"
+      },
+      "frio": {
+        "title": "Cadena de frío",
+        "text": "La fruta pasa por pre-frío y viaja a temperatura controlada hasta el puerto o aeropuerto.",
+        "alt": "Cámara de frío con temperatura controlada"
+      },
+      "envio": {
+        "title": "Documentación y envío",
+        "text": "Gestionamos certificados fitosanitarios, de origen y la documentación aduanera, y despachamos por mar o aire.",
+        "alt": "Carga de cajas de fruta en el camión de despacho"
+      }
+    }
+  },
+  "productos": {
+    "heading": "Qué ofrecemos",
+    "intro": "Frutas frescas y kion del Perú, seleccionados por calibre y con empaques a la medida de cada mercado.",
+    "viewDetail": "Ver detalle de {{name}}",
+    "season": "Temporada",
+    "varieties": "Variedades",
+    "sizes": "Calibres",
+    "presentations": "Presentaciones",
+    "packaging": "Empaque",
+    "availability": "Disponibilidad",
+    "availableIn": "Disponible en: {{months}}",
+    "available": "disponible",
+    "notAvailable": "sin cosecha",
+    "quoteThis": "Cotizar {{name}}",
+    "months": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    "monthsLong": [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre"
+    ],
+    "items": {
+      "arandano": {
+        "name": "Arándano",
+        "summary": "Firme, dulce y de calibre grande.",
+        "season": "Agosto a enero",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "Clamshells de 125 g, 170 g y 500 g",
+        "packaging": "Cajas de 1,5 kg y 3,7 kg",
+        "alt": "Arándanos frescos"
+      },
+      "palta": {
+        "name": "Palta Hass",
+        "summary": "Cremosa y de piel rugosa que oscurece al madurar.",
+        "season": "Marzo a septiembre",
+        "varieties": "Hass",
+        "presentations": "Fruta fresca a granel o en malla",
+        "packaging": "Cajas de 4 kg y 10 kg",
+        "alt": "Palta Hass cortada por la mitad"
+      },
+      "uva": {
+        "name": "Uva de mesa",
+        "summary": "Racimos crujientes, con y sin semilla.",
+        "season": "Noviembre a abril",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "Bolsas y clamshells",
+        "packaging": "Cajas de 8,2 kg",
+        "alt": "Racimo de uvas verdes"
+      },
+      "mango": {
+        "name": "Mango",
+        "summary": "Pulpa sin fibra, aroma intenso y color brillante.",
+        "season": "Noviembre a marzo",
+        "varieties": "Kent, Edward",
+        "presentations": "Fruta fresca seleccionada por calibre",
+        "packaging": "Cajas de 4 kg",
+        "alt": "Mango maduro"
+      },
+      "mandarina": {
+        "name": "Mandarina",
+        "summary": "Fácil de pelar, jugosa y de color intenso.",
+        "season": "Marzo a octubre",
+        "varieties": "W. Murcott, Tango, Satsuma",
+        "presentations": "Fruta fresca seleccionada por calibre",
+        "packaging": "Cajas de 10 kg",
+        "alt": "Mandarinas frescas"
+      },
+      "kion": {
+        "name": "Kion (jengibre)",
+        "summary": "Rizoma aromático y picante, lavado y seleccionado.",
+        "season": "Todo el año",
+        "varieties": "Kion amarillo",
+        "presentations": "Fresco, lavado y oreado",
+        "packaging": "Cajas de 13,6 kg (30 lb)",
+        "alt": "Rizomas de kion frescos"
+      }
+    },
+    "markets": "Mercados con protocolo vigente",
+    "marketsNote": "Para otros destinos, consúltanos: revisamos el protocolo antes de cotizar.",
+    "quoteNote": "Variedades, calibres y presentaciones se ajustan en cada cotización."
+  },
+  "datos": {
+    "heading": "Nuestra oferta en cifras",
+    "intro": "Una sola comercializadora para abastecerte de varios productos peruanos durante todo el año.",
+    "stats": {
+      "productos": {
+        "label": "productos frescos"
+      },
+      "meses": {
+        "label": "meses al año con oferta"
+      },
+      "regiones": {
+        "label": "regiones de origen"
+      },
+      "mercados": {
+        "label": "mercados con protocolo fitosanitario vigente para fruta peruana"
+      }
+    },
+    "mapTitle": "Dónde puede llegar",
+    "mapText": "Mercados con protocolo fitosanitario vigente para al menos uno de nuestros productos. Pasa el cursor por cada punto para ver cuántos.",
+    "mapLabel": "Mapa mundial con los mercados a los que pueden exportarse nuestros productos",
+    "destinos": {
+      "usa": "Estados Unidos",
+      "canada": "Canadá",
+      "mexico": "México",
+      "ue": "Unión Europea",
+      "reino_unido": "Reino Unido",
+      "china": "China",
+      "corea": "Corea del Sur",
+      "japon": "Japón"
+    },
+    "certTitle": "Certificaciones",
+    "marketProducts": "{{n}} productos habilitados",
+    "accessTitle": "Acceso por producto",
+    "accessText": "No todos los productos pueden entrar a todos los países. Esta tabla muestra dónde hay protocolo vigente; para los demás casos te confirmamos la situación antes de cotizar.",
+    "accessCaption": "Mercados con protocolo fitosanitario vigente para cada producto",
+    "accessProduct": "Producto",
+    "accessYes": "Habilitado",
+    "accessAsk": "Consultar",
+    "certText": "Trabajamos con plantas de empaque certificadas (BRCGS, HACCP, BPM), autorizadas por SENASA y registradas ante la FDA. La planta y las certificaciones de cada embarque se confirman en la cotización.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Inocuidad alimentaria"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Control de puntos críticos"
+      },
+      "bpm": {
+        "name": "BPM",
+        "desc": "Buenas Prácticas de Manufactura"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Planta autorizada"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Planta registrada (EE. UU.)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Comercio ético"
+      }
+    }
+  },
+  "contacto": {
+    "slogan": "Lo mejor del Perú, en cada caja.",
+    "text": "Cuéntanos qué fruta buscas, el volumen y el destino. Te enviamos una propuesta.",
+    "cta": "Solicitar cotización"
+  },
+  "form": {
+    "title": "Solicitar cotización",
+    "intro": "Completa los datos y te responderemos en un plazo de 48 horas hábiles.",
+    "required": "Todos los campos son obligatorios.",
+    "name": "Nombre",
+    "company": "Empresa",
+    "country": "País de destino",
+    "email": "Correo electrónico",
+    "product": "Producto de interés",
+    "productPlaceholder": "Elige un producto",
+    "productSeveral": "Varios productos",
+    "message": "Mensaje",
+    "messagePlaceholder": "Volumen aproximado, destino, fechas…",
+    "errors": {
+      "required": "Completa este campo.",
+      "email": "Escribe un correo válido, por ejemplo nombre@empresa.com.",
+      "minlength": "Escribe al menos {{n}} caracteres.",
+      "summary": "Hay {{n}} campos por corregir. Revisa los mensajes en rojo."
+    },
+    "submit": "Enviar solicitud",
+    "sending": "Enviando…",
+    "successTitle": "¡Solicitud enviada!",
+    "successText": "Recibimos tu solicitud. Te escribiremos a {{email}} en un plazo de 48 horas hábiles, confirmando también el protocolo vigente para tu país.",
+    "errorTitle": "No pudimos enviar tu solicitud",
+    "errorText": "Hubo un problema de conexión y tus datos no se enviaron. Revisa tu internet e inténtalo de nuevo; no perderás lo que escribiste.",
+    "retry": "Intentar de nuevo",
+    "again": "Enviar otra solicitud"
+  },
+  "footer": {
+    "tagline": "Comercializadora de fruta fresca peruana para importadores y distribuidores de todo el mundo.",
+    "contact": "Contacto",
+    "follow": "Síguenos",
+    "language": "Idioma",
+    "privacy": "Política de privacidad",
+    "rights": "Todos los derechos reservados."
+  }
+}

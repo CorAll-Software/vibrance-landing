@@ -1,0 +1,175 @@
+<section
+  id="origen"
+  class="origen bg-arena text-palta"
+  aria-labelledby="origen-title"
+  *transloco="let t; prefix: 'origen'"
+>
+  <!--
+    Escena de Origen. En escritorio se queda fija y el scroll avanza 4 momentos
+    (uno por cada frase de la historia):
+    1. Aparece el Perú y la mariposa llega volando con la cesta Vibrance vacía.
+    2. Aparecen las frutas en sus regiones.
+    3. De cada región sale su fruta y entra en la cesta.
+    4. La mariposa se lleva la cesta y aparece "Dónde puede llegar" con los botones de acción.
+    En móvil o con "reducir movimiento" todo va en una columna.
+  -->
+  <div class="origen-pin">
+    <!-- Fondo: mapa del mundo que se desvanece hacia el centro -->
+    <div class="origen-world" aria-hidden="true"></div>
+
+    <!-- Otras mariposas que cruzan la escena dejando su estela (viajan por el mundo) -->
+    @if (scene) {
+      <div class="travelers" aria-hidden="true">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            @for (p of trails; track $index) {
+              <mask [attr.id]="'trail-mask-' + $index" maskUnits="userSpaceOnUse">
+                <path class="trail-reveal" [attr.d]="p" pathLength="1" />
+              </mask>
+            }
+          </defs>
+          @for (p of trails; track $index) {
+            <path class="trail" [attr.d]="p" [attr.mask]="'url(#trail-mask-' + $index + ')'" />
+          }
+        </svg>
+        @for (p of trails; track $index) {
+          <app-butterfly class="traveler" />
+        }
+      </div>
+    }
+
+    <div class="container-page origen-inner">
+      <!-- Cabecera: título + indicador de momentos -->
+      <header class="origen-head">
+        <h2 id="origen-title" class="origen-title font-bold">{{ t('heading') }}</h2>
+        <ol class="beats" aria-hidden="true">
+          @for (line of lines(); track $index) {
+            <li class="beat"><span class="beat-fill"></span></li>
+          }
+        </ol>
+      </header>
+
+      <div class="origen-stage">
+        <!-- Izquierda: mapa del Perú -->
+        <div class="stage-map">
+          <app-map-peru [managed]="scene" />
+        </div>
+
+        <!-- Derecha: la mariposa con la cesta (al final, a dónde puede llegar) y la frase del momento -->
+        <div class="stage-right">
+          <div class="visual">
+            <div class="carrier">
+              <div class="carrier-bob">
+                <svg class="carrier-strings" viewBox="0 0 240 320" aria-hidden="true">
+                  <path
+                    d="M117 84L36 212M123 84L204 212"
+                    stroke="#6B4A2A"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    fill="none"
+                  />
+                </svg>
+                <app-basket class="carrier-basket" [managed]="scene" />
+                <app-butterfly class="carrier-bf" />
+              </div>
+            </div>
+
+            <div class="markets">
+              <h3 class="font-display text-2xl leading-tight font-bold">
+                {{ 'datos.mapTitle' | transloco }}
+              </h3>
+              <p class="mt-2 text-sm text-palta/75">{{ t('marketsText') }}</p>
+              <ul class="mt-5 grid grid-cols-2 gap-x-6 gap-y-3">
+                @for (m of markets; track m.id) {
+                  <li class="market flex items-start gap-2.5">
+                    <span
+                      class="mt-1.5 size-2.5 shrink-0 rounded-full bg-arandano ring-4 ring-arandano/15"
+                    ></span>
+                    <span class="leading-tight">
+                      <span class="block font-semibold">{{
+                        'datos.destinos.' + m.id | transloco
+                      }}</span>
+                      <span class="text-xs text-palta/65">{{
+                        'datos.marketProducts' | transloco: { n: m.products }
+                      }}</span>
+                    </span>
+                  </li>
+                }
+              </ul>
+              <!-- Cierre: de la historia a la acción -->
+              <div class="origen-cta mt-6 flex flex-wrap gap-3">
+                <button type="button" class="btn-primary" (click)="ui.openQuote()">
+                  {{ 'hero.ctaQuote' | transloco }}
+                </button>
+                <a href="#productos" class="btn-ghost" (click)="goToProducts($event)">
+                  {{ 'hero.ctaProducts' | transloco }}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- La frase de cada momento, debajo de la mariposa -->
+          <div class="story">
+            @for (line of lines(); track $index) {
+              <p class="story-line">{{ line }}</p>
+            }
+          </div>
+        </div>
+
+        <!-- Frutas que viajan de su región del mapa a la cesta (solo escena fija) -->
+        @if (scene) {
+          <div class="flyers pointer-events-none absolute inset-0" aria-hidden="true">
+            @for (f of flyers; track f) {
+              <span class="flyer absolute top-0 left-0" [attr.data-id]="f">
+                <app-fruit-icon [fruit]="f" [size]="54" class="block h-full w-full" />
+              </span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!--
+    Foto / video de Origen (core/config/media.config.ts → ORIGEN). Se quitó de la escena
+    pero se deja aquí por si se necesita en otra parte. Para usarla: descomentar, volver a
+    importar NgOptimizedImage en origen.ts y exponer `media = ORIGEN`.
+
+    <div class="lg:col-span-5 lg:pt-28">
+      <div class="origen-frame relative aspect-[4/5] overflow-hidden rounded-[2rem]">
+        <div class="origen-photo absolute inset-0 scale-[1.2]">
+          <img
+            [ngSrc]="media.image"
+            [alt]="t('imageAlt')"
+            fill
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            class="object-cover"
+          />
+          [Video opcional: se reproduce solo a la vista]
+          @if (media.video; as v) {
+            @if (!scroll.reducedMotion()) {
+              <video
+                class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+                [muted]="true"
+                muted
+                loop
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                aria-hidden="true"
+                (playing)="$any($event.target).classList.remove('opacity-0')"
+              >
+                @if (v.webm) {
+                  <source [src]="v.webm" type="video/webm" />
+                }
+                @if (v.mp4) {
+                  <source [src]="v.mp4" type="video/mp4" />
+                }
+              </video>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  -->
+</section>

@@ -1,12 +1,43 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, afterNextRender, inject } from '@angular/core';
+import { SmoothScrollService } from './core/services/smooth-scroll.service';
+import { initReveals } from './core/utils/reveal';
+import { LoaderComponent } from './layout/loader/loader';
+import { HeaderComponent } from './layout/header/header';
+import { FooterComponent } from './layout/footer/footer';
+import { HeroComponent } from './sections/hero/hero';
+import { OrigenComponent } from './sections/origen/origen';
+import { ProcesoComponent } from './sections/proceso/proceso';
+import { ProductosComponent } from './sections/productos/productos';
+import { DatosComponent } from './sections/datos/datos';
+import { ContactoComponent } from './sections/contacto/contacto';
+import { QuoteModalComponent } from './sections/contacto/quote-modal';
+import { WhatsappButtonComponent } from './shared/components/whatsapp-button/whatsapp-button';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
+  imports: [
+    LoaderComponent,
+    HeaderComponent,
+    FooterComponent,
+    HeroComponent,
+    OrigenComponent,
+    ProcesoComponent,
+    ProductosComponent,
+    DatosComponent,
+    ContactoComponent,
+    QuoteModalComponent,
+    WhatsappButtonComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('MelanieFruit');
+  constructor() {
+    const scroll = inject(SmoothScrollService);
+    afterNextRender(() => {
+      scroll.init();
+      initReveals(scroll.reducedMotion());
+    });
+  }
 }

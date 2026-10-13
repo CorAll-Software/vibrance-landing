@@ -1,0 +1,82 @@
+<section
+  id="inicio"
+  class="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-palta text-niebla"
+  *transloco="let t; prefix: 'hero'"
+  aria-labelledby="hero-title"
+>
+  <!-- Fondo: cadena de hasta 3 videos con fundido (core/config/media.config.ts) -->
+  <div class="hero-bg absolute inset-0 -z-10 scale-110">
+    <img [ngSrc]="media.poster" alt="" fill priority sizes="100vw" class="object-cover" />
+    @if (showVideo()) {
+      @for (v of videos; track $index; let i = $index) {
+        <video
+          class="hero-video absolute inset-0 h-full w-full object-cover transition-opacity ease-in-out"
+          [style.transition-duration.s]="media.fade"
+          [style.z-index]="i === current() ? 2 : 1"
+          [class.opacity-0]="!(i === current() && visible()) && i !== previous()"
+          [muted]="true"
+          muted
+          playsinline
+          [loop]="videos.length === 1"
+          [attr.preload]="i === 0 ? 'auto' : 'none'"
+          disablepictureinpicture
+          aria-hidden="true"
+          (playing)="onPlaying(i)"
+          (timeupdate)="onTime(i)"
+          (ended)="next(i)"
+        >
+          @if (v.webm) {
+            <source [src]="v.webm" type="video/webm" />
+          }
+          @if (v.mp4) {
+            <source [src]="v.mp4" type="video/mp4" />
+          }
+        </video>
+      }
+    }
+  </div>
+  <!-- Capa oscura para legibilidad -->
+  <div
+    class="absolute inset-0 -z-10 bg-gradient-to-b from-palta-deep/70 via-palta/55 to-palta-deep/85"
+  ></div>
+
+  <div class="container-page flex flex-col items-center pt-24 pb-32 text-center">
+    <h1 id="hero-title" class="max-w-[14ch] text-hero leading-[0.92] font-bold">
+      <span class="sr-only">{{ t('title') }}</span>
+      <span aria-hidden="true">
+        @for (w of words(); track $index) {
+          <!-- el espacio entre palabras va como margen (japonés no lleva espacios) -->
+          <span
+            class="inline-block overflow-hidden pb-[0.08em] align-bottom"
+            [style.margin-inline-end.em]="spaced() ? 0.24 : 0"
+            ><span class="word inline-block">{{ w }}</span></span
+          >
+        }
+      </span>
+    </h1>
+    <p class="hero-fade measure mt-8 max-w-[52ch] text-lg text-niebla/85">{{ t('subtitle') }}</p>
+    <div class="hero-fade mt-10 flex flex-col gap-3 sm:flex-row">
+      <button type="button" class="btn-primary" (click)="ui.openQuote()">
+        {{ t('ctaQuote') }}
+      </button>
+      <a href="#productos" class="btn-ghost hover:!bg-white/10" (click)="goToProducts($event)">{{
+        t('ctaProducts')
+      }}</a>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll -->
+  <button
+    type="button"
+    class="hero-fade absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-sm text-niebla/80"
+    (click)="goNext()"
+  >
+    {{ t('scroll') }}
+    <span
+      class="scroll-cue relative block h-12 w-px overflow-hidden bg-niebla/25"
+      aria-hidden="true"
+    >
+      <span class="absolute inset-0 bg-niebla"></span>
+    </span>
+  </button>
+</section>

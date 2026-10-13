@@ -1,0 +1,90 @@
+<section
+  id="proceso"
+  class="bg-palta text-niebla"
+  aria-labelledby="proceso-title"
+  *transloco="let t; prefix: 'proceso'"
+>
+  <div class="pin flex flex-col py-24 lg:py-0">
+    <div class="head container-page grid gap-6 md:grid-cols-12 md:items-end">
+      <h2
+        data-reveal
+        id="proceso-title"
+        class="text-4xl leading-[1.05] font-bold md:col-span-6 md:text-6xl"
+      >
+        {{ t('heading') }}
+      </h2>
+      <p data-reveal class="measure text-lg text-niebla/75 md:col-span-5 md:col-start-8">
+        {{ t('intro') }}
+      </p>
+
+      <!-- Progreso (solo en modo horizontal) -->
+      <div class="progress md:col-span-12" aria-hidden="true" dir="ltr">
+        <div class="relative h-0.5 w-full bg-niebla/15">
+          <div class="progress-fill absolute inset-0 origin-left scale-x-0 bg-hoja"></div>
+        </div>
+        <ol class="mt-4 grid grid-cols-5 text-sm">
+          @for (s of steps; track s.id; let i = $index) {
+            <li
+              class="transition-colors duration-300"
+              [class]="i <= active() ? 'text-niebla' : 'text-niebla/45'"
+            >
+              <span class="tabular-nums">0{{ i + 1 }}</span>
+              <span class="ms-2 font-medium" [attr.dir]="lang.dir()">{{
+                t('steps.' + s.id + '.title')
+              }}</span>
+            </li>
+          }
+        </ol>
+      </div>
+    </div>
+
+    <!-- El recorrido horizontal es siempre LTR (también en árabe/hebreo); el texto conserva su dirección -->
+    <ol class="track" dir="ltr">
+      @for (s of steps; track s.id; let i = $index) {
+        <li class="step" [class.is-active]="i === active()">
+          <div class="step__media relative overflow-hidden rounded-[1.75rem] bg-palta-deep">
+            <img
+              [ngSrc]="s.image"
+              [alt]="t('steps.' + s.id + '.alt')"
+              fill
+              sizes="(min-width: 1024px) 34vw, 100vw"
+              class="object-cover"
+            />
+            <!-- Video opcional de la etapa: se reproduce solo mientras está a la vista -->
+            @if (s.video && !scroll.reducedMotion()) {
+              <video
+                class="step-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+                [muted]="true"
+                muted
+                loop
+                playsinline
+                preload="none"
+                disablepictureinpicture
+                aria-hidden="true"
+                (playing)="$any($event.target).classList.remove('opacity-0')"
+              >
+                @if (s.video.webm) {
+                  <source [src]="s.video.webm" type="video/webm" />
+                }
+                @if (s.video.mp4) {
+                  <source [src]="s.video.mp4" type="video/mp4" />
+                }
+              </video>
+            }
+          </div>
+          <div class="step__body" [attr.dir]="lang.dir()">
+            <span class="step__num font-display font-bold tabular-nums" aria-hidden="true"
+              >0{{ i + 1 }}</span
+            >
+            <h3 class="text-2xl font-semibold md:text-4xl">
+              <span class="sr-only">{{ i + 1 }}. </span>{{ t('steps.' + s.id + '.title') }}
+            </h3>
+            <p class="mt-3 max-w-[38ch] text-lg text-niebla/75">
+              {{ t('steps.' + s.id + '.text') }}
+            </p>
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
