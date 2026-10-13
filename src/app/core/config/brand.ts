@@ -34,7 +34,7 @@ export const LOGO = {
  * - ar (árabe) cubre Emiratos / Dubái y he (hebreo) cubre Israel; ambos se muestran de derecha a izquierda.
  * TODO: revisar fr, it, ja, ko, ar y he con un traductor nativo antes de publicar.
  */
-export const AVAILABLE_LANGS = ['es', 'en', 'fr', 'it', 'ar', 'he', 'ja', 'ko'] as const;
+export const AVAILABLE_LANGS = ['es', 'en', 'zh', 'fr', 'it', 'ar', 'he', 'ja', 'ko'] as const;
 export type Lang = (typeof AVAILABLE_LANGS)[number];
 export const DEFAULT_LANG: Lang = 'es';
 
@@ -52,6 +52,7 @@ export interface LangMeta {
 export const LANG_META: Record<Lang, LangMeta> = {
   es: { label: 'Español', short: 'ES', dir: 'ltr', locale: 'es-PE', ogLocale: 'es_PE' },
   en: { label: 'English', short: 'EN', dir: 'ltr', locale: 'en-US', ogLocale: 'en_US' },
+  zh: { label: '中文', short: 'ZH', dir: 'ltr', locale: 'zh-CN', ogLocale: 'zh_CN' },
   fr: { label: 'Français', short: 'FR', dir: 'ltr', locale: 'fr-FR', ogLocale: 'fr_FR' },
   it: { label: 'Italiano', short: 'IT', dir: 'ltr', locale: 'it-IT', ogLocale: 'it_IT' },
   ar: { label: 'العربية', short: 'AR', dir: 'rtl', locale: 'ar-AE-u-nu-latn', ogLocale: 'ar_AE' },

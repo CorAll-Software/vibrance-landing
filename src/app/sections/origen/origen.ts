@@ -29,7 +29,7 @@ import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
  * Modo de la parte 2 de Origen (el mapa): al llegar al tope se reproduce por momentos.
  * Solo respeta el modo "libre" de scroll.config.ts; "momentos" y "pausas" usan "momentos".
  */
-const ORIGEN_MODE: 'libre' | 'momentos' =SCENE_MODE === 'libre' ? 'libre' : 'momentos';
+const ORIGEN_MODE: 'libre' | 'momentos' = SCENE_MODE === 'libre' ? 'libre' : 'momentos';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -68,6 +68,9 @@ const TRAILS = [
   'M1150 940C1220 858 1290 806 1370 770S1450 712 1490 700',
   'M-40 800C30 836 80 880 120 940',
 ];
+/** Línea que une la parte 1 con el mapa (lienzo de 1440 × 520): baja de derecha a izquierda. */
+const BRIDGE_PATH = 'M1120 -40C1100 90 860 80 760 190S520 330 380 360S160 470 190 560';
+
 /** Segundos que tarda cada viajera en cruzar y pausa antes de volver a salir. */
 const TRAVEL = 9;
 const TRAVEL_REST = 5;
@@ -106,6 +109,7 @@ export class OrigenComponent {
   protected readonly ui = inject(UiStateService);
   protected readonly flyers = DELIVERY.flatMap(([, fruits]) => fruits);
   protected readonly trails = TRAILS;
+  protected readonly bridgePath = BRIDGE_PATH;
   /** Foto / video de la parte "Nace en el desierto que florece" (core/config/media.config.ts). */
   protected readonly media = ORIGEN;
   /** Los 4 momentos de la escena del mapa (uno por barrita de avance). */
@@ -128,6 +132,7 @@ export class OrigenComponent {
           // Escritorio: las dos partes son escenas fijas (el orden importa: el de la página)
           if (this.scene) {
             this.buildIntro(host);
+            this.buildBridge(host);
             this.buildScene(host);
             this.buildTravelers(host);
             return;
@@ -230,7 +235,8 @@ export class OrigenComponent {
       (el.closest<HTMLElement>('.pin-spacer') ?? el).getBoundingClientRect().top + window.scrollY;
     const zoneStart = () => top(intro) + window.innerHeight * 0.6;
     const zoneEnd = () => top(card);
-    const go = (y: number) => this.scroll.scrollToY(y, MOMENT_DURATION);
+    // Más despacio que otros momentos: en este tramo la mariposa traza la línea del puente
+    const go = (y: number) => this.scroll.scrollToY(y, MOMENT_DURATION * 1.8);
     ScrollTrigger.create({
       start: zoneStart,
       end: zoneEnd,
@@ -307,9 +313,14 @@ export class OrigenComponent {
   private buildTravelers(host: HTMLElement): void {
     const q = gsap.utils.selector(host);
     const trails = Array.from(host.querySelectorAll<SVGPathElement>('.trail'));
-    const reveals = q('.trail-reveal');
+    const reveals = Array.from(host.querySelectorAll<SVGPathElement>('.trail-reveal'));
     const travelers = q('.traveler');
     const all = gsap.timeline({ paused: true });
+    // La línea se "dibuja" con la mariposa: la máscara se despeja a lo largo de la longitud real
+    const lengths = reveals.map((r) => r.getTotalLength());
+    reveals.forEach((r, i) =>
+      gsap.set(r, { strokeDasharray: lengths[i], strokeDashoffset: lengths[i] }),
+    );
     trails.forEach((trail, i) => {
       const tl = gsap.timeline({ repeat: -1, repeatDelay: TRAVEL_REST + i, delay: 1.5 + i * 3.2 });
       tl.set(travelers[i], { autoAlpha: 1 })
@@ -330,7 +341,7 @@ export class OrigenComponent {
         .to(reveals[i], { strokeDashoffset: 0, duration: TRAVEL, ease: 'sine.inOut' }, 0)
         .set(travelers[i], { autoAlpha: 0 })
         .to(trail, { opacity: 0, duration: 1.6, ease: 'power1.in' }, '+=0.6')
-        .set(reveals[i], { strokeDashoffset: 1 })
+        .set(reveals[i], { strokeDashoffset: lengths[i] })
         .set(trail, { opacity: 1 });
       all.add(tl, 0);
     });
@@ -340,6 +351,46 @@ export class OrigenComponent {
       end: 'bottom top',
       onToggle: (self) => (self.isActive ? all.play() : all.pause()),
     });
+  }
+
+  /**
+   * Puente entre las dos partes: al hacer scroll, la mariposa recorre la curva y la línea se
+   * dibuja detrás de ella, exactamente hasta donde llegó; al terminar, línea y mariposa se desvanecen.
+   */
+  private buildBridge(host: HTMLElement): void {
+    const bridge = host.querySelector<HTMLElement>('.origen-bridge');
+    const guide = host.querySelector<SVGPathElement>('.bridge-guide');
+    const reveal = host.querySelector<SVGPathElement>('.bridge-reveal');
+    const line = host.querySelector<SVGPathElement>('.bridge-line');
+    const bf = host.querySelector<HTMLElement>('.bridge-bf');
+    if (!bridge || !guide || !reveal || !line || !bf) return;
+
+    const len = reveal.getTotalLength();
+    gsap.set(reveal, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.set(bf, { autoAlpha: 0 });
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: bridge,
+        start: 'top 80%',
+        end: 'bottom 45%',
+        scrub: 0.5,
+        invalidateOnRefresh: true,
+      },
+    });
+    tl.set(bf, { autoAlpha: 1 }, 0)
+      .to(
+        bf,
+        {
+          motionPath: { path: guide, align: guide, alignOrigin: [0.5, 0.5], autoRotate: 90 },
+          duration: 1,
+        },
+        0,
+      )
+      .to(reveal, { strokeDashoffset: 0, duration: 1 }, 0)
+      // al llegar, la mariposa y la línea se desvanecen
+      .to([bf, line], { opacity: 0, duration: 0.25, ease: 'power1.in' }, 1);
   }
 
   /** Arma la escena fija. */

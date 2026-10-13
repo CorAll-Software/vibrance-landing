@@ -79,6 +79,42 @@
   }
 }
 
+/* ---------- Puente: la mariposa traza la línea de la parte 1 a la parte 2 (solo escritorio) ---------- */
+.origen-bridge {
+  position: relative;
+  height: 55svh;
+  pointer-events: none;
+}
+.origen-bridge svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.bridge-line {
+  fill: none;
+  stroke: var(--color-palta);
+  stroke-opacity: 0.55;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 12 14;
+}
+.bridge-reveal {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 16;
+}
+.bridge-guide {
+  stroke: none;
+}
+.bridge-bf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  visibility: hidden;
+}
+
 /* ---------- Parte 2: de dónde viene nuestra fruta (móvil y "reducir movimiento": una columna) ---------- */
 /* ---------- Base (móvil y "reducir movimiento"): todo en una columna ---------- */
 .origen-pin {
@@ -328,23 +364,21 @@
   .trail {
     fill: none;
     stroke: var(--color-palta);
-    stroke-opacity: 0.32;
-    stroke-width: 3;
+    stroke-opacity: 0.55;
+    stroke-width: 3.5;
     stroke-linecap: round;
     stroke-dasharray: 12 14;
   }
   .trail-reveal {
     fill: none;
     stroke: #fff;
-    stroke-width: 14;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
+    stroke-width: 16;
   }
   .traveler {
     position: absolute;
     top: 0;
     left: 0;
-    width: 30px;
+    width: 44px;
     visibility: hidden;
   }
 }
@@ -366,9 +400,7 @@
   .origen-mountains {
     inset: 0 0 auto 0;
     height: 200%;
-    background:
-      url('/svg/andes.svg') center top / 100% 50% no-repeat,
-      linear-gradient(to bottom, transparent 50%, rgb(79 122 58 / 0.35) 100%);
+    background: url('/svg/andes.svg') center top / 100% 50% no-repeat;
     will-change: transform;
   }
   /* Los párrafos se apilan en la misma celda: uno a la vez */

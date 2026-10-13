@@ -12,7 +12,7 @@ import { LanguageService } from '../../core/services/language.service';
 import { Lang, LANG_META } from '../../core/config/brand';
 
 /**
- * Selector de idioma desplegable (8 idiomas, cambio en tiempo real sin recargar).
+ * Selector de idioma desplegable (9 idiomas, cambio en tiempo real sin recargar).
  * Accesible: Esc cierra, flechas arriba/abajo recorren la lista, clic fuera cierra,
  * el foco vuelve al botón al elegir.
  */

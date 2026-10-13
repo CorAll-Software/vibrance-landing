@@ -20,6 +20,8 @@
     "productos": "Products",
     "datos": "Facts",
     "contacto": "Contact",
+    "nosotros": "About us",
+    "como": "How we work",
     "cta": "Request a quote",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
@@ -266,6 +268,46 @@
       }
     }
   },
+  "nosotros": {
+    "kicker": "Who we are",
+    "heading": "Every shipment, legally backed and insured",
+    "bio": "I am a lawyer and insurance broker with more than 15 years in risk management. I bring that standard to every export: clear contracts, cargo insurance, and experience with letters of credit and credit insurance, so you and the grower can work with peace of mind.",
+    "role": "CEO · Vibrance Inca Harvest",
+    "pillars": {
+      "contracts": "Clear contracts between grower, trader and importer",
+      "insurance": "Cargo insurance on every shipment",
+      "credit": "Experience with letters of credit and credit insurance"
+    },
+    "quote": "Vibrance is a company that vibrates with love.",
+    "storyTitle": "How Vibrance began",
+    "story": {
+      "p1": "Vibrance Inca Harvest S.A.C. was born with great affection and hope. Its mission is to bring order to exports and to support other exporters.",
+      "p2": "It also aims to help farmers and landowners receive a fairer price for the products the land gives us.",
+      "p3": "It was born with a vibration of love, to bring about positive change in the hearts of Peruvians, who are so generous with the world, while being a profitable company with a positive human and business impact."
+    }
+  },
+  "como": {
+    "heading": "How we work",
+    "intro": "The basic terms for quoting and shipping, clear from the start.",
+    "items": {
+      "incoterms": {
+        "q": "Incoterms",
+        "a": "We work with FOB, CFR and CIF."
+      },
+      "volume": {
+        "q": "Minimum volume",
+        "a": "One 40' reefer container per order. For air freight, depending on the product."
+      },
+      "payment": {
+        "q": "Payment terms",
+        "a": "Letter of credit, or 80% advance and 20% balance; other terms on request."
+      },
+      "port": {
+        "q": "Port of departure",
+        "a": "Callao."
+      }
+    }
+  },
   "contacto": {
     "slogan": "The best of Peru, in every box.",
     "text": "Tell us which fruit you need, the volume and the destination. We'll send you a proposal.",
@@ -279,6 +321,12 @@
     "company": "Company",
     "country": "Destination country",
     "email": "Email",
+    "phone": "Phone / WhatsApp",
+    "volume": "Volume or number of containers",
+    "incoterm": "Incoterm",
+    "incotermPlaceholder": "Choose an Incoterm",
+    "destPort": "Destination port",
+    "shipDate": "Estimated shipping date",
     "product": "Product of interest",
     "productPlaceholder": "Choose a product",
     "productSeveral": "Several products",
@@ -288,6 +336,7 @@
       "required": "Please fill in this field.",
       "email": "Enter a valid email, e.g. name@company.com.",
       "minlength": "Enter at least {{n}} characters.",
+      "pattern": "Enter a valid phone number, for example +51 999 999 999.",
       "summary": "{{n}} fields need attention. Check the messages in red."
     },
     "submit": "Send request",

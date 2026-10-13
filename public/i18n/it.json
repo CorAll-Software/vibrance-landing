@@ -20,6 +20,8 @@
     "productos": "Prodotti",
     "datos": "Dati",
     "contacto": "Contatti",
+    "nosotros": "Chi siamo",
+    "como": "Come lavoriamo",
     "cta": "Richiedi un preventivo",
     "openMenu": "Apri menu",
     "closeMenu": "Chiudi menu",
@@ -266,6 +268,46 @@
       }
     }
   },
+  "nosotros": {
+    "kicker": "Chi siamo",
+    "heading": "Ogni spedizione, con tutela legale e assicurata",
+    "bio": "Sono avvocata e broker assicurativo, con oltre 15 anni di esperienza nella gestione del rischio. Porto questo rigore in ogni esportazione: contratti chiari, assicurazione del trasporto ed esperienza con lettere di credito e assicurazione del credito, perché tu e il produttore possiate lavorare con serenità.",
+    "role": "CEO · Vibrance Inca Harvest",
+    "pillars": {
+      "contracts": "Contratti chiari tra produttore, commerciante e importatore",
+      "insurance": "Assicurazione del trasporto su ogni spedizione",
+      "credit": "Esperienza con lettere di credito e assicurazione del credito"
+    },
+    "quote": "Vibrance è un'azienda che vibra d'amore.",
+    "storyTitle": "Come nasce Vibrance",
+    "story": {
+      "p1": "Vibrance Inca Harvest S.A.C. è nata con grande affetto ed entusiasmo. La sua missione è portare ordine nelle esportazioni e aiutare altri esportatori.",
+      "p2": "Vuole anche far sì che agricoltori e proprietari di aziende agricole ricevano un prezzo più giusto per i prodotti che la terra ci dona.",
+      "p3": "Nasce con una vibrazione d'amore per ottenere un cambiamento positivo nel cuore dei peruviani, così generosi con il mondo, essendo allo stesso tempo un'azienda redditizia con un impatto positivo sul piano umano e imprenditoriale."
+    }
+  },
+  "como": {
+    "heading": "Come lavoriamo",
+    "intro": "Le condizioni di base per preventivare e spedire, chiare fin dall'inizio.",
+    "items": {
+      "incoterms": {
+        "q": "Incoterms",
+        "a": "Lavoriamo con FOB, CFR e CIF."
+      },
+      "volume": {
+        "q": "Volume minimo",
+        "a": "Un container reefer da 40' per ordine. Per le spedizioni aeree, in base al prodotto."
+      },
+      "payment": {
+        "q": "Modalità di pagamento",
+        "a": "Lettera di credito, oppure anticipo dell'80% e saldo del 20%; altre condizioni su richiesta."
+      },
+      "port": {
+        "q": "Porto di partenza",
+        "a": "Callao."
+      }
+    }
+  },
   "contacto": {
     "slogan": "Il meglio del Perù, in ogni cassa.",
     "text": "Dicci quale frutta cerchi, il volume e la destinazione. Ti invieremo una proposta.",
@@ -279,6 +321,12 @@
     "company": "Azienda",
     "country": "Paese di destinazione",
     "email": "E-mail",
+    "phone": "Telefono / WhatsApp",
+    "volume": "Volume o numero di container",
+    "incoterm": "Incoterm",
+    "incotermPlaceholder": "Scegli un Incoterm",
+    "destPort": "Porto di destinazione",
+    "shipDate": "Data di imbarco stimata",
     "product": "Prodotto di interesse",
     "productPlaceholder": "Scegli un prodotto",
     "productSeveral": "Più prodotti",
@@ -288,6 +336,7 @@
       "required": "Compila questo campo.",
       "email": "Inserisci un'e-mail valida, ad es. nome@azienda.com.",
       "minlength": "Inserisci almeno {{n}} caratteri.",
+      "pattern": "Inserisci un numero di telefono valido, ad esempio +51 999 999 999.",
       "summary": "{{n}} campi da correggere. Controlla i messaggi in rosso."
     },
     "submit": "Invia richiesta",

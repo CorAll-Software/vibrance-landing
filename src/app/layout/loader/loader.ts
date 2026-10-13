@@ -24,11 +24,11 @@ import {
 
 gsap.registerPlugin(MotionPathPlugin);
 
-const SESSION_KEY = 'intro-seen';
+const SEEN_KEY = 'intro-seen';
 const GLINTS = 10;
 
 /**
- * Intro de marca (≈3,7 s, solo la primera visita de la sesión):
+ * Intro de marca (≈3,7 s, solo la primera vez que se visita la web):
  * la semilla se asienta, se agrieta y se abre con luz; sale una mariposa que vuela
  * hasta el sol del logo en el header y se funde con él; luego entra la página.
  *
@@ -60,8 +60,8 @@ export class LoaderComponent {
 
     let seen = false;
     try {
-      seen = sessionStorage.getItem(SESSION_KEY) === '1';
-      sessionStorage.setItem(SESSION_KEY, '1');
+      seen = localStorage.getItem(SEEN_KEY) === '1';
+      localStorage.setItem(SEEN_KEY, '1');
     } catch {
       /* almacenamiento no disponible */
     }

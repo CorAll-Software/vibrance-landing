@@ -10,6 +10,7 @@ import {
 import { NgOptimizedImage } from '@angular/common';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { Product } from '../../../data/productos.data';
+import { PhotoPlaceholderComponent } from '../photo-placeholder/photo-placeholder';
 import { SmoothScrollService } from '../../../core/services/smooth-scroll.service';
 
 /**
@@ -18,7 +19,7 @@ import { SmoothScrollService } from '../../../core/services/smooth-scroll.servic
  */
 @Component({
   selector: 'app-product-card',
-  imports: [NgOptimizedImage, TranslocoDirective],
+  imports: [NgOptimizedImage, TranslocoDirective, PhotoPlaceholderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
@@ -33,13 +34,17 @@ import { SmoothScrollService } from '../../../core/services/smooth-scroll.servic
       (focus)="play()"
       (blur)="pause()"
     >
-      <img
-        [ngSrc]="product().image"
-        [alt]="t('items.' + product().id + '.alt')"
-        fill
-        sizes="(min-width: 1024px) 40vw, 100vw"
-        class="card__media object-cover"
-      />
+      @if (product().placeholder) {
+        <app-photo-placeholder class="card__media" />
+      } @else {
+        <img
+          [ngSrc]="product().image"
+          [alt]="t('items.' + product().id + '.alt')"
+          fill
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          class="card__media object-cover"
+        />
+      }
       @if (product().video; as v) {
         <video
           #video

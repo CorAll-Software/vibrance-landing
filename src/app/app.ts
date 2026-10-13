@@ -6,6 +6,8 @@ import { HeaderComponent } from './layout/header/header';
 import { FooterComponent } from './layout/footer/footer';
 import { HeroComponent } from './sections/hero/hero';
 import { OrigenComponent } from './sections/origen/origen';
+import { NosotrosComponent } from './sections/nosotros/nosotros';
+import { ComoTrabajamosComponent } from './sections/como-trabajamos/como-trabajamos';
 import { ProcesoComponent } from './sections/proceso/proceso';
 import { ProductosComponent } from './sections/productos/productos';
 import { DatosComponent } from './sections/datos/datos';
@@ -21,9 +23,11 @@ import { WhatsappButtonComponent } from './shared/components/whatsapp-button/wha
     FooterComponent,
     HeroComponent,
     OrigenComponent,
+    NosotrosComponent,
     ProcesoComponent,
     ProductosComponent,
     DatosComponent,
+    ComoTrabajamosComponent,
     ContactoComponent,
     QuoteModalComponent,
     WhatsappButtonComponent,
