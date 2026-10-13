@@ -65,6 +65,23 @@
     </div>
   </div>
 
+  <!-- Puente (escritorio): una mariposa traza una línea de la historia al mapa, ligada al scroll -->
+  @if (scene) {
+    <div class="origen-bridge" aria-hidden="true">
+      <svg viewBox="0 0 1440 520" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <mask id="bridge-mask" maskUnits="userSpaceOnUse" x="-100" y="-100" width="1640" height="720">
+            <path class="bridge-reveal" [attr.d]="bridgePath" />
+          </mask>
+        </defs>
+        <path class="bridge-line" [attr.d]="bridgePath" mask="url(#bridge-mask)" />
+        <!-- misma curva, invisible: la mariposa la sigue -->
+        <path class="bridge-guide" [attr.d]="bridgePath" fill="none" />
+      </svg>
+      <app-butterfly class="bridge-bf" />
+    </div>
+  }
+
   <!-- Parte 2: de dónde viene nuestra fruta -->
   <div class="origen-pin">
     <!-- Fondo: mapa del mundo que se desvanece hacia el centro -->
@@ -77,7 +94,7 @@
           <defs>
             @for (p of trails; track $index) {
               <mask [attr.id]="'trail-mask-' + $index" maskUnits="userSpaceOnUse">
-                <path class="trail-reveal" [attr.d]="p" pathLength="1" />
+                <path class="trail-reveal" [attr.d]="p" />
               </mask>
             }
           </defs>
@@ -136,7 +153,7 @@
                 @for (m of markets; track m.id) {
                   <li class="market flex items-start gap-2.5">
                     <span
-                      class="mt-1.5 size-2.5 shrink-0 rounded-full bg-arandano ring-4 ring-arandano/15"
+                      class="mt-1.5 size-2.5 shrink-0 rounded-full bg-mandarina ring-4 ring-mandarina/25"
                     ></span>
                     <span class="leading-tight">
                       <span class="block font-semibold">{{

@@ -96,7 +96,7 @@
   .proceso-h .step {
     flex: 0 0 min(68vw, 1000px);
     grid-template-columns: 1.15fr 1fr;
-    opacity: 0.4;
+    opacity: 0.72;
     transition: opacity 400ms ease;
   }
   .proceso-h .step.is-active {

@@ -14,7 +14,15 @@ import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { UiStateService } from '../../core/services/ui-state.service';
 import { LangSwitchComponent } from './lang-switch';
 
-export const NAV_ITEMS = ['origen', 'proceso', 'productos', 'datos', 'contacto'] as const;
+export const NAV_ITEMS = [
+  'origen',
+  'nosotros',
+  'proceso',
+  'productos',
+  'datos',
+  'como',
+  'contacto',
+] as const;
 
 /** Menú transparente sobre el hero; fondo sólido al hacer scroll. */
 @Component({

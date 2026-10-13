@@ -1,0 +1,304 @@
+{
+  "seo": {
+    "title": "{{brand}} · 为进口商甄选的秘鲁优质水果",
+    "description": "秘鲁水果贸易商,为国际进口商和分销商供应蓝莓、牛油果、葡萄、芒果、柑橘和生姜。"
+  },
+  "common": {
+    "close": "关闭",
+    "skip": "跳到正文",
+    "loading": "加载中",
+    "placeholderNote": "示例数据,待确认。",
+    "skip_intro": "跳过开场动画",
+    "whatsapp": "通过 WhatsApp 联系我们",
+    "whatsappMessage": "您好,我想向 Vibrance 询价秘鲁水果。"
+  },
+  "nav": {
+    "label": "主导航",
+    "origen": "产地",
+    "nosotros": "关于我们",
+    "proceso": "流程",
+    "productos": "产品",
+    "datos": "数据",
+    "como": "合作方式",
+    "contacto": "联系",
+    "cta": "获取报价",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "switchLang": "切换语言",
+    "home": "首页"
+  },
+  "hero": {
+    "title": "秘鲁水果,精选送往世界",
+    "subtitle": "我们甄选生产商、把控品质并负责出口,供应蓝莓、牛油果、葡萄、芒果、柑橘和生姜。",
+    "ctaProducts": "查看产品",
+    "ctaQuote": "获取报价",
+    "scroll": "向下滑动探索"
+  },
+  "origen": {
+    "heading": "生于绽放的沙漠",
+    "lines": [
+      "秘鲁地处太平洋与安第斯山脉之间,山谷里的阳光和来自高山的雪水,孕育出风味浓郁、色泽鲜亮、采后耐储的水果。",
+      "我们不自己种植,而是精挑细选:与符合我们标准的沿海和中部丛林地区生产商合作,让进口商只需一个对接窗口,就能获得来自秘鲁多个产区的多种水果。"
+    ],
+    "imageAlt": "秘鲁沿海沙漠中的绿色农田",
+    "mapTitle": "我们的水果来自哪里",
+    "mapText": "我们从这些地区的生产商处采购,每个地区的气候都最适合其作物。",
+    "mapLabel": "标示产品产地的秘鲁地图",
+    "zonas": {
+      "piura": { "name": "皮乌拉", "crops": "芒果和葡萄" },
+      "la_libertad": { "name": "拉利伯塔德", "crops": "蓝莓和牛油果" },
+      "lima": { "name": "利马", "crops": "柑橘和牛油果" },
+      "junin": { "name": "胡宁", "crops": "生姜和柑橘" },
+      "ica": { "name": "伊卡", "crops": "葡萄、牛油果和柑橘" }
+    },
+    "regions": {
+      "costa": "海岸",
+      "sierra": "山地",
+      "selva": "丛林"
+    },
+    "ports": {
+      "paita": "派塔",
+      "callao": "卡亚俄"
+    },
+    "legendPort": "装运港",
+    "legendRoute": "前往港口的路线",
+    "treeLabel": "一棵插画树上结出蓝莓、牛油果、葡萄、芒果、柑橘和生姜,落入 Vibrance 的竹篮中。",
+    "marketsText": "至少有一种我们的产品已获得植物检疫准入的市场。"
+  },
+  "proceso": {
+    "heading": "从生产商到您的仓库",
+    "intro": "我们把控五个环节,确保每批货物数量齐全、准时抵达、手续完备。",
+    "progress": "第 {{current}} 步,共 {{total}} 步",
+    "steps": {
+      "productores": {
+        "title": "甄选生产商",
+        "text": "我们根据品质、可追溯性以及对各目标市场要求的符合程度来选择生产商。",
+        "alt": "合作生产商的农田"
+      },
+      "calidad": {
+        "title": "品质控制",
+        "text": "每批货物在获准出口前,我们都会检查规格、糖度(Brix)、成熟度和状态。",
+        "alt": "品质检验中的水果"
+      },
+      "empaque": {
+        "title": "包装",
+        "text": "我们在认证工厂协调包装,按客户要求提供包装规格和标签。",
+        "alt": "包装厂中的水果箱"
+      },
+      "frio": {
+        "title": "冷链",
+        "text": "水果经过预冷,并在恒温条件下运往港口或机场。",
+        "alt": "恒温冷库"
+      },
+      "envio": {
+        "title": "单证与发运",
+        "text": "我们办理植物检疫证书、原产地证书和报关文件,并通过海运或空运发货。",
+        "alt": "将水果箱装上发货卡车"
+      }
+    }
+  },
+  "productos": {
+    "heading": "我们的产品",
+    "intro": "来自秘鲁的新鲜水果和生姜,按规格分级,包装根据各市场量身定制。",
+    "viewDetail": "查看{{name}}详情",
+    "season": "产季",
+    "varieties": "品种",
+    "sizes": "规格",
+    "presentations": "包装形式",
+    "packaging": "外箱",
+    "availability": "供应情况",
+    "availableIn": "供应月份:{{months}}",
+    "available": "供应中",
+    "notAvailable": "非产季",
+    "quoteThis": "询价:{{name}}",
+    "months": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+    "monthsLong": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+    "items": {
+      "arandano": {
+        "name": "蓝莓",
+        "summary": "果肉紧实、甜度高、果粒大。",
+        "season": "8月至次年1月",
+        "varieties": "Biloxi、Ventura、Emerald",
+        "presentations": "125 克、170 克和 500 克塑料盒",
+        "packaging": "1.5 公斤和 3.7 公斤箱装",
+        "alt": "新鲜蓝莓"
+      },
+      "palta": {
+        "name": "哈斯牛油果",
+        "summary": "口感绵密,果皮粗糙,成熟后转为深色。",
+        "season": "3月至9月",
+        "varieties": "Hass",
+        "presentations": "散装或网袋装鲜果",
+        "packaging": "4 公斤和 10 公斤箱装",
+        "alt": "切开的哈斯牛油果"
+      },
+      "uva": {
+        "name": "鲜食葡萄",
+        "summary": "果穗脆甜,有籽和无籽品种均有。",
+        "season": "11月至次年4月",
+        "varieties": "Red Globe、Sweet Globe、Autumn Crisp",
+        "presentations": "袋装和塑料盒装",
+        "packaging": "8.2 公斤箱装",
+        "alt": "一串绿葡萄"
+      },
+      "mango": {
+        "name": "芒果",
+        "summary": "果肉无纤维,香气浓郁,色泽鲜亮。",
+        "season": "11月至次年3月",
+        "varieties": "Kent、Edward",
+        "presentations": "按规格分级的鲜果",
+        "packaging": "4 公斤箱装",
+        "alt": "成熟的芒果"
+      },
+      "mandarina": {
+        "name": "柑橘",
+        "summary": "易剥皮、多汁、色泽浓郁。",
+        "season": "3月至10月",
+        "varieties": "W. Murcott、Tango、Satsuma",
+        "presentations": "按规格分级的鲜果",
+        "packaging": "10 公斤箱装",
+        "alt": "新鲜柑橘"
+      },
+      "kion": {
+        "name": "生姜",
+        "summary": "香气浓郁、辛辣,经清洗和挑选的根茎。",
+        "season": "全年",
+        "varieties": "黄姜",
+        "presentations": "新鲜、清洗并晾干",
+        "packaging": "13.6 公斤(30 磅)箱装",
+        "alt": "新鲜生姜根茎"
+      }
+    },
+    "markets": "已获准入的市场",
+    "marketsNote": "其他目的地请联系我们:报价前我们会核查相关准入协议。",
+    "quoteNote": "品种、规格和包装形式将在每次报价中根据需求调整。"
+  },
+  "datos": {
+    "heading": "数据看我们的供应",
+    "intro": "一家贸易商,全年为您供应多种秘鲁产品。",
+    "stats": {
+      "productos": { "label": "种新鲜产品" },
+      "meses": { "label": "个月全年有货" },
+      "regiones": { "label": "个产区" },
+      "mercados": { "label": "个市场对秘鲁水果设有有效的植物检疫准入" }
+    },
+    "mapTitle": "可以送达哪里",
+    "mapText": "至少有一种我们的产品已获得植物检疫准入的市场。将光标移到每个点上可查看数量。",
+    "mapLabel": "显示我们产品可出口市场的世界地图",
+    "destinos": {
+      "usa": "美国",
+      "canada": "加拿大",
+      "mexico": "墨西哥",
+      "ue": "欧盟",
+      "reino_unido": "英国",
+      "china": "中国",
+      "corea": "韩国",
+      "japon": "日本"
+    },
+    "certTitle": "认证",
+    "marketProducts": "{{n}} 种产品已获准入",
+    "accessTitle": "各产品准入情况",
+    "accessText": "并非所有产品都能进入所有国家。下表显示已有有效准入协议的市场;其他情况我们会在报价前为您确认。",
+    "accessCaption": "各产品已有有效植物检疫准入的市场",
+    "accessProduct": "产品",
+    "accessYes": "已准入",
+    "accessAsk": "待咨询",
+    "certText": "我们与通过认证(BRCGS、HACCP、BPM)、获 SENASA 授权并在 FDA 注册的包装厂合作。每批货物的工厂和认证信息将在报价中确认。",
+    "certs": {
+      "brcgs": { "name": "BRCGS", "desc": "食品安全" },
+      "haccp": { "name": "HACCP", "desc": "关键控制点" },
+      "bpm": { "name": "BPM", "desc": "良好生产规范" },
+      "senasa": { "name": "SENASA", "desc": "授权工厂" },
+      "fda": { "name": "FDA", "desc": "已注册工厂(美国)" },
+      "eti": { "name": "Ethical Trading Initiative", "desc": "道德贸易" }
+    }
+  },
+  "nosotros": {
+    "kicker": "关于我们",
+    "heading": "每一批货物,都有法律保障并已投保",
+    "bio": "我是一名律师和保险经纪人,在风险管理领域拥有 15 年以上经验。我把这份严谨带到每一次出口中:清晰的合同、货运保险,以及信用证和信用保险方面的经验,让您和生产商都能安心合作。",
+    "role": "首席执行官 · Vibrance Inca Harvest",
+    "pillars": {
+      "contracts": "生产商、贸易商与进口商之间权责清晰的合同",
+      "insurance": "每一批货物都有货运保险",
+      "credit": "信用证和信用保险方面的经验"
+    },
+    "quote": "Vibrance 是一家充满爱的公司。",
+    "storyTitle": "Vibrance 的诞生",
+    "story": {
+      "p1": "Vibrance Inca Harvest S.A.C. 诞生于满满的爱与期待。我们的使命是让出口更有秩序,并帮助其他出口商。",
+      "p2": "我们也希望让农民和农场主,为大地无偿赐予我们的产品获得更公平的价格。",
+      "p3": "公司怀着爱的振动而生,希望为慷慨对待世界的秘鲁人的内心带来积极改变,同时成为一家盈利的企业,在人文和商业层面都产生积极影响。"
+    }
+  },
+  "como": {
+    "heading": "我们如何合作",
+    "intro": "报价和发运的基本条件,从一开始就清晰明确。",
+    "items": {
+      "incoterms": {
+        "q": "国际贸易术语(Incoterms)",
+        "a": "我们采用 FOB、CFR 和 CIF。"
+      },
+      "volume": {
+        "q": "最低起订量",
+        "a": "每单一个 40 英尺冷藏集装箱。空运视产品而定。"
+      },
+      "payment": {
+        "q": "付款方式",
+        "a": "信用证,或 80% 预付款加 20% 尾款;其他条件可另行协商。"
+      },
+      "port": {
+        "q": "出运港口",
+        "a": "卡亚俄(Callao)。"
+      }
+    }
+  },
+  "contacto": {
+    "slogan": "秘鲁最好的,装进每一个箱子。",
+    "text": "告诉我们您需要的水果、数量和目的地,我们将发送报价方案。",
+    "cta": "获取报价"
+  },
+  "form": {
+    "title": "获取报价",
+    "intro": "请填写信息,我们将在 48 个工作小时内回复。",
+    "required": "所有字段均为必填。",
+    "name": "姓名",
+    "company": "公司",
+    "country": "目的国家",
+    "email": "电子邮箱",
+    "phone": "电话 / WhatsApp",
+    "product": "感兴趣的产品",
+    "volume": "数量或集装箱数量",
+    "incoterm": "贸易术语(Incoterm)",
+    "incotermPlaceholder": "请选择 Incoterm",
+    "destPort": "目的港",
+    "shipDate": "预计装运日期",
+    "productPlaceholder": "请选择产品",
+    "productSeveral": "多种产品",
+    "message": "留言",
+    "messagePlaceholder": "大致数量、目的地、时间……",
+    "errors": {
+      "required": "请填写此项。",
+      "email": "请输入有效的邮箱,例如 name@company.com。",
+      "minlength": "请至少输入 {{n}} 个字符。",
+      "pattern": "请输入有效的电话号码,例如 +51 999 999 999。",
+      "summary": "有 {{n}} 个字段需要修改,请查看红色提示。"
+    },
+    "submit": "提交申请",
+    "sending": "发送中……",
+    "successTitle": "申请已发送!",
+    "successText": "我们已收到您的申请,将在 48 个工作小时内通过 {{email}} 联系您,并确认贵国目前的准入协议情况。",
+    "errorTitle": "无法发送您的申请",
+    "errorText": "出现连接问题,您的信息未能发送。请检查网络后重试;您填写的内容不会丢失。",
+    "retry": "重试",
+    "again": "再提交一份申请"
+  },
+  "footer": {
+    "tagline": "面向全球进口商和分销商的秘鲁新鲜水果贸易商。",
+    "contact": "联系方式",
+    "follow": "关注我们",
+    "language": "语言",
+    "privacy": "隐私政策",
+    "rights": "版权所有。"
+  }
+}

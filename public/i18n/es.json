@@ -20,6 +20,8 @@
     "productos": "Productos",
     "datos": "Datos",
     "contacto": "Contacto",
+    "nosotros": "Nosotros",
+    "como": "Cómo trabajamos",
     "cta": "Solicitar cotización",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
@@ -266,6 +268,46 @@
       }
     }
   },
+  "nosotros": {
+    "kicker": "Quiénes somos",
+    "heading": "Cada embarque, con respaldo legal y asegurado",
+    "bio": "Soy abogada y bróker de seguros, con más de 15 años en gestión de riesgos. Llevo ese criterio a cada exportación: contratos claros, seguro de transporte y experiencia con carta de crédito y seguro de crédito, para que tú y el productor trabajen con tranquilidad.",
+    "role": "CEO · Vibrance Inca Harvest",
+    "pillars": {
+      "contracts": "Contratos claros entre productor, comercializadora e importador",
+      "insurance": "Seguro de transporte en cada embarque",
+      "credit": "Experiencia con carta de crédito y seguro de crédito"
+    },
+    "quote": "Vibrance es una empresa que vibra con amor.",
+    "storyTitle": "Cómo nace Vibrance",
+    "story": {
+      "p1": "Vibrance Inca Harvest S.A.C. nació con mucho cariño e ilusión. Su misión es ayudar a poner orden en las exportaciones y apoyar a otros exportadores.",
+      "p2": "También busca que los campesinos y dueños de fundos reciban un precio más justo por los productos que la tierra nos da.",
+      "p3": "Nace con una vibración de amor para lograr un cambio positivo en el corazón de los peruanos, tan generosos con el mundo, siendo a la vez una empresa rentable que impacta de forma positiva en lo humano y lo empresarial."
+    }
+  },
+  "como": {
+    "heading": "Cómo trabajamos",
+    "intro": "Las condiciones básicas para cotizar y embarcar, claras desde el inicio.",
+    "items": {
+      "incoterms": {
+        "q": "Incoterms",
+        "a": "Trabajamos con FOB, CFR y CIF."
+      },
+      "volume": {
+        "q": "Volumen mínimo",
+        "a": "Un contenedor reefer de 40' por pedido. En envíos aéreos, según el producto."
+      },
+      "payment": {
+        "q": "Formas de pago",
+        "a": "Carta de crédito o adelanto del 80 % y saldo del 20 %; otras condiciones, a consultar."
+      },
+      "port": {
+        "q": "Puerto de salida",
+        "a": "Callao."
+      }
+    }
+  },
   "contacto": {
     "slogan": "Lo mejor del Perú, en cada caja.",
     "text": "Cuéntanos qué fruta buscas, el volumen y el destino. Te enviamos una propuesta.",
@@ -279,6 +321,12 @@
     "company": "Empresa",
     "country": "País de destino",
     "email": "Correo electrónico",
+    "phone": "Teléfono / WhatsApp",
+    "volume": "Volumen o número de contenedores",
+    "incoterm": "Incoterm",
+    "incotermPlaceholder": "Elige un Incoterm",
+    "destPort": "Puerto de destino",
+    "shipDate": "Fecha estimada de embarque",
     "product": "Producto de interés",
     "productPlaceholder": "Elige un producto",
     "productSeveral": "Varios productos",
@@ -288,6 +336,7 @@
       "required": "Completa este campo.",
       "email": "Escribe un correo válido, por ejemplo nombre@empresa.com.",
       "minlength": "Escribe al menos {{n}} caracteres.",
+      "pattern": "Escribe un teléfono válido, por ejemplo +51 999 999 999.",
       "summary": "Hay {{n}} campos por corregir. Revisa los mensajes en rojo."
     },
     "submit": "Enviar solicitud",

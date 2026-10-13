@@ -33,6 +33,8 @@ export interface HeroVideo extends VideoSrc {
 
 export interface SectionMedia {
   image: string;
+  /** true: se muestra el recuadro "Foto aquí" hasta tener la foto real (la clienta la entrega). */
+  placeholder?: boolean;
   video?: VideoSrc;
 }
 
@@ -46,10 +48,13 @@ export const HERO = {
    * un fundido; al terminar el último vuelve al primero. Con uno solo, se repite.
    */
   videos: [
-    { mp4: 'https://www.pexels.com/es-es/download/video/28443572/', webm: 'https://www.pexels.com/es-es/download/video/28443572/' },
-    { mp4: 'https://www.pexels.com/es-es/download/video/11760126/', seconds:  20},
+    {
+      mp4: 'https://www.pexels.com/es-es/download/video/28443572/',
+      webm: 'https://www.pexels.com/es-es/download/video/28443572/',
+    },
+    { mp4: 'https://www.pexels.com/es-es/download/video/11760126/', seconds: 20 },
     { mp4: 'https://www.pexels.com/es-es/download/video/3596844/' },
-    { mp4: 'https://www.pexels.com/es-es/download/video/15909393/'},
+    { mp4: 'https://www.pexels.com/es-es/download/video/15909393/' },
   ] as HeroVideo[],
   /** Duración del fundido entre videos, en segundos. */
   fade: 1.2,
@@ -59,7 +64,8 @@ export const HERO = {
 /* "Nace en el desierto que florece" */
 
 export const ORIGEN: SectionMedia = {
-  image: 'https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  image:
+    'https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   // video: { mp4: 'https://…/desierto-cultivo.mp4' },
 };
 
@@ -78,19 +84,31 @@ export const PROCESO: Record<
   },
   calidad: {
     image: 'media/proceso-2-calidad-poster.webp',
-    video: { mp4: 'https://www.pexels.com/es-es/download/video/8633312/', webm: 'https://www.pexels.com/es-es/download/video/8633312/' },
+    video: {
+      mp4: 'https://www.pexels.com/es-es/download/video/8633312/',
+      webm: 'https://www.pexels.com/es-es/download/video/8633312/',
+    },
   },
   empaque: {
     image: 'media/proceso-3-empaque-poster.webp',
-    video: { mp4: 'https://www.pexels.com/es-es/download/video/8633311/', webm: 'https://www.pexels.com/es-es/download/video/8633311/' },
+    video: {
+      mp4: 'https://www.pexels.com/es-es/download/video/8633311/',
+      webm: 'https://www.pexels.com/es-es/download/video/8633311/',
+    },
   },
   frio: {
     image: 'media/proceso-4-frio.webp',
-    video: { mp4: 'https://www.pexels.com/es-es/download/video/10576684/', webm: 'https://www.pexels.com/es-es/download/video/10576684/' },
+    video: {
+      mp4: 'https://www.pexels.com/es-es/download/video/10576684/',
+      webm: 'https://www.pexels.com/es-es/download/video/10576684/',
+    },
   },
   envio: {
     image: 'media/proceso-5-envio-poster.webp',
-    video: { mp4: 'https://www.pexels.com/es-es/download/video/6390323/', webm: 'https://www.pexels.com/es-es/download/video/6390323/' },
+    video: {
+      mp4: 'https://www.pexels.com/es-es/download/video/6390323/',
+      webm: 'https://www.pexels.com/es-es/download/video/6390323/',
+    },
   },
 };
 
@@ -101,11 +119,14 @@ export const PRODUCTOS: Record<
   'arandano' | 'palta' | 'uva' | 'mango' | 'mandarina' | 'kion',
   SectionMedia
 > = {
-  arandano: { image: 'media/producto-arandano.webp' },
-  palta: { image: 'media/producto-palta.webp' },
+  arandano: { image: 'media/producto-arandano.webp', placeholder: true }, // TODO: foto real
+  palta: { image: 'media/producto-palta.webp', placeholder: true }, // TODO: foto real
   uva: {
     image: 'media/uvas.png',
-    video: { mp4: 'https://www.pexels.com/es-es/download/video/31463341/', webm: 'https://www.pexels.com/es-es/download/video/31463341/' },
+    video: {
+      mp4: 'https://www.pexels.com/es-es/download/video/31463341/',
+      webm: 'https://www.pexels.com/es-es/download/video/31463341/',
+    },
   },
   mango: { image: 'media/producto-mango.webp' },
   mandarina: { image: 'media/producto-mandarina.webp' },

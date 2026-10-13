@@ -54,6 +54,7 @@
               [type]="f.type"
               [formControlName]="f.name"
               [autocomplete]="f.autocomplete"
+              [attr.min]="f.type === 'date' ? today : null"
               [attr.aria-invalid]="showError(f.name)"
               [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
               class="field"
@@ -83,6 +84,46 @@
           </select>
           @if (showError('product')) {
             <p id="q-product-err" class="text-sm text-red-700">{{ t('errors.required') }}</p>
+          }
+        </div>
+
+        @for (f of shipFields; track f.name) {
+          <div class="flex flex-col gap-1.5">
+            <label [for]="'q-' + f.name" class="text-sm font-semibold">{{ t(f.name) }}</label>
+            <input
+              [id]="'q-' + f.name"
+              [type]="f.type"
+              [formControlName]="f.name"
+              [autocomplete]="f.autocomplete"
+              [attr.min]="f.type === 'date' ? today : null"
+              [attr.aria-invalid]="showError(f.name)"
+              [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
+              class="field"
+            />
+            @if (showError(f.name)) {
+              <p [id]="'q-' + f.name + '-err'" class="text-sm text-red-700">
+                {{ t('errors.' + firstError(f.name)) }}
+              </p>
+            }
+          </div>
+        }
+
+        <div class="flex flex-col gap-1.5">
+          <label for="q-incoterm" class="text-sm font-semibold">{{ t('incoterm') }}</label>
+          <select
+            id="q-incoterm"
+            formControlName="incoterm"
+            class="field"
+            [attr.aria-invalid]="showError('incoterm')"
+            [attr.aria-describedby]="showError('incoterm') ? 'q-incoterm-err' : null"
+          >
+            <option value="" disabled>{{ t('incotermPlaceholder') }}</option>
+            @for (i of incoterms; track i) {
+              <option [value]="i">{{ i }}</option>
+            }
+          </select>
+          @if (showError('incoterm')) {
+            <p id="q-incoterm-err" class="text-sm text-red-700">{{ t('errors.required') }}</p>
           }
         </div>
 

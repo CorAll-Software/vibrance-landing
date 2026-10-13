@@ -16,7 +16,20 @@ import { QuoteService } from '../../core/services/quote.service';
 import { PRODUCTS } from '../../data/productos.data';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
-type FieldName = 'name' | 'company' | 'country' | 'email' | 'product' | 'message';
+type FieldName =
+  | 'name'
+  | 'company'
+  | 'country'
+  | 'email'
+  | 'phone'
+  | 'product'
+  | 'volume'
+  | 'incoterm'
+  | 'destPort'
+  | 'shipDate'
+  | 'message';
+
+export const INCOTERMS = ['FOB', 'CFR', 'CIF'] as const;
 
 const MESSAGE_MIN = 10;
 
@@ -34,6 +47,8 @@ export class QuoteModalComponent {
 
   protected readonly products = PRODUCTS;
   protected readonly messageMin = MESSAGE_MIN;
+  protected readonly incoterms = INCOTERMS;
+  protected readonly today = new Date().toISOString().slice(0, 10);
   protected readonly status = signal<Status>('idle');
   protected readonly submitted = signal(false);
   protected readonly sentTo = signal('');
@@ -43,7 +58,12 @@ export class QuoteModalComponent {
     company: ['', [Validators.required, Validators.maxLength(120)]],
     country: ['', [Validators.required, Validators.maxLength(60)]],
     email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required, Validators.pattern(/^[+d][ds().-]{5,}$/)]],
     product: ['', Validators.required],
+    volume: ['', [Validators.required, Validators.maxLength(80)]],
+    incoterm: ['', Validators.required],
+    destPort: ['', [Validators.required, Validators.maxLength(80)]],
+    shipDate: ['', Validators.required],
     message: ['', [Validators.required, Validators.minLength(MESSAGE_MIN)]],
   });
 
@@ -52,6 +72,13 @@ export class QuoteModalComponent {
     { name: 'company', type: 'text', autocomplete: 'organization' },
     { name: 'country', type: 'text', autocomplete: 'country-name' },
     { name: 'email', type: 'email', autocomplete: 'email' },
+    { name: 'phone', type: 'tel', autocomplete: 'tel' },
+  ];
+
+  protected readonly shipFields: { name: FieldName; type: string; autocomplete: string }[] = [
+    { name: 'volume', type: 'text', autocomplete: 'off' },
+    { name: 'destPort', type: 'text', autocomplete: 'off' },
+    { name: 'shipDate', type: 'date', autocomplete: 'off' },
   ];
 
   /** Contador de errores para el resumen (se recalcula en cada intento de envío). */
@@ -76,12 +103,13 @@ export class QuoteModalComponent {
     return c.invalid && (c.touched || this.submitted());
   }
 
-  protected firstError(field: FieldName): 'required' | 'email' | 'minlength' | null {
+  protected firstError(field: FieldName): 'required' | 'email' | 'minlength' | 'pattern' | null {
     const e = this.form.controls[field].errors;
     if (!e) return null;
     if (e['required']) return 'required';
     if (e['email']) return 'email';
     if (e['minlength']) return 'minlength';
+    if (e['pattern']) return 'pattern';
     return 'required';
   }
 

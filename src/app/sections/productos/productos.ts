@@ -1,3 +1,4 @@
+import { PhotoPlaceholderComponent } from '../../shared/components/photo-placeholder/photo-placeholder';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
@@ -16,6 +17,7 @@ import { AvailabilityCalendarComponent } from '../../shared/components/availabil
     TranslocoDirective,
     ModalComponent,
     ProductCardComponent,
+    PhotoPlaceholderComponent,
     AvailabilityCalendarComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

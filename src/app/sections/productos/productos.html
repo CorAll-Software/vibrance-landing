@@ -32,13 +32,17 @@
     @if (detail(); as p) {
       <div class="grid md:grid-cols-[1fr_1.2fr]">
         <div class="relative min-h-64 bg-arena md:min-h-full">
-          <img
-            [ngSrc]="p.image"
-            [alt]="t('items.' + p.id + '.alt')"
-            fill
-            sizes="(min-width: 768px) 30rem, 100vw"
-            class="object-cover"
-          />
+          @if (p.placeholder) {
+            <app-photo-placeholder />
+          } @else {
+            <img
+              [ngSrc]="p.image"
+              [alt]="t('items.' + p.id + '.alt')"
+              fill
+              sizes="(min-width: 768px) 30rem, 100vw"
+              class="object-cover"
+            />
+          }
         </div>
         <div class="p-6 sm:p-10">
           <h2 id="product-title" class="pr-12 text-4xl font-bold">

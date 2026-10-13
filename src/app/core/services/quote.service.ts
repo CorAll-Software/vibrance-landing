@@ -5,7 +5,12 @@ export interface QuoteRequest {
   company: string;
   country: string;
   email: string;
+  phone: string;
   product: string;
+  volume: string;
+  incoterm: string;
+  destPort: string;
+  shipDate: string;
   message: string;
 }
 

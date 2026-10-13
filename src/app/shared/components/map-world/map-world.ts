@@ -51,8 +51,8 @@ const project = (p: GeoPoint) => ({
             class="route"
             [attr.d]="r.d"
             fill="none"
-            stroke="#3B3F7A"
-            stroke-opacity="0.45"
+            stroke="#F2A33A"
+            stroke-opacity="0.8"
             stroke-width="1.4"
             stroke-dasharray="1 0"
             pathLength="1"
@@ -78,11 +78,11 @@ const project = (p: GeoPoint) => ({
               "
             >
               <span
-                class="size-3 rounded-full bg-arandano ring-4 ring-arandano/20 transition-transform duration-200 group-hover:scale-150"
+                class="size-3 rounded-full bg-mandarina ring-4 ring-mandarina/25 transition-transform duration-200 group-hover:scale-150"
               ></span>
               <span
                 role="tooltip"
-                class="pointer-events-none absolute bottom-full left-1/2 w-max -translate-x-1/2 translate-y-1 rounded-md bg-arandano px-2.5 py-1 text-sm font-medium text-white opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+                class="pointer-events-none absolute bottom-full left-1/2 w-max -translate-x-1/2 translate-y-1 rounded-md bg-palta px-2.5 py-1 text-sm font-medium text-white opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
               >
                 <strong class="block font-semibold">{{ t('destinos.' + d.id) }}</strong>
                 <span class="text-xs text-white/85">{{

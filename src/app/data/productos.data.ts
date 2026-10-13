@@ -12,6 +12,8 @@ export type ProductId = 'arandano' | 'palta' | 'uva' | 'mango' | 'mandarina' | '
 export interface Product {
   id: ProductId;
   image: string;
+  /** true: se muestra el recuadro "Foto aquí" en lugar de la imagen. */
+  placeholder?: boolean;
   /** Imagen y video (al pasar el mouse): se editan en core/config/media.config.ts */
   video?: { webm?: string; mp4?: string };
   /** Meses de disponibilidad para exportar: 1 = enero … 12 = diciembre. */

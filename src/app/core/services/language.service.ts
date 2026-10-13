@@ -9,7 +9,7 @@ import { AVAILABLE_LANGS, BRAND_NAME, DEFAULT_LANG, LANG_META, Lang } from '../c
 
 const STORAGE_KEY = 'lang';
 
-/** Cambio de idioma en tiempo real (8 idiomas, incluidos RTL) + título, metas, lang y dir del documento. */
+/** Cambio de idioma en tiempo real (9 idiomas, incluidos RTL) + título, metas, lang y dir del documento. */
 @Injectable({ providedIn: 'root' })
 export class LanguageService {
   private readonly transloco = inject(TranslocoService);
