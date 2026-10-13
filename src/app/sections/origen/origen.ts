@@ -25,6 +25,12 @@ import type { ProductId } from '../../data/productos.data';
 import { ORIGEN } from '../../core/config/media.config';
 import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
 
+/**
+ * Modo de la parte 2 de Origen (el mapa): al llegar al tope se reproduce por momentos.
+ * Solo respeta el modo "libre" de scroll.config.ts; "momentos" y "pausas" usan "momentos".
+ */
+const ORIGEN_MODE: 'libre' | 'momentos' =SCENE_MODE === 'libre' ? 'libre' : 'momentos';
+
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 /** Escena fija solo en escritorio con altura suficiente y sin "reducir movimiento" (ver origen.css). */
@@ -33,10 +39,9 @@ const SCENE_MQ =
 
 /**
  * Ritmo de la parte fija (en unidades de la línea de tiempo):
- * cada momento tarda MOVE en ocurrir y luego la escena "descansa" HOLD sin cambios.
+ * cada momento tarda MOVE en ocurrir.
  */
 const MOVE = 1;
-const HOLD = SCENE_MODE === 'pausas' ? 0.7 : 0;
 
 /**
  * Qué fruta aporta cada región a la cesta cuando se marca en el mapa
@@ -73,7 +78,7 @@ const TRAVEL_REST = 5;
  * 2. Aparecen las frutas en sus regiones.
  * 3. De cada región sale su fruta y entra en la cesta.
  * 4. La mariposa se lleva la cesta y aparece "Dónde puede llegar" con los botones de acción.
- * Cómo avanza la parte fija se elige en core/config/scroll.config.ts (SCENE_MODE).
+ * La parte fija del mapa va por momentos (ver ORIGEN_MODE); solo respeta el modo "libre" de scroll.config.ts.
  */
 @Component({
   selector: 'app-origen',
@@ -120,6 +125,13 @@ export class OrigenComponent {
       if (this.scroll.reducedMotion()) return;
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
+          // Escritorio: las dos partes son escenas fijas (el orden importa: el de la página)
+          if (this.scene) {
+            this.buildIntro(host);
+            this.buildScene(host);
+            this.buildTravelers(host);
+            return;
+          }
           // Parte 1 ("Nace en el desierto que florece"): cada párrafo pasa de tenue a pleno
           gsap.fromTo(
             '.intro-line',
@@ -151,16 +163,84 @@ export class OrigenComponent {
               },
             },
           );
-          // Parte 2: en móvil el mapa se anima solo (map-peru y basket tienen su propio scroll)
-          if (!this.scene) return;
-          this.buildScene(host);
-          this.buildTravelers(host);
+          // Móvil: el mapa y la cesta se animan solos (map-peru y basket tienen su propio scroll)
         }, host);
       });
     });
 
     inject(DestroyRef).onDestroy(() => {
       ctx?.revert();
+    });
+  }
+
+  /**
+   * Parte 1: un scroll fijo y luego una salida lineal. Mientras está fija, la foto se queda
+   * pegada, los párrafos se relevan y las montañas bajan de la cumbre a la tierra. Al soltarse
+   * sigue el scroll normal: el texto sale primero y la foto después (cascada inversa), y la
+   * parte 2 llega por debajo sin taparla.
+   */
+  private buildIntro(host: HTMLElement): void {
+    const intro = host.querySelector<HTMLElement>('.origen-intro');
+    const lines = gsap.utils.toArray<HTMLElement>('.intro-line', host);
+    const step = 1 / lines.length;
+    gsap.set(lines.slice(1), { opacity: 0, y: 28 });
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: intro,
+        start: 'top top',
+        end: () => `+=${window.innerHeight * 0.6}`,
+        scrub: 0.6,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+    // Montañas: la capa mide el doble de la pantalla (cumbres arriba, tierra abajo)
+    tl.fromTo('.origen-mountains', { yPercent: 0 }, { yPercent: -50, duration: 1 }, 0);
+    tl.fromTo('.origen-photo', { scale: 1.18 }, { scale: 1, duration: 1 }, 0);
+    // Relevo de párrafos: el actual sale hacia arriba mientras entra el siguiente
+    lines.forEach((line, i) => {
+      if (i === 0) return;
+      const at = i * step - step * 0.2;
+      tl.to(lines[i - 1], { opacity: 0, y: -28, duration: step * 0.2 }, at);
+      tl.to(line, { opacity: 1, y: 0, duration: step * 0.2 }, at + step * 0.1);
+    });
+
+    // Salida en cascada inversa: con el scroll normal, primero se va el texto y luego la foto
+    const exit = (target: string, to: gsap.TweenVars, start: string, end: string) =>
+      gsap.to(target, {
+        ...to,
+        ease: 'none',
+        scrollTrigger: { trigger: intro, start, end, scrub: true, invalidateOnRefresh: true },
+      });
+    exit('.intro-text', { y: -90, opacity: 0 }, 'bottom 92%', 'bottom 52%');
+    exit('.origen-frame', { y: -150, opacity: 0 }, 'bottom 78%', 'bottom 18%');
+
+    /*
+     * Transición por momentos (como hero → Origen): el tramo entre el fin de la parte fija y el
+     * inicio del mapa se recorre solo. Al empezar a bajar en ese tramo la página se desliza,
+     * completa, hasta el mapa; al empezar a subir, vuelve sola al final de la parte 1.
+     */
+    const card = host.querySelector<HTMLElement>('.origen-pin');
+    if (ORIGEN_MODE !== 'momentos' || !intro || !card) return;
+    // El tope de un bloque fijo se mide en su contenedor `.pin-spacer`: no cambia al fijarse
+    const top = (el: HTMLElement) =>
+      (el.closest<HTMLElement>('.pin-spacer') ?? el).getBoundingClientRect().top + window.scrollY;
+    const zoneStart = () => top(intro) + window.innerHeight * 0.6;
+    const zoneEnd = () => top(card);
+    const go = (y: number) => this.scroll.scrollToY(y, MOMENT_DURATION);
+    ScrollTrigger.create({
+      start: zoneStart,
+      end: zoneEnd,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        if (this.scroll.autoScrolling) return;
+        const p = self.progress;
+        if (p <= 0.03 || p >= 0.97) return;
+        go(self.direction > 0 ? zoneEnd() : zoneStart());
+      },
     });
   }
 
@@ -285,12 +365,12 @@ export class OrigenComponent {
     const intro = gsap.timeline({
       scrollTrigger: {
         trigger: pinEl,
-        start: SCENE_MODE === 'libre' ? 'top 85%' : 'top 60%',
+        start: ORIGEN_MODE === 'libre' ? 'top 85%' : 'top 60%',
         once: true,
       },
     });
     // En modo libre la primera barrita la llena la escena misma (sigue al scroll)
-    if (SCENE_MODE !== 'libre') fillBeat(intro, 0, 0);
+    if (ORIGEN_MODE !== 'libre') fillBeat(intro, 0, 0);
     intro
       .add(map.phase(0), 0)
       .fromTo(
@@ -304,8 +384,8 @@ export class OrigenComponent {
     const fly = this.flightFactory(host);
     const scene = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
     scene.addLabel('m0', 0);
-    let cursor = SCENE_MODE === 'libre' ? 0.3 : HOLD * 0.6;
-    if (SCENE_MODE === 'libre') fillBeat(scene, 0, 0);
+    let cursor = ORIGEN_MODE === 'libre' ? 0.3 : 0;
+    if (ORIGEN_MODE === 'libre') fillBeat(scene, 0, 0);
     for (const n of [1, 2, 3]) {
       const at = cursor;
       fillBeat(scene, n, at);
@@ -345,15 +425,14 @@ export class OrigenComponent {
         end = Math.max(end, at + 1.05);
       }
       scene.addLabel(`m${n}`, end);
-      cursor = end + HOLD;
+      cursor = end;
     }
     // Pausa final con el último momento completo
-    if (HOLD) scene.to({}, { duration: HOLD }, '>');
 
     const pin = q('.origen-pin')[0];
     const last = scene.labels['m3'];
 
-    if (SCENE_MODE === 'libre') {
+    if (ORIGEN_MODE === 'libre') {
       // Sin parte fija: la historia avanza mientras la sección cruza la pantalla y, al
       // completarse, queda en su estado final (no retrocede al subir).
       const st = ScrollTrigger.create({
@@ -398,7 +477,7 @@ export class OrigenComponent {
     const st = ScrollTrigger.create({
       trigger: pin,
       start: 'top top',
-      end: SCENE_MODE === 'pausas' ? '+=420%' : '+=240%',
+      end: '+=120%',
       pin: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
@@ -413,17 +492,6 @@ export class OrigenComponent {
       onEnterBack: () => (left = false),
       onUpdate: (self) => {
         if (done) return;
-        if (SCENE_MODE === 'pausas') {
-          // La escena avanza con el scroll (amortiguado) y descansa tras cada momento
-          gsap.to(scene, {
-            time: self.progress * scene.duration(),
-            duration: 1.4,
-            ease: 'power2.out',
-            overwrite: true,
-            onComplete: () => scene.progress() > 0.999 && finish(),
-          });
-          return;
-        }
         // 'momentos': al cruzar cada tercio de la parte fija se reproduce el momento completo
         const target = Math.round(self.progress * 3);
         if (target === current) return;

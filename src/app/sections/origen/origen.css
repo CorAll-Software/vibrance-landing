@@ -354,3 +354,28 @@
     animation: none;
   }
 }
+
+/* ---------- Parte 1 fija (escritorio): mismo media query que SCENE_MQ en origen.ts ---------- */
+@media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .origen-intro {
+    height: 100svh;
+    min-height: 0;
+    padding-block: calc(72px + 2rem) 2rem; /* header fijo */
+  }
+  /* Capa del doble de alto: las montañas arriba y la tierra debajo; el scroll la sube */
+  .origen-mountains {
+    inset: 0 0 auto 0;
+    height: 200%;
+    background:
+      url('/svg/andes.svg') center top / 100% 50% no-repeat,
+      linear-gradient(to bottom, transparent 50%, rgb(79 122 58 / 0.35) 100%);
+    will-change: transform;
+  }
+  /* Los párrafos se apilan en la misma celda: uno a la vez */
+  .intro-lines {
+    display: grid;
+  }
+  .intro-line {
+    grid-area: 1 / 1;
+  }
+}
