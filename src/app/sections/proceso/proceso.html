@@ -1,6 +1,7 @@
 <section
   id="proceso"
   class="bg-palta text-niebla"
+  [class.proceso-h]="horizontal"
   aria-labelledby="proceso-title"
   *transloco="let t; prefix: 'proceso'"
 >
@@ -41,7 +42,11 @@
     <!-- El recorrido horizontal es siempre LTR (también en árabe/hebreo); el texto conserva su dirección -->
     <ol class="track" dir="ltr">
       @for (s of steps; track s.id; let i = $index) {
-        <li class="step" [class.is-active]="i === active()">
+        <li
+          class="step"
+          [class.is-active]="i === active()"
+          [attr.data-reveal]="horizontal ? null : ''"
+        >
           <div class="step__media relative overflow-hidden rounded-[1.75rem] bg-palta-deep">
             <img
               [ngSrc]="s.image"

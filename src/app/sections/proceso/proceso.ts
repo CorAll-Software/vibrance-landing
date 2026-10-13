@@ -24,8 +24,8 @@ const HORIZONTAL_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-prefe
  * Proceso ⭐ momento memorable.
  * Escritorio: la sección se fija (pin) y el scroll vertical desplaza las etapas en horizontal.
  * Cómo avanza se elige en core/config/scroll.config.ts (SCENE_MODE): 'momentos' (cada etapa
- * se desliza completa al cruzar un punto) o 'pausas' (avanza con el scroll y se detiene en
- * cada etapa).
+ * se desliza completa al cruzar un punto), 'pausas' (avanza con el scroll y se detiene en
+ * cada etapa) o 'libre' (sin parte fija: las etapas van en vertical y entran al pasar).
  * Móvil o movimiento reducido: línea de tiempo vertical, sin pin.
  */
 @Component({
@@ -36,6 +36,8 @@ const HORIZONTAL_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-prefe
   styleUrl: './proceso.css',
 })
 export class ProcesoComponent {
+  /** Recorrido horizontal con parte fija (no se usa en el modo 'libre'). */
+  protected readonly horizontal = SCENE_MODE !== 'libre';
   protected readonly steps = PROCESS_STEPS;
   protected readonly active = signal(0);
   protected readonly lang = inject(LanguageService);
@@ -61,6 +63,7 @@ export class ProcesoComponent {
         );
         host.querySelectorAll<HTMLVideoElement>('.step-video').forEach((v) => io!.observe(v));
 
+        if (!this.horizontal) return;
         mm = gsap.matchMedia(host);
         mm.add(HORIZONTAL_MQ, () => {
           const track = host.querySelector<HTMLElement>('.track')!;
