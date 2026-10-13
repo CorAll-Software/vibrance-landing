@@ -137,3 +137,23 @@
     font-size: clamp(5rem, 9vw, 8.5rem);
   }
 }
+
+/* Laptops bajas: que la escena fija quepa en la altura de la ventana (solo recorrido horizontal) */
+@media (min-width: 1024px) and (max-height: 760px) and (prefers-reduced-motion: no-preference) {
+  .proceso-h .pin {
+    gap: 1.75rem;
+  }
+  .proceso-h .head {
+    padding-top: 4rem;
+  }
+  .proceso-h .head h2 {
+    font-size: clamp(2rem, 6.5svh, 3.75rem);
+  }
+  .proceso-h .step__media {
+    max-height: 40svh;
+  }
+  .proceso-h .step__num {
+    font-size: clamp(3rem, 12svh, 6rem);
+    margin-bottom: 0.5rem;
+  }
+}
