@@ -63,10 +63,23 @@ export const HERO = {
 /* ──────────────────────────── ORIGEN ──────────────────────────── */
 /* "Nace en el desierto que florece" */
 
-export const ORIGEN: SectionMedia = {
+export interface OrigenMedia extends SectionMedia {
+  /**
+   * Cara trasera de la tarjeta: se muestra cuando la tarjeta se voltea al pasar al segundo
+   * párrafo. Puede ser imagen, video o ambos (la imagen se ve mientras carga el video).
+   */
+  back: SectionMedia;
+}
+
+export const ORIGEN: OrigenMedia = {
   image:
     'https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   // video: { mp4: 'https://…/desierto-cultivo.mp4' },
+  back: {
+    // TODO: cambiar por la imagen o el video que se mostrará al voltear la tarjeta
+    image: 'media/hero-campo-poster.webp',
+    // video: { mp4: 'https://…/seleccion-productores.mp4' },
+  },
 };
 
 /* ──────────────────────────── PROCESO ─────────────────────────── */

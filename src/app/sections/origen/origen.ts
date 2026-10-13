@@ -31,6 +31,15 @@ import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
  */
 const ORIGEN_MODE: 'libre' | 'momentos' = SCENE_MODE === 'libre' ? 'libre' : 'momentos';
 
+/**
+ * Cómo avanza la escena fija del mapa:
+ * - 'pausas': sigue al scroll (amortiguado) y se detiene un tramo después de cada momento.
+ * - 'momentos': al cruzar cada tercio, el momento se reproduce completo solo.
+ */
+const MAP_MODE: 'pausas' | 'momentos' = 'pausas';
+/** Modo 'pausas': tramo de descanso tras cada momento (en unidades de la línea de tiempo). */
+const HOLD = MAP_MODE === 'pausas' ? 0.6 : 0;
+
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 /** Escena fija solo en escritorio con altura suficiente y sin "reducir movimiento" (ver origen.css). */
@@ -42,6 +51,8 @@ const SCENE_MQ =
  * cada momento tarda MOVE en ocurrir.
  */
 const MOVE = 1;
+/** Largo de la parte 1 fija, en pantallas (relevo de párrafos, volteo y vuelo de la mariposa). */
+const INTRO_PIN = 1.1;
 
 /**
  * Qué fruta aporta cada región a la cesta cuando se marca en el mapa
@@ -59,17 +70,15 @@ const FLIGHT = 0.42;
 
 /**
  * Recorridos de las mariposas viajeras (lienzo de 1440 × 900 que cubre la sección).
- * Entran y salen por los bordes, por fuera del contenido: entre el título y el mapa, arriba a
- * la derecha, abajo a la derecha y abajo a la izquierda.
+ * Van por los márgenes, sin cruzar el título ni el contenido: por el borde izquierdo, por el
+ * borde derecho, abajo a la derecha y abajo a la izquierda.
  */
 const TRAILS = [
-  'M-40 250C110 205 300 196 470 200S700 190 760 120S800 40 820 -40',
-  'M940 -40C980 120 1100 150 1220 160S1400 210 1480 250',
+  'M-40 720C70 610 30 440 130 320S230 110 110 -40',
+  'M1480 140C1370 240 1430 400 1340 520S1300 760 1410 940',
   'M1150 940C1220 858 1290 806 1370 770S1450 712 1490 700',
   'M-40 800C30 836 80 880 120 940',
 ];
-/** Línea que une la parte 1 con el mapa (lienzo de 1440 × 520): baja de derecha a izquierda. */
-const BRIDGE_PATH = 'M1120 -40C1100 90 860 80 760 190S520 330 380 360S160 470 190 560';
 
 /** Segundos que tarda cada viajera en cruzar y pausa antes de volver a salir. */
 const TRAVEL = 9;
@@ -109,7 +118,6 @@ export class OrigenComponent {
   protected readonly ui = inject(UiStateService);
   protected readonly flyers = DELIVERY.flatMap(([, fruits]) => fruits);
   protected readonly trails = TRAILS;
-  protected readonly bridgePath = BRIDGE_PATH;
   /** Foto / video de la parte "Nace en el desierto que florece" (core/config/media.config.ts). */
   protected readonly media = ORIGEN;
   /** Los 4 momentos de la escena del mapa (uno por barrita de avance). */
@@ -117,6 +125,7 @@ export class OrigenComponent {
   /** true si se usa la escena fija (se decide al cargar). */
   protected readonly scene = typeof window !== 'undefined' && window.matchMedia(SCENE_MQ).matches;
 
+  private travelersIo?: IntersectionObserver;
   private readonly map = viewChild.required(MapPeruComponent);
   private readonly basket = viewChild.required(BasketComponent);
 
@@ -132,7 +141,6 @@ export class OrigenComponent {
           // Escritorio: las dos partes son escenas fijas (el orden importa: el de la página)
           if (this.scene) {
             this.buildIntro(host);
-            this.buildBridge(host);
             this.buildScene(host);
             this.buildTravelers(host);
             return;
@@ -153,18 +161,18 @@ export class OrigenComponent {
               },
             },
           );
-          // La foto se aleja un poco mientras se atraviesa
+          // La tarjeta se voltea al cruzar el centro de la pantalla
           gsap.fromTo(
-            '.origen-photo',
-            { scale: 1.18 },
+            '.flip-card',
+            { rotateY: 0 },
             {
-              scale: 1,
-              ease: 'none',
+              rotateY: 180,
+              ease: 'power1.inOut',
               scrollTrigger: {
                 trigger: '.origen-frame',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
+                start: 'center 65%',
+                end: 'center 35%',
+                scrub: 0.6,
               },
             },
           );
@@ -174,13 +182,15 @@ export class OrigenComponent {
     });
 
     inject(DestroyRef).onDestroy(() => {
+      this.travelersIo?.disconnect();
       ctx?.revert();
     });
   }
 
   /**
-   * Parte 1: un scroll fijo y luego una salida lineal. Mientras está fija, la foto se queda
-   * pegada, los párrafos se relevan y las montañas bajan de la cumbre a la tierra. Al soltarse
+   * Parte 1: un scroll fijo y luego una salida lineal. Mientras está fija, los párrafos se relevan,
+   * la tarjeta se voltea mostrando su otra cara, las montañas se mueven apenas y una mariposa
+   * grande cruza de izquierda a derecha. Al soltarse
    * sigue el scroll normal: el texto sale primero y la foto después (cascada inversa), y la
    * parte 2 llega por debajo sin taparla.
    */
@@ -195,16 +205,60 @@ export class OrigenComponent {
       scrollTrigger: {
         trigger: intro,
         start: 'top top',
-        end: () => `+=${window.innerHeight * 0.6}`,
+        end: () => `+=${window.innerHeight * INTRO_PIN}`,
         scrub: 0.6,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
       },
     });
-    // Montañas: la capa mide el doble de la pantalla (cumbres arriba, tierra abajo)
-    tl.fromTo('.origen-mountains', { yPercent: 0 }, { yPercent: -50, duration: 1 }, 0);
-    tl.fromTo('.origen-photo', { scale: 1.18 }, { scale: 1, duration: 1 }, 0);
+    // Montañas: se desplazan apenas (siguen a la vista durante toda la escena)
+    tl.fromTo(
+      '.origen-mountains',
+      { y: 0, scale: 1 },
+      { y: () => -window.innerHeight * 0.06, scale: 1.03, duration: 1 },
+      0,
+    );
+    // La tarjeta se voltea justo cuando el primer párrafo empieza a irse
+    tl.to('.flip-card', { rotateY: 180, duration: 0.3, ease: 'power2.inOut' }, 0.3).to(
+      '.flip-card',
+      { keyframes: { scale: [1, 0.94, 1] }, duration: 0.3, ease: 'none' },
+      0.3,
+    );
+    // La mariposa grande cruza de izquierda a derecha (sale por la derecha a buscar la cesta)
+    const bf = host.querySelector<HTMLElement>('.intro-bf');
+    if (bf) {
+      const W = () => window.innerWidth;
+      const H = () => window.innerHeight;
+      // Curva cúbica (proporcional a la pantalla): entra por la izquierda, ondula y sale arriba a la derecha
+      const curve = (t: number) => {
+        const p = [
+          [-0.15 * W(), 0.84 * H()],
+          [0.3 * W(), 0.62 * H()],
+          [0.62 * W(), 1.02 * H()],
+          [1.12 * W(), 0.32 * H()],
+        ];
+        const u = 1 - t;
+        const k = [u * u * u, 3 * u * u * t, 3 * u * t * t, t * t * t];
+        const d = [-3 * u * u, 3 * u * u - 6 * u * t, 6 * u * t - 3 * t * t, 3 * t * t];
+        const pt = (w: number[], i: number) => w.reduce((acc, c, j) => acc + c * p[j][i], 0);
+        return { x: pt(k, 0), y: pt(k, 1), angle: Math.atan2(pt(d, 1), pt(d, 0)) };
+      };
+      const flight = { t: 0 };
+      const place = () => {
+        const c = curve(flight.t);
+        // El dibujo mira hacia arriba: +90° para que apunte en la dirección del vuelo
+        gsap.set(bf, { x: c.x, y: c.y, rotation: (c.angle * 180) / Math.PI + 90 });
+      };
+      tl.set(bf, { autoAlpha: 1 }, 0.04)
+        .fromTo(
+          flight,
+          { t: 0 },
+          { t: 1, duration: 0.9, ease: 'sine.inOut', onUpdate: place, onStart: place },
+          0.04,
+        )
+        .set(bf, { autoAlpha: 0 }, 0.95);
+    }
     // Relevo de párrafos: el actual sale hacia arriba mientras entra el siguiente
     lines.forEach((line, i) => {
       if (i === 0) return;
@@ -233,10 +287,9 @@ export class OrigenComponent {
     // El tope de un bloque fijo se mide en su contenedor `.pin-spacer`: no cambia al fijarse
     const top = (el: HTMLElement) =>
       (el.closest<HTMLElement>('.pin-spacer') ?? el).getBoundingClientRect().top + window.scrollY;
-    const zoneStart = () => top(intro) + window.innerHeight * 0.6;
+    const zoneStart = () => top(intro) + window.innerHeight * INTRO_PIN;
     const zoneEnd = () => top(card);
-    // Más despacio que otros momentos: en este tramo la mariposa traza la línea del puente
-    const go = (y: number) => this.scroll.scrollToY(y, MOMENT_DURATION * 1.8);
+    const go = (y: number) => this.scroll.scrollToY(y, MOMENT_DURATION * 1.2);
     ScrollTrigger.create({
       start: zoneStart,
       end: zoneEnd,
@@ -345,52 +398,13 @@ export class OrigenComponent {
         .set(trail, { opacity: 1 });
       all.add(tl, 0);
     });
-    ScrollTrigger.create({
-      trigger: host.querySelector('.origen-pin'),
-      start: 'top bottom',
-      end: 'bottom top',
-      onToggle: (self) => (self.isActive ? all.play() : all.pause()),
-    });
-  }
-
-  /**
-   * Puente entre las dos partes: al hacer scroll, la mariposa recorre la curva y la línea se
-   * dibuja detrás de ella, exactamente hasta donde llegó; al terminar, línea y mariposa se desvanecen.
-   */
-  private buildBridge(host: HTMLElement): void {
-    const bridge = host.querySelector<HTMLElement>('.origen-bridge');
-    const guide = host.querySelector<SVGPathElement>('.bridge-guide');
-    const reveal = host.querySelector<SVGPathElement>('.bridge-reveal');
-    const line = host.querySelector<SVGPathElement>('.bridge-line');
-    const bf = host.querySelector<HTMLElement>('.bridge-bf');
-    if (!bridge || !guide || !reveal || !line || !bf) return;
-
-    const len = reveal.getTotalLength();
-    gsap.set(reveal, { strokeDasharray: len, strokeDashoffset: len });
-    gsap.set(bf, { autoAlpha: 0 });
-
-    const tl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: bridge,
-        start: 'top 80%',
-        end: 'bottom 45%',
-        scrub: 0.5,
-        invalidateOnRefresh: true,
-      },
-    });
-    tl.set(bf, { autoAlpha: 1 }, 0)
-      .to(
-        bf,
-        {
-          motionPath: { path: guide, align: guide, alignOrigin: [0.5, 0.5], autoRotate: 90 },
-          duration: 1,
-        },
-        0,
-      )
-      .to(reveal, { strokeDashoffset: 0, duration: 1 }, 0)
-      // al llegar, la mariposa y la línea se desvanecen
-      .to([bf, line], { opacity: 0, duration: 0.25, ease: 'power1.in' }, 1);
+    // Se mueven mientras Origen está a la vista. Se observa la sección completa (no el bloque
+    // fijo: mientras está fijo, el navegador puede darlo por fuera de pantalla y las dejaba quietas)
+    this.travelersIo?.disconnect();
+    this.travelersIo = new IntersectionObserver(([e]) =>
+      e.isIntersecting ? all.play() : all.pause(),
+    );
+    this.travelersIo.observe(host);
   }
 
   /** Arma la escena fija. */
@@ -422,14 +436,13 @@ export class OrigenComponent {
     });
     // En modo libre la primera barrita la llena la escena misma (sigue al scroll)
     if (ORIGEN_MODE !== 'libre') fillBeat(intro, 0, 0);
-    intro
-      .add(map.phase(0), 0)
-      .fromTo(
-        q('.carrier'),
-        { x: () => window.innerWidth * 0.55, y: () => -window.innerHeight * 0.45, rotation: -10 },
-        { x: 0, y: 0, rotation: 0, duration: 1.8, ease: 'power3.out' },
-        0.2,
-      );
+    intro.add(map.phase(0), 0).fromTo(
+      q('.carrier'),
+      // La mariposa vuelve desde la derecha trayendo la cesta Vibrance
+      { x: () => window.innerWidth * 0.6, y: () => -window.innerHeight * 0.08, rotation: -8 },
+      { x: 0, y: 0, rotation: 0, duration: 1.8, ease: 'power3.out' },
+      0.2,
+    );
 
     // Momentos 2–4: la sección se fija y el scroll avanza la historia
     const fly = this.flightFactory(host);
@@ -476,9 +489,10 @@ export class OrigenComponent {
         end = Math.max(end, at + 1.05);
       }
       scene.addLabel(`m${n}`, end);
-      cursor = end;
+      cursor = end + HOLD;
     }
     // Pausa final con el último momento completo
+    if (HOLD) scene.to({}, { duration: HOLD }, '>');
 
     const pin = q('.origen-pin')[0];
     const last = scene.labels['m3'];
@@ -528,7 +542,7 @@ export class OrigenComponent {
     const st = ScrollTrigger.create({
       trigger: pin,
       start: 'top top',
-      end: '+=120%',
+      end: MAP_MODE === 'pausas' ? '+=320%' : '+=120%',
       pin: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
@@ -543,6 +557,17 @@ export class OrigenComponent {
       onEnterBack: () => (left = false),
       onUpdate: (self) => {
         if (done) return;
+        if (MAP_MODE === 'pausas') {
+          // Sigue al scroll con un leve retraso; los descansos están en la línea de tiempo
+          gsap.to(scene, {
+            time: self.progress * scene.duration(),
+            duration: 1.2,
+            ease: 'power2.out',
+            overwrite: true,
+            onComplete: () => scene.progress() > 0.999 && finish(),
+          });
+          return;
+        }
         // 'momentos': al cruzar cada tercio de la parte fija se reproduce el momento completo
         const target = Math.round(self.progress * 3);
         if (target === current) return;
