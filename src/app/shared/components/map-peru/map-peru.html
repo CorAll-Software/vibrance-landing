@@ -1,0 +1,177 @@
+<figure
+  class="map relative mx-auto w-full max-w-[28rem]"
+  dir="ltr"
+  *transloco="let t; prefix: 'origen'"
+>
+  <svg
+    [attr.viewBox]="viewBox"
+    class="block h-auto w-full overflow-visible"
+    role="img"
+    [attr.aria-label]="t('mapLabel')"
+  >
+    <defs>
+      <clipPath id="mp-peru-clip"><path [attr.d]="path" /></clipPath>
+      <!-- Degradados de cada región (luz desde arriba a la izquierda) -->
+      <linearGradient id="mp-g-costa" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FBEFC6" />
+        <stop offset="1" stop-color="#EBD497" />
+      </linearGradient>
+      <linearGradient id="mp-g-sierra" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#D49A5C" />
+        <stop offset="1" stop-color="#A9703C" />
+      </linearGradient>
+      <linearGradient id="mp-g-selva" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7FAE57" />
+        <stop offset="1" stop-color="#4E7D37" />
+      </linearGradient>
+      <!-- Bordes suaves entre regiones -->
+      <filter id="mp-soft" x="-5%" y="-5%" width="110%" height="110%">
+        <feGaussianBlur stdDeviation="2.5" />
+      </filter>
+      <!-- Relieve: textura de terreno iluminada (más marcada en la sierra) -->
+      <filter id="mp-relief" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="4" seed="7" />
+        <feDiffuseLighting surfaceScale="2.6" lighting-color="#ffffff">
+          <feDistantLight azimuth="225" elevation="40" />
+        </feDiffuseLighting>
+        <feComposite in2="SourceGraphic" operator="in" />
+      </filter>
+      <!-- Sombra del país sobre el fondo -->
+      <filter id="mp-drop" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="5" />
+      </filter>
+      <linearGradient id="mp-sheen" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0.22" />
+        <stop offset="0.5" stop-color="#fff" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+
+    <!-- Regiones naturales (estilizadas), recortadas con el contorno del país -->
+    <path
+      class="region"
+      [attr.d]="path"
+      fill="#1E3B2F"
+      opacity="0.22"
+      transform="translate(3 7)"
+      filter="url(#mp-drop)"
+    />
+    <g clip-path="url(#mp-peru-clip)">
+      <g filter="url(#mp-soft)">
+        <path class="region" [attr.d]="path" fill="url(#mp-g-sierra)" />
+        <path class="region" [attr.d]="coast" fill="url(#mp-g-costa)" />
+        <path class="region" [attr.d]="jungle" fill="url(#mp-g-selva)" />
+      </g>
+      <!-- Relieve y brillo -->
+      <path
+        class="region"
+        [attr.d]="path"
+        fill="#fff"
+        filter="url(#mp-relief)"
+        opacity="0.32"
+        style="mix-blend-mode: multiply"
+      />
+      <path class="region" [attr.d]="path" fill="url(#mp-sheen)" />
+    </g>
+    <path
+      [attr.d]="path"
+      fill="none"
+      stroke="#1E3B2F"
+      stroke-opacity="0.85"
+      stroke-width="1.3"
+      stroke-linejoin="round"
+    />
+
+    <!-- Puertos de embarque -->
+    @for (p of ports; track p.id) {
+      <g class="port" [attr.data-id]="p.id" [attr.transform]="'translate(' + p.x + ' ' + p.y + ')'">
+        <circle r="7" fill="#F7F8F5" stroke="#1E3B2F" stroke-width="1.6" />
+        <circle r="2.6" fill="#1E3B2F" />
+        <text x="-12" y="4.5" text-anchor="end" class="port-label">
+          {{ t('ports.' + p.id) }}
+        </text>
+      </g>
+    }
+  </svg>
+
+  <!-- Regiones de origen: ícono de la fruta principal, pulso y mini tarjeta -->
+  <ul class="absolute inset-0">
+    @for (z of zones; track z.id) {
+      <li
+        [attr.data-id]="z.id"
+        class="zone absolute"
+        [style.left.%]="z.x"
+        [style.top.%]="z.y"
+        [class.is-open]="active() === z.id"
+      >
+        <button
+          type="button"
+          class="marker group relative grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full"
+          [attr.aria-label]="t('zonas.' + z.id + '.name') + ': ' + t('zonas.' + z.id + '.crops')"
+          [attr.aria-expanded]="active() === z.id"
+          (click)="toggle(z.id)"
+          (blur)="active() === z.id && active.set(null)"
+        >
+          <span class="pulse" aria-hidden="true"></span>
+          <span class="pulse pulse--late" aria-hidden="true"></span>
+          <span
+            class="relative grid size-10 place-items-center rounded-full bg-niebla shadow-[0_4px_14px_rgb(20_42_32/0.25)] ring-2 ring-palta/80 transition-transform duration-300 group-hover:scale-110"
+          >
+            <app-fruit-icon [fruit]="z.fruits[0]" [size]="26" />
+          </span>
+
+          <!-- Mini tarjeta -->
+          <span
+            class="card pointer-events-none absolute w-64 overflow-hidden rounded-2xl bg-niebla text-start text-palta shadow-[0_14px_40px_rgb(20_42_32/0.28)]"
+            [attr.data-align]="z.align"
+            [class.card--below]="z.below"
+            [attr.dir]="lang.dir()"
+            role="tooltip"
+          >
+            <img [src]="z.image" alt="" class="h-24 w-full object-cover" loading="lazy" />
+            <span class="block px-4 pt-3 pb-4">
+              <strong class="block font-display text-lg leading-tight">{{
+                t('zonas.' + z.id + '.name')
+              }}</strong>
+              <span class="mt-2 flex flex-col gap-1.5">
+                @for (f of z.fruits; track f) {
+                  <span class="flex items-center gap-2 text-sm">
+                    <app-fruit-icon [fruit]="f" [size]="18" />
+                    <span class="font-semibold whitespace-nowrap">{{
+                      'productos.items.' + f + '.name' | transloco
+                    }}</span>
+                    <span class="ms-auto text-end text-xs text-palta/65">{{
+                      'productos.items.' + f + '.season' | transloco
+                    }}</span>
+                  </span>
+                }
+              </span>
+            </span>
+          </span>
+        </button>
+      </li>
+    }
+  </ul>
+
+  <!-- Leyenda -->
+  <figcaption
+    class="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-palta/80"
+    [attr.dir]="lang.dir()"
+  >
+    @for (r of regions; track r) {
+      <span class="inline-flex items-center gap-2">
+        <span
+          class="size-3.5 rounded-full ring-1 ring-palta/30"
+          [style.background]="colors[r]"
+        ></span>
+        {{ t('regions.' + r) }}
+      </span>
+    }
+    <span class="inline-flex items-center gap-2">
+      <svg width="14" height="14" viewBox="-8 -8 16 16" aria-hidden="true">
+        <circle r="6" fill="#F7F8F5" stroke="#1E3B2F" stroke-width="1.6" />
+        <circle r="2.4" fill="#1E3B2F" />
+      </svg>
+      {{ t('legendPort') }}
+    </span>
+  </figcaption>
+</figure>

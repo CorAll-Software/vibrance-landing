@@ -36,7 +36,8 @@ export class SmoothScrollService {
     if (this.lenis || !this.document.defaultView) return;
     this.zone.runOutsideAngular(() => {
       if (!this.reducedMotion()) {
-        this.lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+        // Inercia suave: cada giro de rueda avanza un poco menos y frena de a pocos
+        this.lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 0.85, smoothWheel: true });
         this.lenis.on('scroll', ScrollTrigger.update);
         if (this.stopRequests > 0) this.lenis.stop();
         gsap.ticker.add(this.tick);
@@ -47,11 +48,22 @@ export class SmoothScrollService {
     });
   }
 
+  /** true mientras la página se desplaza sola (navegación del menú o transición automática). */
+  autoScrolling = false;
+  private autoTimer?: ReturnType<typeof setTimeout>;
+
+  private markAuto(seconds: number): void {
+    this.autoScrolling = true;
+    clearTimeout(this.autoTimer);
+    this.autoTimer = setTimeout(() => (this.autoScrolling = false), seconds * 1000 + 150);
+  }
+
   /** Desplaza a un ancla (#id) respetando el header fijo. */
   scrollTo(target: string | HTMLElement, offset = -72): void {
     const el =
       typeof target === 'string' ? this.document.querySelector<HTMLElement>(target) : target;
     if (!el) return;
+    this.markAuto(1.2);
     if (this.lenis) {
       this.lenis.scrollTo(el, { offset, duration: 1.2 });
     } else {
@@ -61,6 +73,37 @@ export class SmoothScrollService {
     // Lleva el foco a la sección para usuarios de teclado / lector de pantalla
     if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
     el.focus({ preventScroll: true });
+  }
+
+  /**
+   * Desplaza a una posición vertical exacta (px) con una transición completa.
+   * Mientras dura, el scroll del usuario queda en pausa para que la transición no se corte.
+   */
+  scrollToY(y: number, duration = 0.7): void {
+    this.markAuto(duration);
+    if (this.lenis) {
+      this.lenis.scrollTo(y, {
+        duration,
+        lock: true,
+        easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+      });
+    } else {
+      window.scrollTo({ top: y, behavior: this.reducedMotion() ? 'auto' : 'smooth' });
+    }
+  }
+
+  /**
+   * Corre la página `dy` px al instante sin que se note (sin cortar la inercia de Lenis).
+   * Sirve para compensar cuando el contenido de arriba cambia de alto.
+   */
+  shiftBy(dy: number): void {
+    if (this.lenis) {
+      const target = this.lenis.targetScroll + dy;
+      this.lenis.scrollTo(this.lenis.animatedScroll + dy, { immediate: true, force: true });
+      this.lenis.scrollTo(target, { force: true });
+    } else {
+      window.scrollTo({ top: window.scrollY + dy, behavior: 'auto' });
+    }
   }
 
   stop(): void {

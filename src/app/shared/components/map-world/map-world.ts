@@ -6,6 +6,7 @@ import {
   NgZone,
   afterNextRender,
   inject,
+  input,
 } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { gsap } from 'gsap';
@@ -96,6 +97,8 @@ const project = (p: GeoPoint) => ({
   `,
 })
 export class MapWorldComponent {
+  /** true: la sección padre controla la animación (escena de Origen). */
+  readonly managed = input(false);
   protected readonly vbW = VB_W;
   protected readonly vbH = VB_H;
   protected readonly origin = project(ORIGIN);
@@ -117,28 +120,47 @@ export class MapWorldComponent {
     return { id: d.id, d: `M${a.x} ${a.y} Q${mx} ${my} ${b.x} ${b.y}` };
   });
 
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+
   constructor() {
-    const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
     const zone = inject(NgZone);
     const scroll = inject(SmoothScrollService);
     let ctx: gsap.Context | undefined;
 
     afterNextRender(() => {
-      if (scroll.reducedMotion()) return;
+      if (this.managed() || scroll.reducedMotion()) return;
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
-          const tl = gsap.timeline({
-            scrollTrigger: { trigger: host, start: 'top 75%', once: true },
-          });
-          // Las rutas se dibujan desde Perú y luego aparecen los destinos
-          tl.fromTo(
-            '.route',
-            { strokeDasharray: '0 1' },
-            { strokeDasharray: '1 0', duration: 1.2, ease: 'power2.inOut', stagger: 0.06 },
-          ).from('.marker', { scale: 0, opacity: 0, duration: 0.35, stagger: 0.05 }, '-=0.6');
-        }, host);
+          this.prepare();
+          gsap
+            .timeline({ scrollTrigger: { trigger: this.host, start: 'top 75%', once: true } })
+            .add(this.phase());
+        }, this.host);
       });
     });
     inject(DestroyRef).onDestroy(() => ctx?.revert());
+  }
+
+  /** Estado inicial: sin rutas ni destinos. */
+  prepare(): void {
+    gsap.set(this.host.querySelectorAll('.route'), { strokeDasharray: '0 1' });
+    gsap.set(this.host.querySelectorAll('.marker'), { scale: 0, opacity: 0 });
+  }
+
+  /** Las rutas se dibujan desde el Perú y luego aparecen los destinos. */
+  phase(): gsap.core.Timeline {
+    return gsap
+      .timeline()
+      .to(this.host.querySelectorAll('.route'), {
+        strokeDasharray: '1 0',
+        duration: 1.2,
+        ease: 'power2.inOut',
+        stagger: 0.06,
+      })
+      .to(
+        this.host.querySelectorAll('.marker'),
+        { scale: 1, opacity: 1, duration: 0.35, stagger: 0.05 },
+        '-=0.6',
+      );
   }
 }

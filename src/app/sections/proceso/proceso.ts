@@ -11,9 +11,11 @@ import {
 import { NgOptimizedImage } from '@angular/common';
 import { TranslocoDirective } from '@jsverse/transloco';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PROCESS_STEPS } from '../../data/proceso.data';
 import { LanguageService } from '../../core/services/language.service';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
+import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
 
 /** Debe coincidir con la media query de proceso.css */
 const HORIZONTAL_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-preference)';
@@ -21,6 +23,9 @@ const HORIZONTAL_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-prefe
 /**
  * Proceso ⭐ momento memorable.
  * Escritorio: la sección se fija (pin) y el scroll vertical desplaza las etapas en horizontal.
+ * Cómo avanza se elige en core/config/scroll.config.ts (SCENE_MODE): 'momentos' (cada etapa
+ * se desliza completa al cruzar un punto) o 'pausas' (avanza con el scroll y se detiene en
+ * cada etapa).
  * Móvil o movimiento reducido: línea de tiempo vertical, sin pin.
  */
 @Component({
@@ -62,24 +67,66 @@ export class ProcesoComponent {
           const distance = () => track.scrollWidth - track.clientWidth;
           const last = this.steps.length - 1;
 
-          gsap.to(track, {
-            x: () => -distance(),
-            ease: 'none',
+          const update = () => {
+            const f = Math.min(1, -Number(gsap.getProperty(track, 'x')) / (distance() || 1));
+            gsap.set('.progress-fill', { scaleX: f });
+            const i = Math.min(last, Math.round(f * last));
+            if (i !== this.active()) this.active.set(i);
+          };
+
+          if (SCENE_MODE === 'momentos') {
+            // Al cruzar cada tramo de la parte fija, el carril se desliza completo a la etapa
+            let current = 0;
+            const goTo = (i: number, duration = MOMENT_DURATION * 0.8) =>
+              gsap.to(track, {
+                x: -distance() * (i / last),
+                duration,
+                ease: 'power2.inOut',
+                overwrite: true,
+                onUpdate: update,
+              });
+            ScrollTrigger.create({
+              trigger: host.querySelector('.pin'),
+              start: 'top top',
+              end: () => `+=${window.innerHeight * 0.75 * last}`,
+              pin: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onRefresh: () => goTo(current, 0),
+              onUpdate: (self) => {
+                const target = Math.round(self.progress * last);
+                if (target === current) return;
+                current = target;
+                goTo(target);
+              },
+            });
+            return;
+          }
+
+          // 'pausas': avanza con el scroll (amortiguado) y se detiene en cada etapa
+          const MOVE = 1; // tramo en que se pasa de una etapa a la siguiente
+          const HOLD = 0.6; // pausa en cada etapa
+          const tl = gsap.timeline({
+            defaults: { ease: 'power1.inOut' },
             scrollTrigger: {
               trigger: host.querySelector('.pin'),
               start: 'top top',
-              end: () => `+=${distance()}`,
+              // Más largo que el recorrido para dar espacio a las pausas
+              end: () => `+=${distance() * ((last * (MOVE + HOLD) + HOLD) / last)}`,
               pin: true,
-              scrub: 0.8,
+              scrub: 1.2, // avance amortiguado
               anticipatePin: 1,
               invalidateOnRefresh: true,
-              onUpdate: (self) => {
-                gsap.set('.progress-fill', { scaleX: self.progress });
-                const i = Math.min(last, Math.round(self.progress * last));
-                if (i !== this.active()) this.active.set(i);
-              },
             },
+            onUpdate: update,
           });
+          tl.to({}, { duration: HOLD / 2 }); // pausa en la etapa 01
+          for (let i = 1; i <= last; i++) {
+            tl.to(track, { x: () => -distance() * (i / last), duration: MOVE }).to(
+              {},
+              { duration: i === last ? HOLD / 2 : HOLD },
+            );
+          }
         });
       });
     });

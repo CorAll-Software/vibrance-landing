@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, afterNextRender, inject } from '@angular/core';
 import { SmoothScrollService } from './core/services/smooth-scroll.service';
+import { initReveals } from './core/utils/reveal';
 import { LoaderComponent } from './layout/loader/loader';
 import { HeaderComponent } from './layout/header/header';
 import { FooterComponent } from './layout/footer/footer';
@@ -10,6 +11,7 @@ import { ProductosComponent } from './sections/productos/productos';
 import { DatosComponent } from './sections/datos/datos';
 import { ContactoComponent } from './sections/contacto/contacto';
 import { QuoteModalComponent } from './sections/contacto/quote-modal';
+import { WhatsappButtonComponent } from './shared/components/whatsapp-button/whatsapp-button';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,7 @@ import { QuoteModalComponent } from './sections/contacto/quote-modal';
     DatosComponent,
     ContactoComponent,
     QuoteModalComponent,
+    WhatsappButtonComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './app.css',
@@ -32,6 +35,9 @@ import { QuoteModalComponent } from './sections/contacto/quote-modal';
 export class App {
   constructor() {
     const scroll = inject(SmoothScrollService);
-    afterNextRender(() => scroll.init());
+    afterNextRender(() => {
+      scroll.init();
+      initReveals(scroll.reducedMotion());
+    });
   }
 }

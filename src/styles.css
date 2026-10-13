@@ -20,8 +20,9 @@
   --color-palta-deep: #142a20;
   --color-hoja: #4f7a3a;
   --color-arena: #d8c49b;
-  --color-mandarina: #f28c28;
-  --color-mandarina-hover: #f6a24f;
+  /* Acento de los CTA, según el branding (mango #F2A33A) */
+  --color-mandarina: #f2a33a;
+  --color-mandarina-hover: #f5b862;
   --color-arandano: #3b3f7a;
   --color-niebla: #f7f8f5;
 

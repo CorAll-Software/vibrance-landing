@@ -6,10 +6,16 @@
 >
   <div class="pin flex flex-col py-24 lg:py-0">
     <div class="head container-page grid gap-6 md:grid-cols-12 md:items-end">
-      <h2 id="proceso-title" class="text-4xl leading-[1.05] font-bold md:col-span-6 md:text-6xl">
+      <h2
+        data-reveal
+        id="proceso-title"
+        class="text-4xl leading-[1.05] font-bold md:col-span-6 md:text-6xl"
+      >
         {{ t('heading') }}
       </h2>
-      <p class="measure text-lg text-niebla/75 md:col-span-5 md:col-start-8">{{ t('intro') }}</p>
+      <p data-reveal class="measure text-lg text-niebla/75 md:col-span-5 md:col-start-8">
+        {{ t('intro') }}
+      </p>
 
       <!-- Progreso (solo en modo horizontal) -->
       <div class="progress md:col-span-12" aria-hidden="true" dir="ltr">

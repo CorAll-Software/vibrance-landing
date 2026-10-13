@@ -19,7 +19,6 @@
           playsinline
           [loop]="videos.length === 1"
           [attr.preload]="i === 0 ? 'auto' : 'none'"
-          [attr.autoplay]="i === 0 ? '' : null"
           disablepictureinpicture
           aria-hidden="true"
           (playing)="onPlaying(i)"

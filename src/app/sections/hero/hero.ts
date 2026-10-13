@@ -13,9 +13,14 @@ import {
 import { NgOptimizedImage } from '@angular/common';
 import { TranslocoDirective, translateSignal } from '@jsverse/transloco';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HERO } from '../../core/config/media.config';
+import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { UiStateService } from '../../core/services/ui-state.service';
+
+/** Espera antes de arrancar el video del hero (la página ya muestra la imagen). */
+const VIDEO_DELAY_MS = 100;
 
 @Component({
   selector: 'app-hero',
@@ -63,6 +68,9 @@ export class HeroComponent {
   protected readonly visible = signal(false);
   private host!: HTMLElement;
   private switching = false;
+  /** El primer video no se reproduce hasta que pasa la espera inicial. */
+  private started = false;
+  private startTimer?: ReturnType<typeof setTimeout>;
   private fadeTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
@@ -82,7 +90,7 @@ export class HeroComponent {
       // Pausa los videos cuando el hero no está a la vista (ahorra batería y CPU)
       io = new IntersectionObserver(([e]) => {
         const v = this.videoEl(this.current());
-        if (!v) return;
+        if (!v || !this.started) return;
         if (e.isIntersecting) v.play().catch(() => {});
         else v.pause();
       });
@@ -98,6 +106,9 @@ export class HeroComponent {
     effect(() => {
       if (!this.ui.introDone() || played || !ready()) return;
       played = true;
+      // El video arranca 1 s después de mostrarse la página, desde el inicio,
+      // para que no se vea "empezado" cuando aparece sobre la imagen
+      this.startTimer = setTimeout(() => this.startVideo(), VIDEO_DELAY_MS);
       if (this.scroll.reducedMotion()) return;
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
@@ -121,6 +132,7 @@ export class HeroComponent {
             scrollTrigger: { trigger: host, start: 'top top', end: 'bottom top', scrub: true },
           });
         }, host);
+        this.linkToNextSection(host);
       });
     });
 
@@ -128,6 +140,38 @@ export class HeroComponent {
       ctx?.revert();
       io?.disconnect();
       clearTimeout(this.fadeTimer);
+      clearTimeout(this.startTimer);
+    });
+  }
+
+  private startVideo(): void {
+    const v = this.videoEl(0);
+    if (!v) return;
+    this.started = true;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+  }
+
+  /**
+   * Transición hero ↔ Origen (modo 'momentos'): al empezar a bajar desde el hero, la página
+   * se desliza sola, completa, hasta el inicio de Origen; al empezar a subir desde ahí,
+   * vuelve sola arriba. Scroll lineal (sin superponer secciones).
+   */
+  private linkToNextSection(host: HTMLElement): void {
+    const next = host.nextElementSibling?.querySelector<HTMLElement>('section') ?? null;
+    if (SCENE_MODE !== 'momentos' || !next) return;
+    const nextTop = () => next.getBoundingClientRect().top + window.scrollY;
+    const go = (y: number) => this.scroll.scrollToY(y, MOMENT_DURATION);
+    ScrollTrigger.create({
+      trigger: host,
+      start: 'top top',
+      end: () => `+=${nextTop()}`,
+      onUpdate: (self) => {
+        if (this.scroll.autoScrolling) return;
+        const p = self.progress;
+        if (self.direction > 0 && p > 0.03 && p < 0.97) go(nextTop());
+        else if (self.direction < 0 && p < 0.97 && p > 0.03) go(0);
+      },
     });
   }
 

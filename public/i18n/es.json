@@ -9,7 +9,9 @@
     "skip": "Saltar al contenido",
     "loading": "Cargando",
     "placeholderNote": "Datos de ejemplo, pendientes de confirmar.",
-    "skip_intro": "Saltar intro"
+    "skip_intro": "Saltar intro",
+    "whatsapp": "Escríbenos por WhatsApp",
+    "whatsappMessage": "Hola, me interesa cotizar fruta peruana con Vibrance."
   },
   "nav": {
     "label": "Navegación principal",
@@ -64,7 +66,20 @@
         "name": "Ica",
         "crops": "Uva, palta y mandarina"
       }
-    }
+    },
+    "regions": {
+      "costa": "Costa",
+      "sierra": "Sierra",
+      "selva": "Selva"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Puerto de embarque",
+    "legendRoute": "Ruta al puerto",
+    "treeLabel": "Árbol ilustrado del que brotan arándano, palta, uva, mango, mandarina y kion, que caen en una cesta de Vibrance.",
+    "marketsText": "Mercados con protocolo fitosanitario vigente para al menos uno de nuestros productos."
   },
   "proceso": {
     "heading": "Del productor a tu almacén",
@@ -78,7 +93,7 @@
       },
       "calidad": {
         "title": "Control de calidad",
-        "text": "Revisamos calibre, madurez y estado de cada lote antes de aprobarlo para exportación.",
+        "text": "Revisamos calibre, grados Brix (dulzor), madurez y estado de cada lote antes de aprobarlo para exportación.",
         "alt": "Fruta revisada en control de calidad"
       },
       "empaque": {
@@ -184,7 +199,8 @@
       }
     },
     "markets": "Mercados con protocolo vigente",
-    "marketsNote": "Para otros destinos, consúltanos: revisamos el protocolo antes de cotizar."
+    "marketsNote": "Para otros destinos, consúltanos: revisamos el protocolo antes de cotizar.",
+    "quoteNote": "Variedades, calibres y presentaciones se ajustan en cada cotización."
   },
   "datos": {
     "heading": "Nuestra oferta en cifras",
@@ -200,7 +216,7 @@
         "label": "regiones de origen"
       },
       "mercados": {
-        "label": "mercados con acceso"
+        "label": "mercados con protocolo fitosanitario vigente para fruta peruana"
       }
     },
     "mapTitle": "Dónde puede llegar",
@@ -217,14 +233,40 @@
       "japon": "Japón"
     },
     "certTitle": "Certificaciones",
-    "certPlaceholder": "Certificación {{n}}",
     "marketProducts": "{{n}} productos habilitados",
     "accessTitle": "Acceso por producto",
     "accessText": "No todos los productos pueden entrar a todos los países. Esta tabla muestra dónde hay protocolo vigente; para los demás casos te confirmamos la situación antes de cotizar.",
     "accessCaption": "Mercados con protocolo fitosanitario vigente para cada producto",
     "accessProduct": "Producto",
     "accessYes": "Habilitado",
-    "accessAsk": "Consultar"
+    "accessAsk": "Consultar",
+    "certText": "Trabajamos con plantas de empaque certificadas (BRCGS, HACCP, BPM), autorizadas por SENASA y registradas ante la FDA. La planta y las certificaciones de cada embarque se confirman en la cotización.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Inocuidad alimentaria"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Control de puntos críticos"
+      },
+      "bpm": {
+        "name": "BPM",
+        "desc": "Buenas Prácticas de Manufactura"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Planta autorizada"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Planta registrada (EE. UU.)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Comercio ético"
+      }
+    }
   },
   "contacto": {
     "slogan": "Lo mejor del Perú, en cada caja.",
@@ -265,6 +307,6 @@
     "follow": "Síguenos",
     "language": "Idioma",
     "privacy": "Política de privacidad",
-    "rights": "© {{year}} {{brand}}. Todos los derechos reservados."
+    "rights": "Todos los derechos reservados."
   }
 }

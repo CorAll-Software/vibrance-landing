@@ -23,14 +23,18 @@ export const STATS: Stat[] = [
 ];
 
 /**
- * Certificaciones: se muestran como espacios de logo genéricos hasta que la clienta
- * confirme cuáles tienen sus productores / ella. TODO: dato real de la clienta (agregar `name` y `logo`).
+ * Certificaciones de las plantas de empaque aliadas (fila en movimiento de la sección Datos).
+ * Todas se muestran igual, solo en texto: los logos de BRCGS, SENASA, FDA y Ethical Trading
+ * Initiative no se pueden usar, y así ninguna resalta sobre otra.
+ * Nombre y descripción de cada una: i18n `datos.certs.<id>`.
  */
-export const CERTIFICATIONS: { id: string; name?: string; logo?: string }[] = [
-  { id: 'cert-1' },
-  { id: 'cert-2' },
-  { id: 'cert-3' },
-  { id: 'cert-4' },
-  { id: 'cert-5' },
-  { id: 'cert-6' },
+export const CERTIFICATIONS: {
+  id: 'brcgs' | 'haccp' | 'bpm' | 'senasa' | 'fda' | 'eti';
+}[] = [
+  { id: 'brcgs' },
+  { id: 'haccp' },
+  { id: 'bpm' },
+  { id: 'senasa' },
+  { id: 'fda' },
+  { id: 'eti' },
 ];

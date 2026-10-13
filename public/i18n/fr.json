@@ -9,7 +9,9 @@
     "skip": "Aller au contenu",
     "loading": "Chargement",
     "placeholderNote": "Données d'exemple, en attente de confirmation.",
-    "skip_intro": "Passer l'intro"
+    "skip_intro": "Passer l'intro",
+    "whatsapp": "Écrivez-nous sur WhatsApp",
+    "whatsappMessage": "Bonjour, je souhaite un devis pour des fruits péruviens avec Vibrance."
   },
   "nav": {
     "label": "Navigation principale",
@@ -64,7 +66,20 @@
         "name": "Ica",
         "crops": "Raisins, avocats et mandarines"
       }
-    }
+    },
+    "regions": {
+      "costa": "Côte",
+      "sierra": "Andes",
+      "selva": "Amazonie"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Port d’embarquement",
+    "legendRoute": "Route vers le port",
+    "treeLabel": "Arbre illustré où poussent myrtilles, avocats, raisins, mangues, mandarines et gingembre, qui tombent dans un panier Vibrance.",
+    "marketsText": "Marchés avec un protocole phytosanitaire en vigueur pour au moins un de nos produits."
   },
   "proceso": {
     "heading": "Du producteur à votre entrepôt",
@@ -78,7 +93,7 @@
       },
       "calidad": {
         "title": "Contrôle qualité",
-        "text": "Nous vérifions le calibre, la maturité et l'état de chaque lot avant de l'approuver pour l'export.",
+        "text": "Nous vérifions le calibre, le degré Brix (taux de sucre), la maturité et l’état de chaque lot avant de l’approuver pour l’export.",
         "alt": "Fruits en contrôle qualité"
       },
       "empaque": {
@@ -197,7 +212,8 @@
       }
     },
     "markets": "Marchés avec protocole en vigueur",
-    "marketsNote": "Pour d'autres destinations, contactez-nous : nous vérifions le protocole avant de chiffrer."
+    "marketsNote": "Pour d'autres destinations, contactez-nous : nous vérifions le protocole avant de chiffrer.",
+    "quoteNote": "Variétés, calibres et présentations sont ajustés dans chaque devis."
   },
   "datos": {
     "heading": "Notre offre en chiffres",
@@ -213,7 +229,7 @@
         "label": "régions d'origine"
       },
       "mercados": {
-        "label": "marchés accessibles"
+        "label": "marchés avec un protocole phytosanitaire en vigueur pour les fruits péruviens"
       }
     },
     "mapTitle": "Où nos produits peuvent aller",
@@ -230,14 +246,40 @@
       "japon": "Japon"
     },
     "certTitle": "Certifications",
-    "certPlaceholder": "Certification {{n}}",
     "marketProducts": "{{n}} produits autorisés",
     "accessTitle": "Accès par produit",
     "accessText": "Tous les produits ne peuvent pas entrer dans tous les pays. Ce tableau indique où un protocole est en vigueur ; pour les autres cas, nous confirmons la situation avant de chiffrer.",
     "accessCaption": "Marchés disposant d'un protocole phytosanitaire en vigueur pour chaque produit",
     "accessProduct": "Produit",
     "accessYes": "Autorisé",
-    "accessAsk": "Nous consulter"
+    "accessAsk": "Nous consulter",
+    "certText": "Nous travaillons avec des stations de conditionnement certifiées (BRCGS, HACCP, BPF), agréées par le SENASA et enregistrées auprès de la FDA. La station et les certifications de chaque expédition sont confirmées dans le devis.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Sécurité des aliments"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Points critiques de contrôle"
+      },
+      "bpm": {
+        "name": "BPF",
+        "desc": "Bonnes pratiques de fabrication"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Station agréée"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Installation enregistrée (É.-U.)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Commerce éthique"
+      }
+    }
   },
   "contacto": {
     "slogan": "Le meilleur du Pérou, dans chaque caisse.",
@@ -278,6 +320,6 @@
     "follow": "Suivez-nous",
     "language": "Langue",
     "privacy": "Politique de confidentialité",
-    "rights": "© {{year}} {{brand}}. Tous droits réservés."
+    "rights": "Tous droits réservés."
   }
 }

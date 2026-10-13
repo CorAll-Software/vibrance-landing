@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoDirective } from '@jsverse/transloco';
-import { BRAND_DESCRIPTOR, BRAND_NAME, CONTACT, LEGAL_NAME, LOGO } from '../../core/config/brand';
+import {
+  BRAND_DESCRIPTOR,
+  BRAND_NAME,
+  CONTACT,
+  LEGAL_NAME,
+  LOGO,
+  RUC,
+} from '../../core/config/brand';
 import { LangSwitchComponent } from '../header/lang-switch';
 
 @Component({
@@ -30,15 +37,12 @@ import { LangSwitchComponent } from '../header/lang-switch';
 
         <div class="md:col-span-3">
           <h2 class="font-sans text-base font-semibold">{{ t('contact') }}</h2>
-          <!-- TODO: dato real de la clienta -->
           <address class="mt-3 flex flex-col gap-1.5 not-italic text-niebla/75">
-            <a [href]="'mailto:' + contact.email" class="hover:text-niebla hover:underline">{{
-              contact.email
-            }}</a>
-            <a
-              [href]="'tel:' + contact.phone.replace(' ', '')"
-              class="hover:text-niebla hover:underline"
-              >{{ contact.phone }}</a
+            <a [href]="'mailto:' + contact.email" class="hover:text-niebla hover:underline"
+              ><bdi dir="ltr">{{ contact.email }}</bdi></a
+            >
+            <a [href]="'tel:' + tel" class="hover:text-niebla hover:underline"
+              ><bdi dir="ltr">{{ contact.phone }}</bdi></a
             >
             <span>{{ contact.address }}</span>
           </address>
@@ -101,7 +105,11 @@ import { LangSwitchComponent } from '../header/lang-switch';
         <div
           class="container-page flex flex-col gap-3 py-6 text-sm text-niebla/60 sm:flex-row sm:justify-between"
         >
-          <p>{{ t('rights', { year: year, brand: legalName }) }}</p>
+          <p>
+            © {{ year }} <bdi>{{ legalName }}</bdi> ·
+            <bdi dir="ltr" class="whitespace-nowrap">RUC {{ ruc }}</bdi>
+            · {{ t('rights') }}
+          </p>
           <a [href]="contact.privacyHref" class="hover:text-niebla hover:underline">{{
             t('privacy')
           }}</a>
@@ -116,5 +124,7 @@ export class FooterComponent {
   protected readonly legalName = LEGAL_NAME;
   protected readonly logo = LOGO;
   protected readonly contact = CONTACT;
+  protected readonly ruc = RUC;
+  protected readonly tel = CONTACT.phone.replace(/\s/g, '');
   protected readonly year = new Date().getFullYear();
 }

@@ -31,8 +31,13 @@ import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
         >
           {{ t('slogan') }}
         </h2>
-        <p class="measure mt-8 max-w-[48ch] text-lg text-niebla/80">{{ t('text') }}</p>
-        <button type="button" class="btn-primary mt-10 !px-8 text-lg" (click)="ui.openQuote()">
+        <p data-reveal class="measure mt-8 max-w-[48ch] text-lg text-niebla/80">{{ t('text') }}</p>
+        <button
+          data-reveal
+          type="button"
+          class="btn-primary mt-10 !px-8 text-lg"
+          (click)="ui.openQuote()"
+        >
           {{ t('cta') }}
         </button>
       </div>

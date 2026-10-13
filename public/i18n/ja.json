@@ -9,7 +9,9 @@
     "skip": "本文へスキップ",
     "loading": "読み込み中",
     "placeholderNote": "サンプルデータです（確認待ち）。",
-    "skip_intro": "イントロをスキップ"
+    "skip_intro": "イントロをスキップ",
+    "whatsapp": "WhatsAppでお問い合わせ",
+    "whatsappMessage": "こんにちは。Vibranceのペルー産果物の見積もりを希望します。"
   },
   "nav": {
     "label": "メインナビゲーション",
@@ -64,7 +66,20 @@
         "name": "イカ",
         "crops": "ぶどう、アボカド、マンダリン"
       }
-    }
+    },
+    "regions": {
+      "costa": "海岸",
+      "sierra": "アンデス山地",
+      "selva": "アマゾン"
+    },
+    "ports": {
+      "paita": "パイタ",
+      "callao": "カヤオ"
+    },
+    "legendPort": "積出港",
+    "legendRoute": "港へのルート",
+    "treeLabel": "ブルーベリー、アボカド、ぶどう、マンゴー、みかん、しょうがが実り、Vibranceのかごに落ちるイラストの木。",
+    "marketsText": "当社製品の少なくとも1つについて植物検疫プロトコルが有効な市場。"
   },
   "proceso": {
     "heading": "生産者から御社の倉庫まで",
@@ -78,7 +93,7 @@
       },
       "calidad": {
         "title": "品質管理",
-        "text": "輸出を承認する前に、各ロットのサイズ、熟度、状態を確認します。",
+        "text": "輸出を承認する前に、各ロットのサイズ、糖度（Brix）、熟度、状態を確認します。",
         "alt": "品質検査中のフルーツ"
       },
       "empaque": {
@@ -197,7 +212,8 @@
       }
     },
     "markets": "検疫プロトコルが有効な市場",
-    "marketsNote": "その他の仕向地はお問い合わせください。見積もり前にプロトコルを確認します。"
+    "marketsNote": "その他の仕向地はお問い合わせください。見積もり前にプロトコルを確認します。",
+    "quoteNote": "品種・サイズ・荷姿はお見積もりごとに調整します。"
   },
   "datos": {
     "heading": "数字で見る私たちの供給",
@@ -213,7 +229,7 @@
         "label": "産地"
       },
       "mercados": {
-        "label": "輸出可能な市場"
+        "label": "ペルー産果物の植物検疫プロトコルが有効な市場"
       }
     },
     "mapTitle": "輸出できる市場",
@@ -230,14 +246,40 @@
       "japon": "日本"
     },
     "certTitle": "認証",
-    "certPlaceholder": "認証 {{n}}",
     "marketProducts": "輸出可能な製品：{{n}}",
     "accessTitle": "製品別の市場アクセス",
     "accessText": "すべての製品がすべての国に輸出できるわけではありません。この表はプロトコルが有効な市場を示しています。それ以外の場合は、見積もり前に状況を確認します。",
     "accessCaption": "製品ごとの植物検疫プロトコルが有効な市場",
     "accessProduct": "製品",
     "accessYes": "輸出可",
-    "accessAsk": "要相談"
+    "accessAsk": "要相談",
+    "certText": "BRCGS・HACCP・GMPの認証を受け、SENASAの認可とFDAへの登録を済ませた選果・包装施設と提携しています。各出荷の施設と認証は、お見積もりの際にご案内します。",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "食品安全"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "重要管理点"
+      },
+      "bpm": {
+        "name": "GMP",
+        "desc": "適正製造規範"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "認可施設"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "登録施設（米国）"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "エシカル・トレード"
+      }
+    }
   },
   "contacto": {
     "slogan": "ペルーの最高を、ひと箱ごとに。",
@@ -278,6 +320,6 @@
     "follow": "フォロー",
     "language": "言語",
     "privacy": "プライバシーポリシー",
-    "rights": "© {{year}} {{brand}}. All rights reserved."
+    "rights": "All rights reserved."
   }
 }

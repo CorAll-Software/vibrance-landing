@@ -9,7 +9,9 @@
     "skip": "Vai al contenuto",
     "loading": "Caricamento",
     "placeholderNote": "Dati di esempio, in attesa di conferma.",
-    "skip_intro": "Salta intro"
+    "skip_intro": "Salta intro",
+    "whatsapp": "Scrivici su WhatsApp",
+    "whatsappMessage": "Buongiorno, vorrei un preventivo per frutta peruviana da Vibrance."
   },
   "nav": {
     "label": "Navigazione principale",
@@ -64,7 +66,20 @@
         "name": "Ica",
         "crops": "Uva, avocado e mandarini"
       }
-    }
+    },
+    "regions": {
+      "costa": "Costa",
+      "sierra": "Ande",
+      "selva": "Amazzonia"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Porto d’imbarco",
+    "legendRoute": "Percorso al porto",
+    "treeLabel": "Albero illustrato su cui crescono mirtilli, avocado, uva, mango, mandarini e zenzero, che cadono in un cesto Vibrance.",
+    "marketsText": "Mercati con protocollo fitosanitario vigente per almeno uno dei nostri prodotti."
   },
   "proceso": {
     "heading": "Dal produttore al tuo magazzino",
@@ -78,7 +93,7 @@
       },
       "calidad": {
         "title": "Controllo qualità",
-        "text": "Verifichiamo calibro, maturazione e condizioni di ogni lotto prima di approvarlo per l'export.",
+        "text": "Controlliamo calibro, gradi Brix (dolcezza), maturazione e stato di ogni lotto prima di approvarlo per l’export.",
         "alt": "Frutta durante il controllo qualità"
       },
       "empaque": {
@@ -184,7 +199,8 @@
       }
     },
     "markets": "Mercati con protocollo vigente",
-    "marketsNote": "Per altre destinazioni, contattaci: verifichiamo il protocollo prima del preventivo."
+    "marketsNote": "Per altre destinazioni, contattaci: verifichiamo il protocollo prima del preventivo.",
+    "quoteNote": "Varietà, calibri e confezioni si definiscono in ogni preventivo."
   },
   "datos": {
     "heading": "La nostra offerta in cifre",
@@ -200,7 +216,7 @@
         "label": "regioni di origine"
       },
       "mercados": {
-        "label": "mercati accessibili"
+        "label": "mercati con protocollo fitosanitario vigente per la frutta peruviana"
       }
     },
     "mapTitle": "Dove può arrivare",
@@ -217,14 +233,40 @@
       "japon": "Giappone"
     },
     "certTitle": "Certificazioni",
-    "certPlaceholder": "Certificazione {{n}}",
     "marketProducts": "{{n}} prodotti ammessi",
     "accessTitle": "Accesso per prodotto",
     "accessText": "Non tutti i prodotti possono entrare in tutti i paesi. Questa tabella mostra dove esiste un protocollo vigente; negli altri casi confermiamo la situazione prima del preventivo.",
     "accessCaption": "Mercati con protocollo fitosanitario vigente per ogni prodotto",
     "accessProduct": "Prodotto",
     "accessYes": "Ammesso",
-    "accessAsk": "Chiedici"
+    "accessAsk": "Chiedici",
+    "certText": "Lavoriamo con centri di confezionamento certificati (BRCGS, HACCP, GMP), autorizzati dal SENASA e registrati presso la FDA. Il centro e le certificazioni di ogni spedizione vengono confermati nel preventivo.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Sicurezza alimentare"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Punti critici di controllo"
+      },
+      "bpm": {
+        "name": "GMP",
+        "desc": "Buone pratiche di fabbricazione"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Impianto autorizzato"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Impianto registrato (USA)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Commercio etico"
+      }
+    }
   },
   "contacto": {
     "slogan": "Il meglio del Perù, in ogni cassa.",
@@ -265,6 +307,6 @@
     "follow": "Seguici",
     "language": "Lingua",
     "privacy": "Informativa sulla privacy",
-    "rights": "© {{year}} {{brand}}. Tutti i diritti riservati."
+    "rights": "Tutti i diritti riservati."
   }
 }

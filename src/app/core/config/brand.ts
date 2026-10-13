@@ -7,7 +7,9 @@
  */
 export const BRAND_NAME = 'Vibrance';
 export const BRAND_DESCRIPTOR = 'Inca Harvest';
-export const LEGAL_NAME = 'Vibrance Inca Harvest SAC';
+export const LEGAL_NAME = 'Vibrance Inca Harvest S.A.C.';
+/** RUC (SUNAT) de la razón social; se muestra en el footer. */
+export const RUC = '20615112446';
 
 /**
  * Símbolo del logo (sol con hojas). Hay dos rutas en public/brand/:
@@ -63,8 +65,11 @@ export const SHOW_PLACEHOLDER_NOTES = true;
 
 // TODO: dato real de la clienta
 export const CONTACT = {
-  email: 'comercial@ejemplo.com',
-  phone: '+51 000 000 000',
+  email: 'ventas@vibranceincaharvest.com',
+  /** Teléfono de la empresa (footer). */
+  phone: '+51 920 503 588',
+  /** Número del botón flotante de WhatsApp (con código de país). */
+  whatsapp: '+51 988 983 710',
   address: 'Lima, Perú',
   socials: [
     { id: 'linkedin', label: 'LinkedIn', href: '#' },

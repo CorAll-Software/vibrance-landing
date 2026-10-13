@@ -9,7 +9,9 @@
     "skip": "Skip to content",
     "loading": "Loading",
     "placeholderNote": "Sample data, pending confirmation.",
-    "skip_intro": "Skip intro"
+    "skip_intro": "Skip intro",
+    "whatsapp": "Message us on WhatsApp",
+    "whatsappMessage": "Hello, I'd like a quote for Peruvian fruit from Vibrance."
   },
   "nav": {
     "label": "Main navigation",
@@ -64,7 +66,20 @@
         "name": "Ica",
         "crops": "Grapes, avocados and mandarins"
       }
-    }
+    },
+    "regions": {
+      "costa": "Coast",
+      "sierra": "Andes",
+      "selva": "Amazon"
+    },
+    "ports": {
+      "paita": "Paita",
+      "callao": "Callao"
+    },
+    "legendPort": "Shipping port",
+    "legendRoute": "Route to port",
+    "treeLabel": "Illustrated tree growing blueberries, avocados, grapes, mangoes, mandarins and ginger, which fall into a Vibrance basket.",
+    "marketsText": "Markets with an active phytosanitary protocol for at least one of our products."
   },
   "proceso": {
     "heading": "From the grower to your warehouse",
@@ -78,7 +93,7 @@
       },
       "calidad": {
         "title": "Quality control",
-        "text": "We check size, ripeness and condition of every lot before approving it for export.",
+        "text": "We check size, Brix (sweetness), ripeness and condition of every lot before approving it for export.",
         "alt": "Fruit being checked in quality control"
       },
       "empaque": {
@@ -184,7 +199,8 @@
       }
     },
     "markets": "Markets with an active protocol",
-    "marketsNote": "For other destinations, ask us: we check the protocol before quoting."
+    "marketsNote": "For other destinations, ask us: we check the protocol before quoting.",
+    "quoteNote": "Varieties, sizes and presentations are tailored in each quote."
   },
   "datos": {
     "heading": "Our offer at a glance",
@@ -200,7 +216,7 @@
         "label": "sourcing regions"
       },
       "mercados": {
-        "label": "markets with access"
+        "label": "markets with an active phytosanitary protocol for Peruvian fruit"
       }
     },
     "mapTitle": "Where it can go",
@@ -217,14 +233,40 @@
       "japon": "Japan"
     },
     "certTitle": "Certifications",
-    "certPlaceholder": "Certification {{n}}",
     "marketProducts": "{{n}} products allowed",
     "accessTitle": "Access by product",
     "accessText": "Not every product can enter every country. This table shows where an active protocol exists; for anything else we confirm the situation before quoting.",
     "accessCaption": "Markets with an active phytosanitary protocol for each product",
     "accessProduct": "Product",
     "accessYes": "Allowed",
-    "accessAsk": "Ask us"
+    "accessAsk": "Ask us",
+    "certText": "We work with certified packing houses (BRCGS, HACCP, GMP), authorized by SENASA and registered with the FDA. The packing house and certifications for each shipment are confirmed in the quote.",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "Food safety"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "Critical control points"
+      },
+      "bpm": {
+        "name": "GMP",
+        "desc": "Good Manufacturing Practices"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "Authorized plant"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "Registered facility (USA)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "Ethical trade"
+      }
+    }
   },
   "contacto": {
     "slogan": "The best of Peru, in every box.",
@@ -265,6 +307,6 @@
     "follow": "Follow us",
     "language": "Language",
     "privacy": "Privacy policy",
-    "rights": "© {{year}} {{brand}}. All rights reserved."
+    "rights": "All rights reserved."
   }
 }

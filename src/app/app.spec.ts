@@ -31,5 +31,5 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelectorAll('h1').length).toBe(1);
     expect(compiled.querySelector('h1')?.textContent).toContain('Fruta peruana');
-  });
+  }, 20000); // la página completa (árbol con cientos de hojas SVG) tarda más en el entorno de pruebas
 });

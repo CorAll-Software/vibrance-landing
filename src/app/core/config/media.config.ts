@@ -40,7 +40,7 @@ export interface SectionMedia {
 
 export const HERO = {
   /** Imagen de fondo inicial (y la que se comparte en redes, ver src/index.html). */
-  poster: 'media/hero-campo-poster.webp',
+  poster: 'media/campo.png',
   /**
    * Cadena de videos (máximo 3). Se reproducen en orden y pasan de uno a otro con
    * un fundido; al terminar el último vuelve al primero. Con uno solo, se repite.
@@ -70,7 +70,7 @@ export const PROCESO: Record<
   SectionMedia
 > = {
   productores: {
-    image: 'media/proceso-1-productores-poster.webp',
+    image: 'media/uvas.png',
     video: {
       mp4: 'https://www.pexels.com/es-es/download/video/31463341/',
       webm: 'https://www.pexels.com/es-es/download/video/31463341/',
@@ -104,8 +104,8 @@ export const PRODUCTOS: Record<
   arandano: { image: 'media/producto-arandano.webp' },
   palta: { image: 'media/producto-palta.webp' },
   uva: {
-    image: 'media/producto-uva.webp',
-    video: { mp4: 'media/producto-uva.mp4', webm: 'media/producto-uva.webm' },
+    image: 'media/uvas.png',
+    video: { mp4: 'https://www.pexels.com/es-es/download/video/31463341/', webm: 'https://www.pexels.com/es-es/download/video/31463341/' },
   },
   mango: { image: 'media/producto-mango.webp' },
   mandarina: { image: 'media/producto-mandarina.webp' },
