@@ -319,6 +319,30 @@
         "q": "Port de départ",
         "a": "Callao."
       }
+    },
+    "inco": {
+      "hint": "Choisissez un Incoterm pour voir quelle étape Vibrance prend en charge.",
+      "insurance": "Assurance maritime",
+      "us": "Pris en charge par Vibrance",
+      "you": "À votre charge",
+      "stops": {
+        "plant": "Station de conditionnement",
+        "port": "Port du Callao",
+        "board": "À bord du navire",
+        "dest": "Votre port de destination"
+      },
+      "fob": {
+        "name": "Free On Board",
+        "desc": "Nous livrons la marchandise à bord du navire au Callao. Ensuite, le fret et l’assurance sont à votre charge."
+      },
+      "cfr": {
+        "name": "Cost and Freight",
+        "desc": "Nous payons aussi le fret maritime jusqu’à votre port de destination. Le risque vous est transféré une fois la marchandise à bord."
+      },
+      "cif": {
+        "name": "Cost, Insurance and Freight",
+        "desc": "Nous payons le fret et l’assurance maritime jusqu’à votre port de destination. Le risque vous est transféré une fois la marchandise à bord."
+      }
     }
   },
   "contacto": {

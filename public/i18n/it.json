@@ -306,6 +306,30 @@
         "q": "Porto di partenza",
         "a": "Callao."
       }
+    },
+    "inco": {
+      "hint": "Scegli un Incoterm per vedere quale tratta copre Vibrance.",
+      "insurance": "Assicurazione marittima",
+      "us": "A carico di Vibrance",
+      "you": "A tuo carico",
+      "stops": {
+        "plant": "Centro di confezionamento",
+        "port": "Porto del Callao",
+        "board": "A bordo della nave",
+        "dest": "Il tuo porto di destinazione"
+      },
+      "fob": {
+        "name": "Free On Board",
+        "desc": "Consegniamo la merce a bordo della nave al Callao. Da lì, nolo e assicurazione sono a tuo carico."
+      },
+      "cfr": {
+        "name": "Cost and Freight",
+        "desc": "Paghiamo anche il nolo marittimo fino al tuo porto di destinazione. Il rischio passa a te quando la merce è a bordo."
+      },
+      "cif": {
+        "name": "Cost, Insurance and Freight",
+        "desc": "Paghiamo nolo e assicurazione marittima fino al tuo porto di destinazione. Il rischio passa a te quando la merce è a bordo."
+      }
     }
   },
   "contacto": {
