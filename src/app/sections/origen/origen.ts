@@ -8,6 +8,7 @@ import {
   inject,
   viewChild,
 } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { TranslocoDirective, TranslocoPipe, translateObjectSignal } from '@jsverse/transloco';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -21,6 +22,7 @@ import { ButterflyComponent } from '../../shared/components/butterfly/butterfly'
 import { FruitIconComponent } from '../../shared/components/fruit-icon/fruit-icon';
 import { UiStateService } from '../../core/services/ui-state.service';
 import type { ProductId } from '../../data/productos.data';
+import { ORIGEN } from '../../core/config/media.config';
 import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -76,6 +78,7 @@ const TRAVEL_REST = 5;
 @Component({
   selector: 'app-origen',
   imports: [
+    NgOptimizedImage,
     TranslocoDirective,
     TranslocoPipe,
     MapPeruComponent,
@@ -98,6 +101,10 @@ export class OrigenComponent {
   protected readonly ui = inject(UiStateService);
   protected readonly flyers = DELIVERY.flatMap(([, fruits]) => fruits);
   protected readonly trails = TRAILS;
+  /** Foto / video de la parte "Nace en el desierto que florece" (core/config/media.config.ts). */
+  protected readonly media = ORIGEN;
+  /** Los 4 momentos de la escena del mapa (uno por barrita de avance). */
+  protected readonly moments = [0, 1, 2, 3];
   /** true si se usa la escena fija (se decide al cargar). */
   protected readonly scene = typeof window !== 'undefined' && window.matchMedia(SCENE_MQ).matches;
 
@@ -113,25 +120,39 @@ export class OrigenComponent {
       if (this.scroll.reducedMotion()) return;
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
-          if (!this.scene) {
-            // Móvil: cada línea de la historia pasa de tenue a plena con el scroll
-            gsap.fromTo(
-              '.story-line',
-              { opacity: 0.15 },
-              {
-                opacity: 1,
-                ease: 'none',
-                stagger: 0.5,
-                scrollTrigger: {
-                  trigger: '.story',
-                  start: 'top 75%',
-                  end: 'bottom 45%',
-                  scrub: 0.6,
-                },
+          // Parte 1 ("Nace en el desierto que florece"): cada párrafo pasa de tenue a pleno
+          gsap.fromTo(
+            '.intro-line',
+            { opacity: 0.15 },
+            {
+              opacity: 1,
+              ease: 'none',
+              stagger: 0.5,
+              scrollTrigger: {
+                trigger: '.intro-lines',
+                start: 'top 80%',
+                end: 'bottom 50%',
+                scrub: 0.6,
               },
-            );
-            return;
-          }
+            },
+          );
+          // La foto se aleja un poco mientras se atraviesa
+          gsap.fromTo(
+            '.origen-photo',
+            { scale: 1.18 },
+            {
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.origen-frame',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+              },
+            },
+          );
+          // Parte 2: en móvil el mapa se anima solo (map-peru y basket tienen su propio scroll)
+          if (!this.scene) return;
           this.buildScene(host);
           this.buildTravelers(host);
         }, host);
@@ -234,7 +255,7 @@ export class OrigenComponent {
       all.add(tl, 0);
     });
     ScrollTrigger.create({
-      trigger: host,
+      trigger: host.querySelector('.origen-pin'),
       start: 'top bottom',
       end: 'bottom top',
       onToggle: (self) => (self.isActive ? all.play() : all.pause()),
@@ -246,36 +267,30 @@ export class OrigenComponent {
     const map = this.map();
     const basket = this.basket();
     const q = gsap.utils.selector(host);
-    const lines = q('.story-line');
+    const pinEl = q('.origen-pin')[0];
     const fills = q('.beat-fill');
 
     map.prepare();
     basket.prepare();
-    gsap.set(lines, { autoAlpha: 0, y: 16 });
     gsap.set(fills, { scaleX: 0, transformOrigin: '0 50%' });
     gsap.set(q('.markets'), { autoAlpha: 0, y: 24 });
     gsap.set(q('.market, .origen-cta'), { autoAlpha: 0, y: 10 });
 
-    /** Cambia la frase visible y llena la barrita del momento. */
-    const showLine = (tl: gsap.core.Timeline, i: number, at: number | string) => {
-      if (i > 0) tl.to(lines[i - 1], { autoAlpha: 0, y: -16, duration: 0.15 }, at);
-      tl.to(lines[i], { autoAlpha: 1, y: 0, duration: 0.2 }, i > 0 ? '>-0.05' : at).to(
-        fills[i],
-        { scaleX: 1, duration: 0.2 },
-        '<',
-      );
+    /** Llena la barrita del momento. */
+    const fillBeat = (tl: gsap.core.Timeline, i: number, at: number) => {
+      tl.to(fills[i], { scaleX: 1, duration: 0.2 }, at);
     };
 
     // Momento 1: al entrar aparece el Perú y llega la mariposa con la cesta vacía (una sola vez)
     const intro = gsap.timeline({
       scrollTrigger: {
-        trigger: host,
+        trigger: pinEl,
         start: SCENE_MODE === 'libre' ? 'top 85%' : 'top 60%',
         once: true,
       },
     });
-    // En modo libre la primera frase la muestra la escena misma (sigue al scroll)
-    if (SCENE_MODE !== 'libre') showLine(intro, 0, 0);
+    // En modo libre la primera barrita la llena la escena misma (sigue al scroll)
+    if (SCENE_MODE !== 'libre') fillBeat(intro, 0, 0);
     intro
       .add(map.phase(0), 0)
       .fromTo(
@@ -290,10 +305,10 @@ export class OrigenComponent {
     const scene = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
     scene.addLabel('m0', 0);
     let cursor = SCENE_MODE === 'libre' ? 0.3 : HOLD * 0.6;
-    if (SCENE_MODE === 'libre') showLine(scene, 0, 0);
+    if (SCENE_MODE === 'libre') fillBeat(scene, 0, 0);
     for (const n of [1, 2, 3]) {
       const at = cursor;
-      showLine(scene, n, at);
+      fillBeat(scene, n, at);
       let end = at + MOVE;
       if (n === 1) {
         // Momento 2: aparecen las frutas en sus regiones (norte → sur)
@@ -342,7 +357,7 @@ export class OrigenComponent {
       // Sin parte fija: la historia avanza mientras la sección cruza la pantalla y, al
       // completarse, queda en su estado final (no retrocede al subir).
       const st = ScrollTrigger.create({
-        trigger: host,
+        trigger: pinEl,
         start: 'top 70%',
         end: 'top 5%',
         animation: scene,
