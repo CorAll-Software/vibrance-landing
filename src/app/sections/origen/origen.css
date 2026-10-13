@@ -9,7 +9,7 @@
   position: absolute;
   inset: auto 0 0 0;
   height: min(60%, 34rem);
-  background: url('/svg/andes.svg') center bottom / 100% 100% no-repeat;
+  background: url('/svg/andes.svg') center bottom / 100% auto no-repeat;
   opacity: 0.9;
   --fade: linear-gradient(
     to right,
@@ -47,21 +47,46 @@
   font-size: clamp(1.05rem, 1.6vw, 1.3rem);
   line-height: 1.5;
 }
+/* Tarjeta con dos caras: se voltea (eje vertical) al pasar al segundo párrafo */
 .origen-frame {
   position: relative;
   width: min(100%, 24rem);
   aspect-ratio: 4 / 5;
   max-height: 70svh;
   margin-inline: auto;
-  overflow: hidden;
-  border-radius: 2rem;
-  box-shadow: 0 24px 60px rgb(20 42 32 / 0.25);
+  perspective: 1400px;
 }
-.origen-photo {
+.flip-card {
   position: absolute;
   inset: 0;
+  transform-style: preserve-3d;
   will-change: transform;
 }
+.flip-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 24px 60px rgb(20 42 32 / 0.25);
+  background: var(--color-palta);
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+/* Mariposa grande que cruza la parte 1 (solo escritorio, la mueve origen.ts) */
+.intro-bf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: clamp(5.5rem, 8vw, 8rem);
+  visibility: hidden;
+  filter: drop-shadow(0 10px 14px rgb(20 42 32 / 0.25));
+  pointer-events: none;
+}
+
 @media (min-width: 1024px) {
   .origen-intro {
     min-height: 100svh;
@@ -77,42 +102,6 @@
   .origen-frame {
     margin-inline: 0 auto;
   }
-}
-
-/* ---------- Puente: la mariposa traza la línea de la parte 1 a la parte 2 (solo escritorio) ---------- */
-.origen-bridge {
-  position: relative;
-  height: 55svh;
-  pointer-events: none;
-}
-.origen-bridge svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.bridge-line {
-  fill: none;
-  stroke: var(--color-palta);
-  stroke-opacity: 0.55;
-  stroke-width: 3.5;
-  stroke-linecap: round;
-  stroke-dasharray: 12 14;
-}
-.bridge-reveal {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 16;
-}
-.bridge-guide {
-  stroke: none;
-}
-.bridge-bf {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 44px;
-  visibility: hidden;
 }
 
 /* ---------- Parte 2: de dónde viene nuestra fruta (móvil y "reducir movimiento": una columna) ---------- */
@@ -138,7 +127,8 @@
   display: grid;
 }
 .origen-title {
-  font-size: clamp(2rem, 6vw, 2.75rem);
+  /* Mismo tamaño que el título de la parte 1 */
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
   line-height: 1.05;
 }
 .beats {
@@ -280,7 +270,7 @@
 @media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
   .origen-pin {
     height: 100svh;
-    padding-block: calc(72px + 2rem) 2rem; /* header fijo */
+    padding-block: calc(72px + 3.25rem) 2rem; /* header fijo + aire para bajar el título */
   }
   .origen-inner {
     height: 100%;
@@ -291,7 +281,7 @@
 
   /* Cabecera: solo el título y el indicador de momentos */
   .origen-title {
-    font-size: clamp(1.9rem, 2.7vw, 2.6rem);
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
   }
   .beats {
     display: flex;
@@ -318,7 +308,7 @@
     align-items: center;
   }
   .stage-map {
-    max-width: min(22rem, calc((100svh - 300px) * 0.66));
+    max-width: min(22rem, calc((100svh - 350px) * 0.66));
   }
   .stage-right {
     justify-content: center;
@@ -330,7 +320,7 @@
     display: block;
   }
   .carrier {
-    width: min(13.5rem, calc((100svh - 300px) * 0.42));
+    width: min(13.5rem, calc((100svh - 350px) * 0.42));
   }
   /* El panel de mercados ocupa el lugar de la cesta cuando la mariposa se va
      (anclado abajo: si es más alto que la cesta, crece hacia arriba) */
@@ -396,11 +386,11 @@
     min-height: 0;
     padding-block: calc(72px + 2rem) 2rem; /* header fijo */
   }
-  /* Capa del doble de alto: las montañas arriba y la tierra debajo; el scroll la sube */
+  /* Las montañas solo se desplazan un poco mientras la parte 1 está fija (ver origen.ts).
+     Capa de todo el alto y el dibujo con su proporción real, apoyado abajo: las cumbres no se cortan */
   .origen-mountains {
-    inset: 0 0 auto 0;
-    height: 200%;
-    background: url('/svg/andes.svg') center top / 100% 50% no-repeat;
+    height: 100%;
+    background-size: max(100%, 1100px) auto;
     will-change: transform;
   }
   /* Los párrafos se apilan en la misma celda: uno a la vez */
