@@ -268,9 +268,14 @@ export class OrigenComponent {
 
     // Momento 1: al entrar aparece el Perú y llega la mariposa con la cesta vacía (una sola vez)
     const intro = gsap.timeline({
-      scrollTrigger: { trigger: host, start: 'top 60%', once: true },
+      scrollTrigger: {
+        trigger: host,
+        start: SCENE_MODE === 'libre' ? 'top 85%' : 'top 60%',
+        once: true,
+      },
     });
-    showLine(intro, 0, 0);
+    // En modo libre la primera frase la muestra la escena misma (sigue al scroll)
+    if (SCENE_MODE !== 'libre') showLine(intro, 0, 0);
     intro
       .add(map.phase(0), 0)
       .fromTo(
@@ -284,7 +289,8 @@ export class OrigenComponent {
     const fly = this.flightFactory(host);
     const scene = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
     scene.addLabel('m0', 0);
-    let cursor = HOLD * 0.6;
+    let cursor = SCENE_MODE === 'libre' ? 0.3 : HOLD * 0.6;
+    if (SCENE_MODE === 'libre') showLine(scene, 0, 0);
     for (const n of [1, 2, 3]) {
       const at = cursor;
       showLine(scene, n, at);
@@ -331,6 +337,25 @@ export class OrigenComponent {
 
     const pin = q('.origen-pin')[0];
     const last = scene.labels['m3'];
+
+    if (SCENE_MODE === 'libre') {
+      // Sin parte fija: la historia avanza mientras la sección cruza la pantalla y, al
+      // completarse, queda en su estado final (no retrocede al subir).
+      const st = ScrollTrigger.create({
+        trigger: host,
+        start: 'top 70%',
+        end: 'top 5%',
+        animation: scene,
+        scrub: 0.8,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (self.progress < 0.995) return;
+          scene.progress(1);
+          st.kill(false, true); // deja la escena donde quedó (no la elimina)
+        },
+      });
+      return;
+    }
 
     /*
      * La historia se cuenta una sola vez: al completarse queda fija en el último momento
@@ -380,7 +405,7 @@ export class OrigenComponent {
             duration: 1.4,
             ease: 'power2.out',
             overwrite: true,
-            onComplete: () => self.progress === 1 && finish(),
+            onComplete: () => scene.progress() > 0.999 && finish(),
           });
           return;
         }

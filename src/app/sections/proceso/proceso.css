@@ -65,22 +65,22 @@
 
 /* ---------- Escritorio: pin + scroll horizontal ---------- */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .pin {
+  .proceso-h .pin {
     height: 100vh;
     height: 100svh;
     justify-content: center;
     gap: 3.5rem;
     overflow: hidden;
   }
-  .head {
+  .proceso-h .head {
     padding-top: 4.5rem; /* altura del header fijo */
   }
-  .progress {
+  .proceso-h .progress {
     display: block;
     margin-top: 1rem;
   }
 
-  .track {
+  .proceso-h .track {
     flex-direction: row;
     gap: 6vw;
     max-width: none;
@@ -88,45 +88,71 @@
     padding-inline: max(4rem, calc((100vw - 1280px) / 2 + 4rem));
     will-change: transform;
   }
-  .track::before,
-  .step::before {
+  .proceso-h .track::before,
+  .proceso-h .step::before {
     display: none;
   }
 
-  .step {
+  .proceso-h .step {
     flex: 0 0 min(68vw, 1000px);
     grid-template-columns: 1.15fr 1fr;
     opacity: 0.4;
     transition: opacity 400ms ease;
   }
-  .step.is-active {
+  .proceso-h .step.is-active {
     opacity: 1;
   }
-  .step__media {
+  .proceso-h .step__media {
     aspect-ratio: 4 / 3;
     max-height: 52vh;
   }
-  .step__num {
+  .proceso-h .step__num {
     font-size: clamp(5rem, 9vw, 8.5rem);
     margin-bottom: 1rem;
   }
 }
 
-/* Laptops bajas: que la escena fija quepa en la altura de la ventana */
+/* ---------- Escritorio, modo 'libre': etapas en vertical, alternando el lado de la imagen ---------- */
+@media (min-width: 1024px) {
+  section:not(.proceso-h) .track {
+    gap: 7rem;
+    margin-top: 5rem;
+    padding-left: clamp(1.25rem, 5vw, 4rem);
+  }
+  section:not(.proceso-h) .track::before,
+  section:not(.proceso-h) .step::before {
+    display: none;
+  }
+  section:not(.proceso-h) .step {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 5rem;
+  }
+  section:not(.proceso-h) .step:nth-child(even) {
+    grid-template-columns: 1fr 1.15fr;
+  }
+  section:not(.proceso-h) .step:nth-child(even) .step__media {
+    order: 2;
+  }
+  section:not(.proceso-h) .step__num {
+    font-size: clamp(5rem, 9vw, 8.5rem);
+  }
+}
+
+/* Laptops bajas: que la escena fija quepa en la altura de la ventana (solo recorrido horizontal) */
 @media (min-width: 1024px) and (max-height: 760px) and (prefers-reduced-motion: no-preference) {
-  .pin {
+  .proceso-h .pin {
     gap: 1.75rem;
   }
-  .head {
+  .proceso-h .head {
     padding-top: 4rem;
   }
-  .head h2 {
+  .proceso-h .head h2 {
     font-size: clamp(2rem, 6.5svh, 3.75rem);
   }
-  .step__media {
+  .proceso-h .step__media {
     max-height: 40svh;
   }
-  .step__num {
+  .proceso-h .step__num {
     font-size: clamp(3rem, 12svh, 6rem);
     margin-bottom: 0.5rem;
   }
