@@ -75,6 +75,12 @@
   .proceso-h .head {
     padding-top: 4.5rem; /* altura del header fijo */
   }
+  /* Entrada desde la derecha al llegar desde la escena de Nosotros (la anima nosotros.ts) */
+  .proceso-h .head,
+  .proceso-h .track {
+    translate: var(--enter, 0px) 0;
+    opacity: var(--enter-o, 1);
+  }
   .proceso-h .progress {
     display: block;
     margin-top: 1rem;
