@@ -6,6 +6,7 @@ import {
   NgZone,
   afterNextRender,
   inject,
+  isDevMode,
   signal,
 } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -66,7 +67,10 @@ export class LoaderComponent {
       /* almacenamiento no disponible */
     }
 
-    if (seen || this.scroll.reducedMotion()) {
+    // En desarrollo (ng serve) o con ?intro en la URL se muestra siempre, aunque ya se haya visto
+    const force = isDevMode() || new URLSearchParams(location.search).has('intro');
+
+    if ((seen && !force) || this.scroll.reducedMotion()) {
       this.ui.introDone.set(true);
       return;
     }
