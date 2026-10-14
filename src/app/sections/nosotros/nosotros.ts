@@ -7,21 +7,55 @@ import {
   afterNextRender,
   computed,
   inject,
+  isDevMode,
   viewChild,
 } from '@angular/core';
 import { TranslocoDirective, translateSignal } from '@jsverse/transloco';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
+import { MOMENT_DURATION } from '../../core/config/scroll.config';
 import { ButterflyComponent } from '../../shared/components/butterfly/butterfly';
 import { PhotoPlaceholderComponent } from '../../shared/components/photo-placeholder/photo-placeholder';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Escena fija solo en escritorio con altura suficiente y sin "reducir movimiento". */
+const SCENE_MQ =
+  '(min-width: 1024px) and (min-height: 480px) and (prefers-reduced-motion: no-preference)';
+/** Segundos que se ve la pantalla verde con su texto antes de abrirse el círculo. */
+const INTRO_HOLD = 1;
+/** Segundos que tarda la frase en salir por la izquierda antes de que entre Proceso. */
+const SLIDE = 0.6;
+
+/** La escena se reproduce una sola vez por visitante (como la intro de la mariposa). */
+const SEEN_KEY = 'vibe-seen';
+function sceneSeen(): boolean {
+  if (typeof window === 'undefined') return true;
+  // En desarrollo (ng serve) o con ?intro en la URL se muestra siempre (una vez por carga)
+  if (isDevMode() || new URLSearchParams(location.search).has('intro')) return false;
+  try {
+    return localStorage.getItem(SEEN_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+function markSeen(): void {
+  try {
+    localStorage.setItem(SEEN_KEY, '1');
+  } catch {
+    /* almacenamiento no disponible */
+  }
+}
+
 /**
  * Quiénes somos: la CEO, su trayectoria y el mensaje de respaldo legal y asegurado.
- * Cierra con la frase de la marca a todo el ancho: sus palabras pasan de tenues a plenas con el
- * scroll y, al completarse, aparece la mariposa amarilla.
+ * Cierra con la frase de la marca.
+ * Escritorio: escena fija (imán). Al llegar, la vista es verde con un texto por un segundo y
+ * luego, sola, un círculo crece desde el centro y "limpia" el verde mostrando la frase con la
+ * mariposa. El siguiente scroll (momento) desliza la escena hasta "Del productor a tu almacén".
+ * Móvil o movimiento reducido: las palabras pasan de tenues a plenas con el scroll y, al
+ * completarse, aparece la mariposa amarilla.
  */
 @Component({
   selector: 'app-nosotros',
@@ -31,6 +65,7 @@ gsap.registerPlugin(ScrollTrigger);
     <section
       id="nosotros"
       class="bg-niebla py-24 md:py-36"
+      [style.padding-bottom]="scene ? '0' : null"
       aria-labelledby="nosotros-title"
       *transloco="let t; prefix: 'nosotros'"
     >
@@ -42,7 +77,7 @@ gsap.registerPlugin(ScrollTrigger);
           <h2
             data-reveal
             id="nosotros-title"
-            class="mt-4 text-4xl leading-[1.05] font-bold md:text-6xl"
+            class="mt-4 text-4xl leading-[1.05] font-bold md:text-5xl xl:text-6xl"
           >
             {{ t('heading') }}
           </h2>
@@ -94,22 +129,132 @@ gsap.registerPlugin(ScrollTrigger);
         </div>
       </div>
 
-      <!-- Frase de la marca: cada palabra se llena con el scroll -->
-      <figure class="quote-band container-page" #band [style.--n]="words().count">
-        <blockquote>
-          <p class="quote-text font-display font-bold" [attr.aria-label]="t('quote')">
-            @for (w of words().parts; track $index) {
-              <span class="qw" [class.qw--space]="w.i < 0" [style.--i]="w.i" aria-hidden="true">{{
-                w.text
-              }}</span>
-            }
-          </p>
-        </blockquote>
-        <app-butterfly class="quote-bf" />
-      </figure>
+      @if (scene) {
+        <!-- Escena fija: verde → círculo que limpia y muestra la frase → desliza a Proceso -->
+        <div #vibe class="vibe">
+          <div class="vibe-track" dir="ltr">
+            <div class="vibe-panel">
+              <div class="vibe-green" aria-hidden="true">
+                <p class="vibe-intro font-display font-bold">{{ t('vibeIntro') }}</p>
+              </div>
+              <div class="vibe-reveal">
+                <p class="vibe-quote font-display font-bold">{{ t('quote') }}</p>
+                <app-butterfly class="vibe-bf" aria-hidden="true" />
+              </div>
+            </div>
+            <!-- Mismo verde que Proceso: al terminar de deslizar, Proceso entra por la derecha -->
+            <div class="vibe-panel vibe-next" aria-hidden="true"></div>
+          </div>
+        </div>
+      } @else {
+        <!-- Frase de la marca: cada palabra se llena con el scroll -->
+        <figure class="quote-band container-page" #band [style.--n]="words().count">
+          <blockquote>
+            <p class="quote-text font-display font-bold" [attr.aria-label]="t('quote')">
+              @for (w of words().parts; track $index) {
+                <span class="qw" [class.qw--space]="w.i < 0" [style.--i]="w.i" aria-hidden="true">{{
+                  w.text
+                }}</span>
+              }
+            </p>
+          </blockquote>
+          <app-butterfly class="quote-bf" />
+        </figure>
+      }
     </section>
   `,
   styles: `
+    /* ---------- Escena fija (escritorio) ---------- */
+    .vibe {
+      position: relative;
+      height: 100vh;
+      height: 100svh;
+      margin-top: 7rem;
+      overflow: hidden;
+    }
+    .vibe-track {
+      display: flex;
+      width: 200%;
+      height: 100%;
+      will-change: transform;
+    }
+    .vibe-panel {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .vibe-green,
+    .vibe-reveal {
+      position: absolute;
+      inset: 0;
+    }
+    .vibe-green {
+      display: grid;
+      place-items: center;
+      background: var(--color-palta);
+    }
+    .vibe-intro {
+      padding-inline: 1.5rem;
+      text-align: center;
+      font-size: clamp(1.75rem, min(4vw, 8svh), 3.5rem);
+      line-height: 1.1;
+      color: var(--color-niebla);
+    }
+    /* El círculo que crece deja ver, "limpiando" el verde, la frase sobre fondo claro */
+    .vibe-reveal {
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      background: var(--color-niebla);
+      clip-path: circle(0% at 50% 50%);
+    }
+    .vibe-quote {
+      max-width: 20ch;
+      padding-inline: 1.5rem;
+      text-align: center;
+      font-size: clamp(2rem, min(6vw, 11svh), 5.25rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--color-palta);
+    }
+    .vibe-bf {
+      display: block;
+      width: clamp(2.25rem, 7svh, 3.25rem);
+      margin-top: clamp(1rem, 3svh, 2rem);
+    }
+    .vibe-next {
+      background: var(--color-palta);
+      color: var(--color-niebla);
+    }
+    /* Ya reproducida: un bloque normal con la frase, como la banda original */
+    .vibe.is-done {
+      height: auto;
+      margin-top: 5rem;
+      padding-block: 3.5rem 4.5rem;
+      border-top: 1px solid rgb(30 59 47 / 0.15);
+    }
+    .is-done .vibe-track {
+      display: block;
+      width: 100%;
+    }
+    .is-done .vibe-panel {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    .is-done .vibe-green,
+    .is-done .vibe-next {
+      display: none;
+    }
+    .is-done .vibe-reveal {
+      position: static;
+      clip-path: none;
+      background: none;
+    }
+
     .quote-band {
       position: relative;
       margin-top: 7rem;
@@ -170,15 +315,30 @@ export class NosotrosComponent {
     return { parts, count: i };
   });
 
-  private readonly band = viewChild.required<ElementRef<HTMLElement>>('band');
+  /** true si se usa la escena fija (se decide al cargar; si ya se vio, va la frase simple). */
+  protected readonly scene =
+    typeof window !== 'undefined' && window.matchMedia(SCENE_MQ).matches && !sceneSeen();
+
+  private readonly band = viewChild<ElementRef<HTMLElement>>('band');
+  private readonly vibe = viewChild<ElementRef<HTMLElement>>('vibe');
 
   constructor() {
     const zone = inject(NgZone);
     const scroll = inject(SmoothScrollService);
+    const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
     let st: ScrollTrigger | undefined;
+    let ctx: gsap.Context | undefined;
     afterNextRender(() => {
       if (scroll.reducedMotion()) return;
-      const band = this.band().nativeElement;
+      const vibe = this.vibe()?.nativeElement;
+      if (vibe) {
+        zone.runOutsideAngular(() => {
+          ctx = gsap.context(() => this.buildScene(vibe, scroll), host);
+        });
+        return;
+      }
+      const band = this.band()?.nativeElement;
+      if (!band) return;
       zone.runOutsideAngular(() => {
         band.style.setProperty('--p', '0');
         st = ScrollTrigger.create({
@@ -190,6 +350,152 @@ export class NosotrosComponent {
         });
       });
     });
-    inject(DestroyRef).onDestroy(() => st?.kill());
+    inject(DestroyRef).onDestroy(() => {
+      st?.kill();
+      ctx?.revert();
+    });
+  }
+
+  /**
+   * Escena fija con imán: al acercarse, la página se acomoda sola en la escena y queda fija.
+   * El scroll solo cambia de momento (cada uno se reproduce completo): verde → círculo → lateral.
+   */
+  private buildScene(vibe: HTMLElement, scroll: SmoothScrollService): void {
+    const q = gsap.utils.selector(vibe);
+    // Línea de tiempo en segundos reales
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'none' } });
+    tl.addLabel('m0', 0)
+      // 1 · (solo, al llegar) el verde con su texto se ve un momento...
+      .from(q('.vibe-intro'), { y: 16, autoAlpha: 0, duration: 0.5, ease: 'power2.out' }, 0)
+      .to(
+        q('.vibe-intro'),
+        { autoAlpha: 0, scale: 0.96, duration: 0.3, ease: 'power1.in' },
+        INTRO_HOLD,
+      )
+      // ...y un círculo crece desde el centro, limpia el verde y muestra la frase con la mariposa
+      .to(
+        q('.vibe-reveal'),
+        { clipPath: 'circle(75% at 50% 50%)', duration: MOMENT_DURATION, ease: 'power2.inOut' },
+        INTRO_HOLD + 0.2,
+      )
+      .from(
+        q('.vibe-quote'),
+        { y: 30, autoAlpha: 0, duration: 0.6, ease: 'power2.out' },
+        INTRO_HOLD + 0.8,
+      )
+      .from(
+        q('.vibe-bf'),
+        { y: -40, rotation: 25, autoAlpha: 0, duration: 0.6, ease: 'power2.out' },
+        INTRO_HOLD + 1.2,
+      )
+      .addLabel('m1', INTRO_HOLD + 1.8)
+      // 2 · (con scroll) la escena arranca hacia la izquierda acelerando (la frase y la mariposa
+      // un poco más rápido, como en capas); Proceso continúa el mismo movimiento frenando
+      .to(q('.vibe-track'), { xPercent: -50, duration: SLIDE, ease: 'power2.in' }, 'm1')
+      .to(q('.vibe-quote, .vibe-bf'), { x: -120, duration: SLIDE, ease: 'power2.in' }, 'm1')
+      .addLabel('m2', '>');
+
+    let current = 0;
+    const go = (i: number) => {
+      if (i === current) return;
+      current = i;
+      tl.tweenTo(`m${i}`, {
+        // hacia atrás va más rápido
+        duration:
+          Math.abs(tl.labels[`m${i}`] - tl.time()) * (tl.labels[`m${i}`] < tl.time() ? 0.5 : 1),
+        overwrite: true,
+        // Al terminar de deslizar, se pasa directo a Proceso, que entra por la derecha
+        onComplete: () => i === 2 && toProceso(),
+      });
+    };
+    /**
+     * Continúa el movimiento lateral: la escena se suelta (ya no vuelve a reproducirse), la
+     * página salta (sin que se note, todo es verde) al inicio de Proceso y su contenido entra
+     * desde la derecha con la misma velocidad con la que salió la frase.
+     */
+    const toProceso = () => {
+      const proceso = document.querySelector<HTMLElement>('#proceso');
+      const pin = proceso?.querySelector<HTMLElement>('.pin');
+      if (!proceso || !pin || scroll.autoScrolling) return;
+      release();
+      const top = (pin.closest<HTMLElement>('.pin-spacer') ?? pin).getBoundingClientRect().top;
+      if (top <= 0) return; // ya se pasó (scroll rápido): no se retrocede
+      scroll.jumpBy(top);
+      gsap.fromTo(
+        proceso,
+        { '--enter': `${window.innerWidth}px`, '--enter-o': 0.3 },
+        { '--enter': '0px', '--enter-o': 1, duration: 1.1, ease: 'power3.out' },
+      );
+    };
+    /**
+     * Una sola vez: tras reproducirse, la escena deja de estar fija y queda como un bloque con
+     * la frase (al volver a subir se ve completa, sin animación). También se recuerda para las
+     * próximas visitas, igual que la intro de la mariposa.
+     */
+    let released = false;
+    const release = () => {
+      if (released) return;
+      released = true;
+      markSeen();
+      st.kill();
+      magnet.kill();
+      tl.kill();
+      // Queda como al inicio: la frase con poco aire arriba y abajo (ver .vibe.is-done)
+      gsap.set(q('.vibe-track, .vibe-reveal, .vibe-intro, .vibe-quote, .vibe-bf'), {
+        clearProps: 'all',
+      });
+      vibe.classList.add('is-done');
+      // Al volver a subir, la frase y la mariposa aparecen con un fundido suave
+      // (la escena ya quedó arriba: se dispara al volver a entrar en pantalla)
+      const fade = gsap.fromTo(
+        q('.vibe-quote, .vibe-bf'),
+        { autoAlpha: 0, y: 24 },
+        { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.25, ease: 'power2.out', paused: true },
+      );
+      // Se observa después del salto a Proceso (si no, se dispararía antes de tiempo)
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const io = new IntersectionObserver(
+            ([e]) => {
+              if (!e.isIntersecting) return;
+              fade.play();
+              io.disconnect();
+            },
+            { threshold: 0.35 },
+          );
+          io.observe(vibe);
+        }),
+      );
+      ScrollTrigger.refresh();
+    };
+    const st = ScrollTrigger.create({
+      trigger: vibe,
+      start: 'top top',
+      end: () => `+=${window.innerHeight}`,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      // Al llegar: verde con texto, y el círculo se abre solo (sin scroll)
+      onEnter: () => go(1),
+      // Al volver desde Proceso se muestra directo la frase (sin el tramo verde vacío)
+      onEnterBack: () => go(1),
+      // Al salir por arriba se reinicia, para que la próxima vez vuelva a empezar en verde
+      onLeaveBack: () => go(0),
+      // El siguiente scroll (momento) desliza hasta Proceso
+      onUpdate: (self) => go(self.direction > 0 && self.progress >= 0.35 ? 2 : 1),
+    });
+
+    // Imán: al acercarse a la escena bajando, la página se acomoda sola en ella
+    const magnet = ScrollTrigger.create({
+      trigger: vibe,
+      start: 'top 75%',
+      end: 'top top',
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        if (scroll.autoScrolling || self.direction < 0) return;
+        if (self.progress < 0.05 || self.progress > 0.97) return;
+        scroll.scrollToY(st.start, MOMENT_DURATION);
+      },
+    });
   }
 }

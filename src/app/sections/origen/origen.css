@@ -339,6 +339,31 @@
     font-size: clamp(0.95rem, 1.05vw, 1.05rem);
   }
 
+  /* Pantallas bajas: el panel de mercados se compacta para no subir sobre el título */
+  @media (max-height: 900px) {
+    .markets {
+      padding: 1rem 1.25rem;
+    }
+    .markets > p {
+      display: none;
+    }
+    .markets ul {
+      margin-top: 0.75rem;
+      row-gap: 0.5rem;
+    }
+    .markets .origen-cta {
+      margin-top: 1rem;
+    }
+  }
+  @media (max-height: 760px) {
+    .markets ul span span:last-child {
+      display: none;
+    }
+    .markets h3 {
+      font-size: 1.25rem;
+    }
+  }
+
   /* Mariposas viajeras con su estela punteada */
   .travelers {
     position: absolute;

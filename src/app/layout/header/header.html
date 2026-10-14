@@ -18,7 +18,7 @@
   <div class="container-page flex h-[4.5rem] items-center justify-between gap-6">
     <a
       href="#inicio"
-      class="flex items-center gap-3"
+      class="flex shrink-0 items-center gap-3"
       (click)="go($event, 'inicio')"
       [attr.aria-label]="brand + ' — ' + t('home')"
     >
@@ -45,7 +45,9 @@
     </a>
 
     <nav class="hidden lg:block" [attr.aria-label]="t('label')" data-intro-fade>
-      <ul class="flex items-center gap-8 text-[0.95rem] font-medium">
+      <ul
+        class="flex items-center gap-5 text-sm font-medium whitespace-nowrap xl:gap-8 xl:text-[0.95rem]"
+      >
         @for (id of items; track id) {
           <li>
             <a [href]="'#' + id" class="nav-link relative py-2" (click)="go($event, id)">{{
@@ -56,11 +58,11 @@
       </ul>
     </nav>
 
-    <div class="flex items-center gap-3" data-intro-fade>
+    <div class="flex shrink-0 items-center gap-3" data-intro-fade>
       <app-lang-switch class="hidden sm:block" />
       <button
         type="button"
-        class="btn-primary hidden min-h-11 !px-5 !py-2 text-sm md:inline-flex"
+        class="btn-primary hidden min-h-11 !px-5 !py-2 text-sm whitespace-nowrap md:inline-flex lg:hidden xl:inline-flex"
         (click)="quote()"
       >
         {{ t('cta') }}

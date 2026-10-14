@@ -58,21 +58,89 @@ export class SmoothScrollService {
     this.autoTimer = setTimeout(() => (this.autoScrolling = false), seconds * 1000 + 150);
   }
 
-  /** Desplaza a un ancla (#id) respetando el header fijo. */
+  /**
+   * Lleva a un ancla (#id) respetando el header fijo.
+   * - Si en el camino no hay escenas fijas (secciones vecinas): desplazamiento suave.
+   * - Si hay escenas fijas de por medio: fundido a verde, salto directo y fundido de vuelta,
+   *   para no reproducir de paso las animaciones de las secciones intermedias.
+   * Las secciones que empiezan con una escena fija se muestran desde su tope (sin offset).
+   */
   scrollTo(target: string | HTMLElement, offset = -72): void {
     const el =
       typeof target === 'string' ? this.document.querySelector<HTMLElement>(target) : target;
     if (!el) return;
-    this.markAuto(1.2);
-    if (this.lenis) {
-      this.lenis.scrollTo(el, { offset, duration: 1.2 });
+    const destination = () => {
+      const top = el.getBoundingClientRect().top;
+      const spacer = el.querySelector<HTMLElement>('.pin-spacer');
+      const pinned = !!spacer && Math.abs(spacer.getBoundingClientRect().top - top) < 4;
+      return top + window.scrollY + (pinned ? 0 : offset);
+    };
+
+    if (!this.lenis) {
+      window.scrollTo({ top: destination(), behavior: this.reducedMotion() ? 'auto' : 'smooth' });
+    } else if (this.crossesScene(window.scrollY, destination())) {
+      this.fadeJump(destination);
     } else {
-      const top = el.getBoundingClientRect().top + window.scrollY + offset;
-      window.scrollTo({ top, behavior: this.reducedMotion() ? 'auto' : 'smooth' });
+      this.markAuto(1.2);
+      this.lenis.scrollTo(destination(), { duration: 1.2 });
     }
     // Lleva el foco a la sección para usuarios de teclado / lector de pantalla
     if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
     el.focus({ preventScroll: true });
+  }
+
+  /** true si entre las posiciones `from` y `to` hay alguna escena fija (pin). */
+  private crossesScene(from: number, to: number): boolean {
+    const lo = Math.min(from, to);
+    const hi = Math.max(from, to);
+    return Array.from(this.document.querySelectorAll<HTMLElement>('.pin-spacer')).some((s) => {
+      const r = s.getBoundingClientRect();
+      const top = r.top + window.scrollY;
+      return top < hi && top + r.height > lo;
+    });
+  }
+
+  /** Capa verde a pantalla completa para el fundido (bajo el header, que sigue visible). */
+  private veilEl?: HTMLElement;
+  private veil(): HTMLElement {
+    if (!this.veilEl) {
+      const v = this.document.createElement('div');
+      v.setAttribute('aria-hidden', 'true');
+      Object.assign(v.style, {
+        position: 'fixed',
+        inset: '0',
+        zIndex: '45',
+        background: 'var(--color-palta)',
+        opacity: '0',
+        visibility: 'hidden',
+        pointerEvents: 'none',
+      });
+      this.document.body.appendChild(v);
+      this.veilEl = v;
+    }
+    return this.veilEl;
+  }
+
+  /** Fundido a verde → salto instantáneo (el destino se mide justo al saltar) → fundido de vuelta. */
+  private fadeJump(destination: () => number): void {
+    const veil = this.veil();
+    // Imanes y saltos automáticos de las escenas quedan en pausa durante todo el cambio
+    this.markAuto(1.1);
+    gsap.killTweensOf(veil);
+    gsap.to(veil, {
+      autoAlpha: 1,
+      duration: 0.25,
+      ease: 'power1.in',
+      onComplete: () => {
+        this.lenis?.scrollTo(destination(), { immediate: true, force: true });
+        ScrollTrigger.update();
+        // Por si una escena cambió de alto al saltar, se corrige la posición antes de mostrar
+        requestAnimationFrame(() => {
+          this.lenis?.scrollTo(destination(), { immediate: true, force: true });
+          gsap.to(veil, { autoAlpha: 0, duration: 0.4, delay: 0.1, ease: 'power1.out' });
+        });
+      },
+    });
   }
 
   /**
@@ -101,6 +169,15 @@ export class SmoothScrollService {
       const target = this.lenis.targetScroll + dy;
       this.lenis.scrollTo(this.lenis.animatedScroll + dy, { immediate: true, force: true });
       this.lenis.scrollTo(target, { force: true });
+    } else {
+      window.scrollTo({ top: window.scrollY + dy, behavior: 'auto' });
+    }
+  }
+
+  /** Salta `dy` px al instante y se queda ahí (corta la inercia). */
+  jumpBy(dy: number): void {
+    if (this.lenis) {
+      this.lenis.scrollTo(this.lenis.animatedScroll + dy, { immediate: true, force: true });
     } else {
       window.scrollTo({ top: window.scrollY + dy, behavior: 'auto' });
     }
