@@ -15,17 +15,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PROCESS_STEPS } from '../../data/proceso.data';
 import { LanguageService } from '../../core/services/language.service';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
-import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
+import { SCENE_MODE } from '../../core/config/scroll.config';
 
 /** Debe coincidir con la media query de proceso.css */
 const HORIZONTAL_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-preference)';
+/** Segundos que tarda el carril en llegar a una etapa. */
+const STEP_DURATION = 0.7;
 
 /**
  * Proceso ⭐ momento memorable.
  * Escritorio: la sección se fija (pin) y el scroll vertical desplaza las etapas en horizontal.
- * Cómo avanza se elige en core/config/scroll.config.ts (SCENE_MODE): 'momentos' (cada etapa
- * se desliza completa al cruzar un punto), 'pausas' (avanza con el scroll y se detiene en
- * cada etapa) o 'libre' (sin parte fija: las etapas van en vertical y entran al pasar).
+ * Avanza por momentos: cada etapa se desliza completa al cruzar un punto del scroll, y las
+ * pestañas de arriba llevan directo a cualquier etapa. Con SCENE_MODE 'libre'
+ * (core/config/scroll.config.ts) no hay parte fija: las etapas van en vertical.
  * Móvil o movimiento reducido: línea de tiempo vertical, sin pin.
  */
 @Component({
@@ -38,6 +40,13 @@ const HORIZONTAL_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-prefe
 export class ProcesoComponent {
   /** Recorrido horizontal con parte fija (no se usa en el modo 'libre'). */
   protected readonly horizontal = SCENE_MODE !== 'libre';
+  /** Lleva el carril a una etapa (lo define la escena fija; sin ella las pestañas no actúan). */
+  private goToStep?: (i: number) => void;
+
+  /** Pestañas de etapas: se mueve a la elegida. */
+  protected select(i: number): void {
+    this.goToStep?.(i);
+  }
   protected readonly steps = PROCESS_STEPS;
   protected readonly active = signal(0);
   protected readonly lang = inject(LanguageService);
@@ -77,59 +86,47 @@ export class ProcesoComponent {
             if (i !== this.active()) this.active.set(i);
           };
 
-          if (SCENE_MODE === 'momentos') {
-            // Al cruzar cada tramo de la parte fija, el carril se desliza completo a la etapa
-            let current = 0;
-            const goTo = (i: number, duration = MOMENT_DURATION * 0.8) =>
-              gsap.to(track, {
-                x: -distance() * (i / last),
-                duration,
-                ease: 'power2.inOut',
-                overwrite: true,
-                onUpdate: update,
-              });
-            ScrollTrigger.create({
-              trigger: host.querySelector('.pin'),
-              start: 'top top',
-              end: () => `+=${window.innerHeight * 0.75 * last}`,
-              pin: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-              onRefresh: () => goTo(current, 0),
-              onUpdate: (self) => {
-                const target = Math.round(self.progress * last);
-                if (target === current) return;
-                current = target;
-                goTo(target);
-              },
+          // Por momentos: al cruzar cada tramo de la parte fija, el carril se desliza completo
+          // a la etapa. Las pestañas de arriba llevan directo a cualquier etapa.
+          let current = 0;
+          const goTo = (i: number, duration = STEP_DURATION) =>
+            gsap.to(track, {
+              x: -distance() * (i / last),
+              duration,
+              ease: 'power3.out', // arranca al instante y frena suave
+              overwrite: true,
+              onUpdate: update,
             });
-            return;
-          }
-
-          // 'pausas': avanza con el scroll (amortiguado) y se detiene en cada etapa
-          const MOVE = 1; // tramo en que se pasa de una etapa a la siguiente
-          const HOLD = 0.6; // pausa en cada etapa
-          const tl = gsap.timeline({
-            defaults: { ease: 'power1.inOut' },
-            scrollTrigger: {
-              trigger: host.querySelector('.pin'),
-              start: 'top top',
-              // Más largo que el recorrido para dar espacio a las pausas
-              end: () => `+=${distance() * ((last * (MOVE + HOLD) + HOLD) / last)}`,
-              pin: true,
-              scrub: 1.2, // avance amortiguado
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
+          const st = ScrollTrigger.create({
+            trigger: host.querySelector('.pin'),
+            start: 'top top',
+            end: () => `+=${window.innerHeight * 0.75 * last}`,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onRefresh: () => goTo(current, 0),
+            onUpdate: (self) => {
+              // Mientras una pestaña lleva a su etapa, el scroll no cambia de momento
+              if (this.scroll.autoScrolling) return;
+              // Basta con entrar un poco (20 %) en el tramo siguiente para cambiar de etapa
+              const f = self.progress * last;
+              const target =
+                self.direction > 0
+                  ? Math.min(last, Math.floor(f + 0.8))
+                  : Math.max(0, Math.ceil(f - 0.8));
+              if (target === current) return;
+              current = target;
+              goTo(target);
             },
-            onUpdate: update,
           });
-          tl.to({}, { duration: HOLD / 2 }); // pausa en la etapa 01
-          for (let i = 1; i <= last; i++) {
-            tl.to(track, { x: () => -distance() * (i / last), duration: MOVE }).to(
-              {},
-              { duration: i === last ? HOLD / 2 : HOLD },
-            );
-          }
+          this.goToStep = (i: number) => {
+            if (i === current) return;
+            current = i;
+            goTo(i);
+            // La página se acomoda en el tramo de esa etapa (el scroll sigue desde ahí)
+            this.scroll.scrollToY(st.start + (st.end - st.start) * (i / last), STEP_DURATION);
+          };
+          return () => (this.goToStep = undefined);
         });
       });
     });

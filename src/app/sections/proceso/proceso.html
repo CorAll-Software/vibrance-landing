@@ -18,21 +18,27 @@
         {{ t('intro') }}
       </p>
 
-      <!-- Progreso (solo en modo horizontal) -->
-      <div class="progress md:col-span-12" aria-hidden="true" dir="ltr">
-        <div class="relative h-0.5 w-full bg-niebla/15">
+      <!-- Progreso con pestañas (solo en modo horizontal): cada una lleva a su etapa -->
+      <div class="progress md:col-span-12" dir="ltr">
+        <div class="relative h-0.5 w-full bg-niebla/15" aria-hidden="true">
           <div class="progress-fill absolute inset-0 origin-left scale-x-0 bg-hoja"></div>
         </div>
-        <ol class="mt-4 grid grid-cols-5 text-sm">
+        <ol class="mt-2 grid grid-cols-5 text-sm">
           @for (s of steps; track s.id; let i = $index) {
-            <li
-              class="transition-colors duration-300"
-              [class]="i <= active() ? 'text-niebla' : 'text-niebla/80'"
-            >
-              <span class="tabular-nums">0{{ i + 1 }}</span>
-              <span class="ms-2 font-medium" [attr.dir]="lang.dir()">{{
-                t('steps.' + s.id + '.title')
-              }}</span>
+            <li>
+              <button
+                type="button"
+                class="step-tab"
+                [class.is-done]="i <= active()"
+                [class.is-active]="i === active()"
+                [attr.aria-current]="i === active() ? 'step' : null"
+                (click)="select(i)"
+              >
+                <span class="tabular-nums">0{{ i + 1 }}</span>
+                <span class="ms-2 font-medium" [attr.dir]="lang.dir()">{{
+                  t('steps.' + s.id + '.title')
+                }}</span>
+              </button>
             </li>
           }
         </ol>
