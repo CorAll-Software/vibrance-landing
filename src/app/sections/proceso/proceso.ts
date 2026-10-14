@@ -105,6 +105,8 @@ export class ProcesoComponent {
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onRefresh: () => goTo(current, 0),
+            // Al pasar la última etapa hacia abajo, la sección se suelta (ver release)
+            onLeave: () => release(),
             onUpdate: (self) => {
               // Mientras una pestaña lleva a su etapa, el scroll no cambia de momento
               if (this.scroll.autoScrolling) return;
@@ -119,12 +121,31 @@ export class ProcesoComponent {
               goTo(target);
             },
           });
+          /**
+           * Una sola vez, como en Origen y Nosotros: tras pasar "Documentación y envío" la parte
+           * fija se suelta. Al volver a subir, la sección queda quieta en la última etapa y solo
+           * las pestañas mueven el carril.
+           */
+          let released = false;
+          const release = () => {
+            if (released) return;
+            released = true;
+            const distance = st.end - st.start;
+            st.kill();
+            // Se quita el tramo fijo sin que se note el salto
+            this.scroll.shiftBy(-distance);
+            ScrollTrigger.refresh();
+          };
           this.goToStep = (i: number) => {
             if (i === current) return;
             current = i;
             goTo(i);
-            // La página se acomoda en el tramo de esa etapa (el scroll sigue desde ahí)
-            this.scroll.scrollToY(st.start + (st.end - st.start) * (i / last), STEP_DURATION);
+            // Mientras está fija, la página se acomoda en el tramo de esa etapa
+            // (la última queda justo antes del final: solo el scroll del usuario suelta la sección)
+            if (!released) {
+              const y = st.start + (st.end - st.start) * (i / last);
+              this.scroll.scrollToY(Math.min(y, st.end - 4), STEP_DURATION);
+            }
           };
           return () => (this.goToStep = undefined);
         });
