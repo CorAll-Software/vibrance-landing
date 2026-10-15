@@ -126,21 +126,15 @@ export const PROCESO: Record<
 };
 
 /* ─────────────────────────── PRODUCTOS ────────────────────────── */
-/* El video se reproduce al pasar el mouse sobre la tarjeta. */
+/* Foto de cada panel del catálogo y del detalle del producto. */
 
 export const PRODUCTOS: Record<
   'arandano' | 'palta' | 'uva' | 'mango' | 'mandarina' | 'kion',
   SectionMedia
 > = {
-  arandano: { image: 'media/producto-arandano.webp', placeholder: true }, // TODO: foto real
-  palta: { image: 'media/producto-palta.webp', placeholder: true }, // TODO: foto real
-  uva: {
-    image: 'media/uvas.png',
-    video: {
-      mp4: 'https://www.pexels.com/es-es/download/video/31463341/',
-      webm: 'https://www.pexels.com/es-es/download/video/31463341/',
-    },
-  },
+  arandano: { image: 'media/producto-arandano.webp' },
+  palta: { image: 'media/producto-palta.webp' },
+  uva: { image: 'media/producto-uva.webp' },
   mango: { image: 'media/producto-mango.webp' },
   mandarina: { image: 'media/producto-mandarina.webp' },
   kion: { image: 'media/producto-kion.webp' },

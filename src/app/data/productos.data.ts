@@ -14,7 +14,7 @@ export interface Product {
   image: string;
   /** true: se muestra el recuadro "Foto aquí" en lugar de la imagen. */
   placeholder?: boolean;
-  /** Imagen y video (al pasar el mouse): se editan en core/config/media.config.ts */
+  /** Imagen (y video opcional, hoy sin uso en el catálogo): se editan en core/config/media.config.ts */
   video?: { webm?: string; mp4?: string };
   /** Meses de disponibilidad para exportar: 1 = enero … 12 = diciembre. */
   months: number[];

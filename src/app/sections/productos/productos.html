@@ -1,6 +1,6 @@
 <section
   id="productos"
-  class="py-24 md:py-36"
+  class="py-24 md:py-36 lg:pt-24"
   aria-labelledby="productos-title"
   *transloco="let t; prefix: 'productos'"
 >
@@ -18,78 +18,71 @@
       </p>
     </div>
 
-    <ul class="mt-14 grid gap-5 lg:grid-cols-12">
+    <!--
+      Paneles que se expanden: la fruta activa (cursor, foco o toque) se ensancha y muestra su
+      información; las demás quedan como franjas con su nombre. Clic en la activa: detalle.
+      Escritorio: franjas verticales lado a lado. Móvil: filas apiladas (acordeón).
+    -->
+    <ul data-reveal class="panels mt-10 md:mt-14 lg:mt-10" (pointerleave)="hovering = false">
       @for (p of products; track p.id; let i = $index) {
-        <li data-reveal [class]="layout[i % layout.length]">
-          <app-product-card class="h-full" [product]="p" (selected)="open($event)" />
+        <li class="panel" [class.is-active]="active() === i" (pointerenter)="hover(i, $event)">
+          <button
+            type="button"
+            class="panel__btn"
+            [attr.aria-expanded]="active() === i"
+            [attr.aria-label]="
+              active() === i
+                ? t('viewDetail', { name: t('items.' + p.id + '.name') })
+                : t('items.' + p.id + '.name')
+            "
+            (pointerdown)="pressing = true"
+            (focus)="focused(i)"
+            (click)="choose(i, p.id)"
+          >
+            @if (p.placeholder) {
+              <app-photo-placeholder />
+            } @else {
+              <img
+                [ngSrc]="p.image"
+                [alt]="t('items.' + p.id + '.alt')"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                class="panel__img object-cover"
+              />
+            }
+            <span class="panel__shade" aria-hidden="true"></span>
+
+            <!-- Franja cerrada: nombre en vertical (escritorio) o en línea (móvil) -->
+            <span class="panel__label font-display font-semibold" aria-hidden="true">{{
+              t('items.' + p.id + '.name')
+            }}</span>
+
+            <!-- Abierta: nombre, resumen, temporada y "ver detalle" -->
+            <span class="panel__info">
+              <span class="panel__num tabular-nums">0{{ i + 1 }}</span>
+              <span class="panel__name font-display font-bold">{{
+                t('items.' + p.id + '.name')
+              }}</span>
+              <span class="panel__summary">{{ t('items.' + p.id + '.summary') }}</span>
+              <span class="panel__meta">
+                <span class="panel__season">
+                  {{ t('season') }} · {{ t('items.' + p.id + '.season') }}
+                </span>
+                <span class="panel__more" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path
+                      d="M12 5v14M5 12h14"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </span>
+          </button>
         </li>
       }
     </ul>
   </div>
-
-  <!-- Modal de detalle -->
-  <app-modal [open]="!!selected()" size="wide" labelledBy="product-title" (closed)="close()">
-    @if (detail(); as p) {
-      <div class="grid md:grid-cols-[1fr_1.2fr]">
-        <div class="relative min-h-64 bg-arena md:min-h-full">
-          @if (p.placeholder) {
-            <app-photo-placeholder />
-          } @else {
-            <img
-              [ngSrc]="p.image"
-              [alt]="t('items.' + p.id + '.alt')"
-              fill
-              sizes="(min-width: 768px) 30rem, 100vw"
-              class="object-cover"
-            />
-          }
-        </div>
-        <div class="p-6 sm:p-10">
-          <h2 id="product-title" class="pr-12 text-4xl font-bold">
-            {{ t('items.' + p.id + '.name') }}
-          </h2>
-          <p class="mt-2 text-lg text-palta/75">{{ t('items.' + p.id + '.summary') }}</p>
-
-          <dl class="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
-            <div>
-              <dt class="text-sm font-semibold text-palta/60">{{ t('varieties') }}</dt>
-              <dd class="mt-1">{{ t('items.' + p.id + '.varieties') }}</dd>
-            </div>
-            <div>
-              <dt class="text-sm font-semibold text-palta/60">{{ t('sizes') }}</dt>
-              <dd class="mt-1">{{ p.sizes.join(' · ') }}</dd>
-            </div>
-            <div>
-              <dt class="text-sm font-semibold text-palta/60">{{ t('presentations') }}</dt>
-              <dd class="mt-1">{{ t('items.' + p.id + '.presentations') }}</dd>
-            </div>
-            <div>
-              <dt class="text-sm font-semibold text-palta/60">{{ t('packaging') }}</dt>
-              <dd class="mt-1">{{ t('items.' + p.id + '.packaging') }}</dd>
-            </div>
-          </dl>
-          <p class="mt-5 text-sm text-palta/70">{{ t('quoteNote') }}</p>
-
-          <div class="mt-8 border-t border-palta/15 pt-6">
-            <h3 class="font-sans text-sm font-semibold text-palta/60">{{ t('markets') }}</h3>
-            <p class="mt-1">{{ marketNames(p.id) }}</p>
-            <p class="mt-1 text-sm text-palta/60">{{ t('marketsNote') }}</p>
-          </div>
-
-          <div class="mt-8 border-t border-palta/15 pt-6">
-            <h3 class="font-sans text-sm font-semibold text-palta/60">
-              {{ t('availability') }} · {{ t('items.' + p.id + '.season') }}
-            </h3>
-            <div class="mt-4">
-              <app-availability-calendar [months]="p.months" />
-            </div>
-          </div>
-
-          <button type="button" class="btn-primary mt-10" (click)="quote(p)">
-            {{ t('quoteThis', { name: t('items.' + p.id + '.name') }) }}
-          </button>
-        </div>
-      </div>
-    }
-  </app-modal>
 </section>
