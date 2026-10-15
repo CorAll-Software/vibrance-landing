@@ -1,65 +1,52 @@
-import { PhotoPlaceholderComponent } from '../../shared/components/photo-placeholder/photo-placeholder';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
-import { PRODUCTS, Product, ProductId } from '../../data/productos.data';
-import { MARKET_ACCESS } from '../../data/mercados.data';
+import { TranslocoDirective } from '@jsverse/transloco';
+import { PRODUCTS, ProductId } from '../../data/productos.data';
 import { UiStateService } from '../../core/services/ui-state.service';
-import { ModalComponent } from '../../shared/components/modal/modal';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card';
-import { AvailabilityCalendarComponent } from '../../shared/components/availability-calendar/availability-calendar';
+import { PhotoPlaceholderComponent } from '../../shared/components/photo-placeholder/photo-placeholder';
 
-/** Qué ofrecemos: cards por fruta + modal de detalle con calendario de disponibilidad. */
+/**
+ * Qué ofrecemos: paneles que se expanden. La fruta activa se ensancha y muestra su información;
+ * al hacer clic en ella se abre el detalle (app-product-detail, compartido con el mapa de Origen).
+ * En pantallas táctiles el primer toque abre el panel y el segundo, el detalle.
+ */
 @Component({
   selector: 'app-productos',
-  imports: [
-    NgOptimizedImage,
-    TranslocoDirective,
-    ModalComponent,
-    ProductCardComponent,
-    PhotoPlaceholderComponent,
-    AvailabilityCalendarComponent,
-  ],
+  imports: [NgOptimizedImage, TranslocoDirective, PhotoPlaceholderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './productos.html',
+  styleUrl: './productos.css',
 })
 export class ProductosComponent {
   protected readonly products = PRODUCTS;
-  private readonly ui = inject(UiStateService);
-  private readonly transloco = inject(TranslocoService);
+  protected readonly ui = inject(UiStateService);
+  /** Panel abierto (por defecto, el primero). */
+  protected readonly active = signal(0);
+  /** true mientras el cursor está sobre los paneles: el clic abre directo el detalle. */
+  protected hovering = false;
+  /** true entre pointerdown y click: el foco de un toque no debe contar como "ya abierto". */
+  protected pressing = false;
 
-  protected readonly selected = signal<Product | null>(null);
-  /** Se conserva el último producto para que el contenido no desaparezca durante la animación de cierre. */
-  private readonly lastSelected = signal<Product | null>(null);
-  protected readonly detail = computed(() => this.selected() ?? this.lastSelected());
-
-  /** Composición asimétrica: la primera card es alta; las tres últimas comparten fila (escritorio). */
-  protected readonly layout = [
-    'lg:col-span-5 lg:row-span-2 min-h-[26rem] lg:min-h-[44rem]',
-    'lg:col-span-7 min-h-[22rem]',
-    'lg:col-span-7 min-h-[22rem]',
-    'lg:col-span-4 min-h-[22rem] lg:min-h-[26rem]',
-    'lg:col-span-4 min-h-[22rem] lg:min-h-[26rem]',
-    'lg:col-span-4 min-h-[22rem] lg:min-h-[26rem]',
-  ];
-
-  /** Mercados con protocolo vigente para el producto, ya traducidos. */
-  protected marketNames(id: ProductId): string {
-    return MARKET_ACCESS[id].map((m) => this.transloco.translate('datos.destinos.' + m)).join(', ');
+  /** Solo el mouse abre al pasar (en táctil el navegador emula eventos de cursor). */
+  protected hover(i: number, event: PointerEvent): void {
+    if (event.pointerType !== 'mouse') return;
+    this.hovering = true;
+    this.active.set(i);
   }
 
-  protected open(product: Product): void {
-    this.lastSelected.set(product);
-    this.selected.set(product);
+  /** Teclado: al llegar con Tab se abre el panel. */
+  protected focused(i: number): void {
+    if (!this.pressing) this.active.set(i);
   }
 
-  protected close(): void {
-    this.selected.set(null);
-  }
-
-  protected quote(product: Product): void {
-    this.close();
-    // Espera a que el modal de detalle se cierre antes de abrir la cotización
-    setTimeout(() => this.ui.openQuote(product.id), 50);
+  /** Clic: si el panel ya está abierto (o se llegó con el cursor), abre el detalle. */
+  protected choose(i: number, id: ProductId): void {
+    this.pressing = false;
+    if (this.active() === i || this.hovering) {
+      this.active.set(i);
+      this.ui.openProduct(id);
+    } else {
+      this.active.set(i);
+    }
   }
 }

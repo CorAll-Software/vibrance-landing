@@ -13,6 +13,7 @@ import { ProductosComponent } from './sections/productos/productos';
 import { DatosComponent } from './sections/datos/datos';
 import { ContactoComponent } from './sections/contacto/contacto';
 import { QuoteModalComponent } from './sections/contacto/quote-modal';
+import { ProductDetailComponent } from './shared/components/product-detail/product-detail';
 import { WhatsappButtonComponent } from './shared/components/whatsapp-button/whatsapp-button';
 
 @Component({
@@ -29,6 +30,7 @@ import { WhatsappButtonComponent } from './shared/components/whatsapp-button/wha
     DatosComponent,
     ComoTrabajamosComponent,
     ContactoComponent,
+    ProductDetailComponent,
     QuoteModalComponent,
     WhatsappButtonComponent,
   ],

@@ -26,10 +26,12 @@ import { ORIGEN } from '../../core/config/media.config';
 import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
 
 /**
- * Modo de la parte 2 de Origen (el mapa): al llegar al tope se reproduce por momentos.
- * Solo respeta el modo "libre" de scroll.config.ts; "momentos" y "pausas" usan "momentos".
+ * Modo de Origen (sigue a SCENE_MODE de scroll.config.ts):
+ * - 'pausas': el paso de la parte 1 al mapa sigue al scroll normal (sin desplazarse solo).
+ * - 'momentos': ese paso se recorre solo, completo, al empezar a bajar o subir.
+ * - 'libre': sin partes fijas.
  */
-const ORIGEN_MODE: 'libre' | 'momentos' = SCENE_MODE === 'libre' ? 'libre' : 'momentos';
+const ORIGEN_MODE: 'libre' | 'momentos' | 'pausas' = SCENE_MODE;
 
 /**
  * Cómo avanza la escena fija del mapa:
@@ -90,7 +92,7 @@ const TRAVEL_REST = 5;
  * 2. Aparecen las frutas en sus regiones.
  * 3. De cada región sale su fruta y entra en la cesta.
  * 4. La mariposa se lleva la cesta y aparece "Dónde puede llegar" con los botones de acción.
- * La parte fija del mapa va por momentos (ver ORIGEN_MODE); solo respeta el modo "libre" de scroll.config.ts.
+ * La parte fija del mapa avanza con pausas (ver MAP_MODE); el paso al mapa sigue a ORIGEN_MODE.
  */
 @Component({
   selector: 'app-origen',

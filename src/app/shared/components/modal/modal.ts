@@ -73,7 +73,7 @@ import { SmoothScrollService } from '../../../core/services/smooth-scroll.servic
         display 300ms allow-discrete;
     }
     .modal--wide {
-      width: min(100% - 2rem, 64rem);
+      width: min(100% - 2rem, 72rem);
     }
     .modal[open] {
       opacity: 1;
@@ -103,11 +103,12 @@ import { SmoothScrollService } from '../../../core/services/smooth-scroll.servic
     .modal__panel {
       position: relative;
     }
+    /* Fijo arriba a la derecha aunque se recorra el contenido (no ocupa espacio: margen negativo) */
     .modal__close {
-      position: absolute;
+      position: sticky;
       top: 1rem;
-      right: 1rem;
       z-index: 2;
+      margin: 1rem 1rem -3.75rem auto;
       display: grid;
       place-items: center;
       width: 2.75rem;

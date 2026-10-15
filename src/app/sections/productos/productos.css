@@ -1,0 +1,182 @@
+/* ---------- Paneles que se expanden ---------- */
+
+/* Móvil y tablet: filas apiladas; la activa se abre como un acordeón */
+.panels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.panel {
+  flex: 0 0 4.75rem;
+  min-height: 0;
+  transition: flex-basis 600ms var(--ease-out-soft, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.panel.is-active {
+  flex-basis: 22rem;
+}
+
+.panel__btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: var(--color-arena);
+  color: var(--color-niebla);
+  text-align: start;
+  cursor: pointer;
+}
+.panel__btn:focus-visible {
+  outline: 3px solid var(--color-mandarina);
+  outline-offset: 3px;
+}
+
+/* Foto: se acerca un poco cuando el panel está cerrado */
+.panel__img {
+  transform: scale(1.08);
+  transition: transform 900ms var(--ease-out-soft, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.is-active .panel__img {
+  transform: scale(1);
+}
+
+/* Velo: parejo en las franjas cerradas; degradado abajo en la abierta (para leer el texto) */
+.panel__shade {
+  position: absolute;
+  inset: 0;
+  background: rgb(30 59 47 / 0.55);
+  transition: background-color 500ms ease;
+}
+.is-active .panel__shade {
+  background: linear-gradient(
+    to top,
+    rgb(30 59 47 / 0.92) 0%,
+    rgb(30 59 47 / 0.35) 45%,
+    rgb(30 59 47 / 0) 75%
+  );
+}
+.panel__btn:hover .panel__shade {
+  background-color: rgb(30 59 47 / 0.45);
+}
+.is-active .panel__btn:hover .panel__shade {
+  background-color: transparent;
+}
+
+/* Nombre de la franja cerrada */
+.panel__label {
+  position: absolute;
+  top: 50%;
+  left: 1.5rem;
+  translate: 0 -50%;
+  font-size: 1.25rem;
+  white-space: nowrap;
+  transition: opacity 300ms ease;
+}
+.is-active .panel__label {
+  opacity: 0;
+}
+
+/* Información del panel abierto (ancho mínimo fijo: no se reacomoda mientras se expande) */
+.panel__info {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 18rem;
+  padding: 1.5rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+.is-active .panel__info {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 500ms ease 250ms,
+    transform 500ms var(--ease-out-soft, cubic-bezier(0.22, 1, 0.36, 1)) 250ms;
+}
+.panel__num {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-mandarina);
+}
+.panel__name {
+  font-size: clamp(1.75rem, 3vw, 3rem);
+  line-height: 1.05;
+}
+.panel__summary {
+  max-width: 34ch;
+  color: rgb(247 248 245 / 0.85);
+}
+.panel__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.panel__season {
+  font-size: 0.875rem;
+  color: rgb(247 248 245 / 0.75);
+}
+.panel__more {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: rgb(247 248 245 / 0.92);
+  color: var(--color-palta);
+  transition: transform 300ms var(--ease-out-soft, cubic-bezier(0.22, 1, 0.36, 1));
+}
+.panel__btn:hover .panel__more {
+  transform: rotate(90deg);
+}
+
+/* Escritorio: franjas verticales lado a lado, a la altura de una pantalla */
+@media (min-width: 1024px) {
+  .panels {
+    flex-direction: row;
+    gap: 0.75rem;
+    /* Que la sección quepa entera en la pantalla (header + título + márgenes ≈ 23rem) */
+    height: clamp(20rem, calc(100svh - 23rem), 38rem);
+  }
+  .panel {
+    flex: 1 1 0;
+    min-width: 0;
+    transition: flex-grow 700ms var(--ease-out-soft, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+  .panel.is-active {
+    flex-grow: 5;
+  }
+  /* Nombre en vertical, de abajo hacia arriba */
+  .panel__label {
+    top: auto;
+    bottom: 1.75rem;
+    left: 50%;
+    translate: -50% 0;
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+    font-size: 1.375rem;
+  }
+  .panel__info {
+    min-width: 24rem;
+    padding: 2rem;
+    gap: 0.625rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .panel__img,
+  .panel__info,
+  .is-active .panel__info {
+    transition: none;
+  }
+}

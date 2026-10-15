@@ -19,4 +19,15 @@ export class UiStateService {
   closeQuote(): void {
     this.quoteOpen.set(false);
   }
+
+  /** Producto abierto en el modal de detalle (catálogo y mapa de Origen). */
+  readonly productDetail = signal<ProductId | null>(null);
+
+  openProduct(product: ProductId): void {
+    this.productDetail.set(product);
+  }
+
+  closeProduct(): void {
+    this.productDetail.set(null);
+  }
 }

@@ -15,6 +15,7 @@ import { GROWING_ZONES, PORTS } from '../../../data/destinos.data';
 import { PRODUCTS } from '../../../data/productos.data';
 import { LanguageService } from '../../../core/services/language.service';
 import { SmoothScrollService } from '../../../core/services/smooth-scroll.service';
+import { UiStateService } from '../../../core/services/ui-state.service';
 import { FruitIconComponent } from '../fruit-icon/fruit-icon';
 import { PERU_PATH } from './peru-path';
 import { COAST_AREA, JUNGLE_AREA, VB_H, VB_W, VB_X, VB_Y, project, toPercent } from './peru-geo';
@@ -22,12 +23,24 @@ import { COAST_AREA, JUNGLE_AREA, VB_H, VB_W, VB_X, VB_Y, project, toPercent } f
 /** Colores de las regiones (leyenda; el mapa usa degradados de estos tonos). */
 const REGION_COLORS = { costa: '#F3E2AF', sierra: '#C28449', selva: '#679448' } as const;
 
+/**
+ * Dónde se clava el pin de cada región (lon, lat): un poco tierra adentro para que la punta caiga
+ * sobre el país y no en el borde; Lima y Junín, escalonados para que no se pisen.
+ */
+const PIN_AT: Record<string, [number, number]> = {
+  piura: [-80.1, -5.3],
+  la_libertad: [-78.4, -8.1],
+  lima: [-76.6, -12.3],
+  junin: [-74.6, -10.4],
+  ica: [-75.2, -14.7],
+};
+
 /** Orden en que aparecen las regiones (de norte a sur; Lima al final). */
 const POP_ORDER = ['piura', 'la_libertad', 'junin', 'ica', 'lima'];
 
 /**
  * Mapa del Perú: regiones naturales con relieve, puertos de embarque y un ícono de fruta por
- * región de origen (con pulso y mini tarjeta al pasar el cursor o tocar).
+ * región de origen (con pulso y mini tarjeta al pasar el cursor o tocar; cada fruta de la tarjeta abre su detalle).
  * Fases: 0 aparece el país · 1 se marcan las regiones del norte al sur · 2 Lima.
  * Si `managed` es true, la sección padre arma la línea de tiempo; si no, se anima sola.
  */
@@ -50,7 +63,7 @@ export class MapPeruComponent {
   protected readonly regions = ['costa', 'sierra', 'selva'] as const;
 
   protected readonly zones = GROWING_ZONES.map((z) => {
-    const pos = toPercent(z.lon, z.lat);
+    const pos = toPercent(...(PIN_AT[z.id] ?? [z.lon, z.lat]));
     return {
       ...z,
       ...pos,
@@ -73,6 +86,16 @@ export class MapPeruComponent {
   protected toggle(id: string): void {
     this.active.update((cur) => (cur === id ? null : id));
   }
+
+  /** Cierra la tarjeta cuando el foco sale de la región (no al pasar del marcador a una fruta). */
+  protected onFocusOut(event: FocusEvent, id: string): void {
+    const zone = event.currentTarget as HTMLElement;
+    if (zone.contains(event.relatedTarget as Node | null)) return;
+    if (this.active() === id) this.active.set(null);
+  }
+
+  /** Abre el detalle de la fruta (mismo modal que el catálogo). */
+  protected readonly ui = inject(UiStateService);
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private readonly q = gsap.utils.selector(this.host);

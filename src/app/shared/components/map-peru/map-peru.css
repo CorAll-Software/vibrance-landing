@@ -13,28 +13,54 @@
   stroke-linejoin: round;
 }
 
-/* Pulso de cada región */
-.pulse {
+/* Pin de cada región: misma línea que las alas (borde oscuro grueso, luz arriba a la izquierda) */
+/* El tamaño del pin acompaña al del mapa (en mapas pequeños no se pisan entre sí) */
+.map-box {
+  container-type: inline-size;
+  --pin: clamp(1.75rem, 11cqw, 2.5rem);
+}
+.anchor {
+  width: var(--pin);
+  height: var(--pin);
+  /* La punta del pin queda sobre la región */
+  translate: -50% calc(-100% - var(--pin) * 0.18);
+}
+.pin {
   position: absolute;
   inset: 0;
-  border-radius: 999px;
-  background: rgb(242 163 58 / 0.45);
-  animation: pulse 2.6s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  border: 3px solid #1e3b2f;
+  border-radius: 50% 50% 50% 0;
+  background: radial-gradient(circle at 35% 30%, #fffdf6 0%, #f6ecd4 60%, #e6d3a8 100%);
+  box-shadow: 0 6px 14px rgb(20 42 32 / 0.3);
+  rotate: -45deg;
+  transition:
+    translate 250ms var(--ease-out-soft, ease),
+    box-shadow 250ms ease;
 }
-.pulse--late {
-  animation-delay: 1.3s;
+.pin__icon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  rotate: 45deg;
 }
-@keyframes pulse {
-  0% {
-    transform: scale(0.7);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1.9);
-    opacity: 0;
-  }
+.pin__icon ::ng-deep svg {
+  width: 70%;
+  height: 70%;
 }
-
+.marker:hover .pin,
+.marker:focus-visible .pin,
+.zone.is-open .pin {
+  translate: 0 -3px;
+  box-shadow: 0 10px 18px rgb(20 42 32 / 0.32);
+}
+.marker:focus-visible {
+  outline: none;
+}
+.marker:focus-visible .pin {
+  outline: 3px solid var(--color-mandarina);
+  outline-offset: 2px;
+}
 /* Mini tarjeta */
 .zone:hover,
 .zone:focus-within,
@@ -44,11 +70,25 @@
 .card {
   bottom: 100%;
   margin-bottom: 0.75rem;
+  visibility: hidden;
   opacity: 0;
   transform: translateY(6px);
   transition:
     opacity 200ms ease,
-    transform 200ms ease;
+    transform 200ms ease,
+    visibility 0s linear 200ms;
+}
+/* Puente invisible entre el marcador y la tarjeta: el cursor puede pasar a la tarjeta sin cerrarla */
+.card::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 0.75rem;
+}
+.card.card--below::after {
+  top: auto;
+  bottom: 100%;
 }
 .card.card--below {
   bottom: auto;
@@ -67,18 +107,29 @@
 .card[data-align='end'] {
   right: -0.75rem;
 }
-.marker:hover .card,
-.marker:focus-visible .card,
+.zone:hover .card,
 .zone.is-open .card {
+  visibility: visible;
   opacity: 1;
   transform: translateY(0);
+  transition-delay: 0s;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .pulse {
-    animation: none;
-  }
-  .pulse {
-    display: none;
-  }
+/* Cada fruta de la tarjeta abre su detalle */
+.fruit-link {
+  transition: background-color 200ms ease;
+}
+.fruit-link:hover,
+.fruit-link:focus-visible {
+  background: rgb(30 59 47 / 0.08);
+}
+.fruit-link:focus-visible {
+  outline: 2px solid var(--color-mandarina);
+  outline-offset: -2px;
+}
+.fruit-link__arrow {
+  color: rgb(30 59 47 / 0.45);
+  transition: transform 200ms ease;
+}
+.fruit-link:hover .fruit-link__arrow {
+  transform: translateX(2px);
 }
