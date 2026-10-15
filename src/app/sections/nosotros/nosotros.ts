@@ -396,9 +396,31 @@ export class NosotrosComponent {
       .addLabel('m2', '>');
 
     let current = 0;
+    /**
+     * Durante la transición a Proceso (deslizamiento + entrada) el scroll queda bloqueado: si no,
+     * un scroll rápido seguiría moviendo la página y el carril de Proceso, y la animación se
+     * deformaría. Se libera cuando Proceso termina de entrar.
+     */
+    let locked = false;
+    const lock = () => {
+      if (locked) return;
+      locked = true;
+      scroll.stop();
+      // Salvaguarda: pase lo que pase, el scroll se libera en unos segundos
+      setTimeout(unlock, 4000);
+      // Si un scroll rápido ya pasó el final de la escena, se vuelve a ella antes de deslizar
+      const beyond = window.scrollY - (st.end - 2);
+      if (beyond > 0) scroll.jumpBy(-beyond);
+    };
+    const unlock = () => {
+      if (!locked) return;
+      locked = false;
+      scroll.start();
+    };
     const go = (i: number) => {
       if (i === current) return;
       current = i;
+      if (i === 2) lock();
       tl.tweenTo(`m${i}`, {
         // hacia atrás va más rápido
         duration:
@@ -416,15 +438,22 @@ export class NosotrosComponent {
     const toProceso = () => {
       const proceso = document.querySelector<HTMLElement>('#proceso');
       const pin = proceso?.querySelector<HTMLElement>('.pin');
-      if (!proceso || !pin || scroll.autoScrolling) return;
+      if (!proceso || !pin || scroll.autoScrolling) return unlock();
       release();
+      // Salta justo al inicio de Proceso (también si un scroll rápido ya lo había pasado un poco)
       const top = (pin.closest<HTMLElement>('.pin-spacer') ?? pin).getBoundingClientRect().top;
-      if (top <= 0) return; // ya se pasó (scroll rápido): no se retrocede
       scroll.jumpBy(top);
       gsap.fromTo(
         proceso,
         { '--enter': `${window.innerWidth}px`, '--enter-o': 0.3 },
-        { '--enter': '0px', '--enter-o': 1, duration: 1.1, ease: 'power3.out' },
+        {
+          '--enter': '0px',
+          '--enter-o': 1,
+          duration: 1.1,
+          ease: 'power3.out',
+          overwrite: true,
+          onComplete: unlock,
+        },
       );
     };
     /**
