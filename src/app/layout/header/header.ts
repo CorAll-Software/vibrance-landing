@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { BRAND_DESCRIPTOR, BRAND_NAME, LOGO } from '../../core/config/brand';
+import { ActiveSectionService } from '../../core/services/active-section.service';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { UiStateService } from '../../core/services/ui-state.service';
 import { LangSwitchComponent } from './lang-switch';
@@ -40,6 +41,7 @@ export class HeaderComponent {
   protected readonly menuOpen = signal(false);
 
   protected readonly ui = inject(UiStateService);
+  protected readonly section = inject(ActiveSectionService);
   private readonly scroll = inject(SmoothScrollService);
 
   constructor() {

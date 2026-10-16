@@ -178,6 +178,17 @@ html.lenis body {
   overflow: hidden;
 }
 
+/* Barra de scroll nativa oculta: la reemplaza app-scroll-indicator (que no se muestra con
+   movimiento reducido, donde queda la nativa). */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -202,7 +213,8 @@ html.lenis body {
   transition: transform 300ms var(--ease-out-soft);
 }
 .nav-link:hover::after,
-.nav-link:focus-visible::after {
+.nav-link:focus-visible::after,
+.nav-link.is-active::after {
   transform: scaleX(1);
 }
 

@@ -14,6 +14,7 @@
   },
   "nav": {
     "label": "主导航",
+    "sections": "页面章节",
     "origen": "产地",
     "nosotros": "关于我们",
     "proceso": "流程",

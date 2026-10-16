@@ -15,6 +15,7 @@
   },
   "nav": {
     "label": "주요 메뉴",
+    "sections": "페이지 섹션",
     "origen": "원산지",
     "proceso": "프로세스",
     "productos": "제품",

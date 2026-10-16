@@ -50,9 +50,14 @@
       >
         @for (id of items; track id) {
           <li>
-            <a [href]="'#' + id" class="nav-link relative py-2" (click)="go($event, id)">{{
-              t(id)
-            }}</a>
+            <a
+              [href]="'#' + id"
+              class="nav-link relative py-2"
+              [class.is-active]="section.active() === id"
+              [attr.aria-current]="section.active() === id ? 'location' : null"
+              (click)="go($event, id)"
+              >{{ t(id) }}</a
+            >
           </li>
         }
       </ul>
@@ -111,6 +116,8 @@
               <a
                 [href]="'#' + id"
                 class="block py-2 font-display text-4xl font-semibold"
+                [class]="section.active() === id ? 'text-hoja' : ''"
+                [attr.aria-current]="section.active() === id ? 'location' : null"
                 (click)="go($event, id)"
                 >{{ t(id) }}</a
               >

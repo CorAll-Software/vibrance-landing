@@ -15,6 +15,7 @@
   },
   "nav": {
     "label": "Main navigation",
+    "sections": "Page sections",
     "origen": "Origin",
     "proceso": "Process",
     "productos": "Products",
