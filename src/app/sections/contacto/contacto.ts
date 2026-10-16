@@ -20,7 +20,7 @@ import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
   template: `
     <section
       id="contacto"
-      class="overflow-hidden bg-palta py-28 text-niebla md:py-44"
+      class="overflow-hidden bg-palta pt-28 pb-28 text-niebla md:pt-40 md:pb-44"
       aria-labelledby="contacto-title"
       *transloco="let t; prefix: 'contacto'"
     >

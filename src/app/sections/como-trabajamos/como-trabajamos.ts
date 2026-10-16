@@ -29,7 +29,7 @@ const REACH: Record<Term, number> = { fob: 2, cfr: 3, cif: 3 };
   template: `
     <section
       id="como"
-      class="bg-white py-24 md:py-36"
+      class="bg-niebla py-24 md:py-36"
       aria-labelledby="como-title"
       *transloco="let t; prefix: 'como'"
     >
