@@ -52,6 +52,24 @@ export class SmoothScrollService {
   autoScrolling = false;
   private autoTimer?: ReturnType<typeof setTimeout>;
 
+  /** Destino de la navegación del menú en curso (null si no hay). Las escenas fijas del camino no reaccionan. */
+  navTarget: HTMLElement | null = null;
+  private navTimer?: ReturnType<typeof setTimeout>;
+
+  private navHooks = new Set<(el: HTMLElement) => void>();
+
+  /** Avisa cuando el menú va a saltar a una sección pasando por escenas fijas (pantalla tapada). */
+  onNavigate(cb: (el: HTMLElement) => void): () => void {
+    this.navHooks.add(cb);
+    return () => this.navHooks.delete(cb);
+  }
+
+  private markNav(el: HTMLElement, seconds: number): void {
+    this.navTarget = el;
+    clearTimeout(this.navTimer);
+    this.navTimer = setTimeout(() => (this.navTarget = null), seconds * 1000 + 150);
+  }
+
   private markAuto(seconds: number): void {
     this.autoScrolling = true;
     clearTimeout(this.autoTimer);
@@ -73,13 +91,15 @@ export class SmoothScrollService {
       const top = el.getBoundingClientRect().top;
       const spacer = el.querySelector<HTMLElement>('.pin-spacer');
       const pinned = !!spacer && Math.abs(spacer.getBoundingClientRect().top - top) < 4;
-      return top + window.scrollY + (pinned ? 0 : offset);
+      // Con escena fija arriba, unos px de más para no caer dentro de la escena anterior (redondeo)
+      return top + window.scrollY + (pinned ? 3 : offset);
     };
 
+    this.markNav(el, this.lenis ? 1.6 : 1);
     if (!this.lenis) {
       window.scrollTo({ top: destination(), behavior: this.reducedMotion() ? 'auto' : 'smooth' });
     } else if (this.crossesScene(window.scrollY, destination())) {
-      this.fadeJump(destination);
+      this.fadeJump(el, destination);
     } else {
       this.markAuto(1.2);
       this.lenis.scrollTo(destination(), { duration: 1.2 });
@@ -122,7 +142,7 @@ export class SmoothScrollService {
   }
 
   /** Fundido a verde → salto instantáneo (el destino se mide justo al saltar) → fundido de vuelta. */
-  private fadeJump(destination: () => number): void {
+  private fadeJump(el: HTMLElement, destination: () => number): void {
     const veil = this.veil();
     // Imanes y saltos automáticos de las escenas quedan en pausa durante todo el cambio
     this.markAuto(1.1);
@@ -132,10 +152,15 @@ export class SmoothScrollService {
       duration: 0.25,
       ease: 'power1.in',
       onComplete: () => {
+        this.navHooks.forEach((cb) => cb(el));
+        // Antes de saltar, las escenas fijas pueden tener medidas desfasadas (p. ej. si aún no se
+        // ha pasado por ellas): se recalculan y se salta ya con la posición real del destino
+        ScrollTrigger.refresh();
         this.lenis?.scrollTo(destination(), { immediate: true, force: true });
         ScrollTrigger.update();
         // Por si una escena cambió de alto al saltar, se corrige la posición antes de mostrar
         requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
           this.lenis?.scrollTo(destination(), { immediate: true, force: true });
           gsap.to(veil, { autoAlpha: 0, duration: 0.4, delay: 0.1, ease: 'power1.out' });
         });

@@ -343,6 +343,7 @@ export class NosotrosComponent {
 
   /** Llenado palabra por palabra de la frase una vez reproducida la escena. */
   private fill?: ScrollTrigger;
+  private offNav?: () => void;
   private readonly band = viewChild<ElementRef<HTMLElement>>('band');
   private readonly vibe = viewChild<ElementRef<HTMLElement>>('vibe');
 
@@ -377,6 +378,7 @@ export class NosotrosComponent {
     inject(DestroyRef).onDestroy(() => {
       st?.kill();
       this.fill?.kill();
+      this.offNav?.();
       ctx?.revert();
     });
   }
@@ -421,6 +423,10 @@ export class NosotrosComponent {
       .addLabel('m2', '>');
 
     let current = 0;
+    /** Navegando por el menú a otra sección: la escena que queda de paso no se reproduce. */
+    const passing = () =>
+      !!scroll.navTarget && !vibe.closest('section')?.contains(scroll.navTarget);
+    const inView = () => Math.abs(vibe.getBoundingClientRect().top) < window.innerHeight * 0.6;
     /**
      * Durante la transición a Proceso (deslizamiento + entrada) el scroll queda bloqueado: si no,
      * un scroll rápido seguiría moviendo la página y el carril de Proceso, y la animación se
@@ -442,6 +448,17 @@ export class NosotrosComponent {
       locked = false;
       scroll.start();
     };
+    /**
+     * Entrada a la escena (bajando o subiendo desde Proceso): siempre la misma secuencia, verde
+     * con "Lo que nos mueve" y luego el círculo que abre "Vibrance es una empresa…". Solo si la
+     * escena está a la vista (con medidas desfasadas el aviso puede llegar antes de tiempo).
+     */
+    const start = () => {
+      if (!inView()) return;
+      tl.pause(0);
+      current = 0;
+      go(1);
+    };
     const go = (i: number) => {
       if (i === current) return;
       current = i;
@@ -456,8 +473,7 @@ export class NosotrosComponent {
       });
     };
     /**
-     * Continúa el movimiento lateral: la escena se suelta (ya no vuelve a reproducirse), la
-     * página salta (sin que se note, todo es verde) al inicio de Proceso y su contenido entra
+     * Continúa el movimiento lateral: la página salta (sin que se note, todo es verde) al inicio de Proceso y su contenido entra
      * desde la derecha con la misma velocidad con la que salió la frase.
      */
     const toProceso = () => {
@@ -482,15 +498,16 @@ export class NosotrosComponent {
       );
     };
     /**
-     * Una sola vez: tras reproducirse, la escena deja de estar fija y queda como un bloque con
-     * la frase (al volver a subir se llena palabra por palabra con el scroll). También se recuerda para las
-     * próximas visitas, igual que la intro de la mariposa.
+     * Una sola vez: tras reproducirse (o saltarse por el menú), la escena deja de estar fija y
+     * queda como un bloque con la frase (al volver a subir se llena palabra por palabra con el
+     * scroll). También se recuerda para las próximas visitas, igual que la intro de la mariposa.
      */
     let released = false;
     const release = () => {
       if (released) return;
       released = true;
       markSeen();
+      unlock();
       st.kill();
       magnet.kill();
       tl.kill();
@@ -499,8 +516,6 @@ export class NosotrosComponent {
         clearProps: 'all',
       });
       vibe.classList.add('is-done');
-      // Al volver a subir, la frase se llena palabra por palabra con el scroll (igual que la
-      // banda de la versión sin escena); la mariposa llega cuando está completa
       vibe.style.setProperty('--p', '0');
       this.fill = ScrollTrigger.create({
         trigger: vibe,
@@ -512,6 +527,7 @@ export class NosotrosComponent {
       ScrollTrigger.refresh();
       vibe.style.setProperty('--p', this.fill.progress.toFixed(3));
     };
+    let lastY = window.scrollY;
     const st = ScrollTrigger.create({
       trigger: vibe,
       start: 'top top',
@@ -520,13 +536,20 @@ export class NosotrosComponent {
       anticipatePin: 1,
       invalidateOnRefresh: true,
       // Al llegar: verde con texto, y el círculo se abre solo (sin scroll)
-      onEnter: () => go(1),
-      // Al volver desde Proceso se muestra directo la frase (sin el tramo verde vacío)
-      onEnterBack: () => go(1),
+      onEnter: () => !passing() && start(),
+      // Si se vuelve sin haberla visto, empieza igual que al bajar
+      onEnterBack: () => !passing() && start(),
       // Al salir por arriba se reinicia, para que la próxima vez vuelva a empezar en verde
-      onLeaveBack: () => go(0),
+      onLeaveBack: () => !passing() && go(0),
       // El siguiente scroll (momento) desliza hasta Proceso
-      onUpdate: (self) => go(self.direction > 0 && self.progress >= 0.35 ? 2 : 1),
+      onUpdate: (self) => {
+        // Se decide por lo que realmente se movió la página: un recálculo de posiciones (al
+        // liberar el scroll) no cuenta como bajar y no debe llevar solo a Proceso
+        const dy = window.scrollY - lastY;
+        lastY = window.scrollY;
+        if (passing() || !inView() || dy === 0) return;
+        go(dy > 0 && self.progress >= 0.35 ? 2 : 1);
+      },
     });
 
     // Imán: al acercarse a la escena bajando, la página se acomoda sola en ella
@@ -540,6 +563,19 @@ export class NosotrosComponent {
         if (self.progress < 0.05 || self.progress > 0.97) return;
         scroll.scrollToY(st.start, MOMENT_DURATION);
       },
+    });
+
+    // Si se llega por el menú a una sección posterior, la escena cuenta como ya reproducida:
+    // al subir solo se ve su forma estática (se aplica con la pantalla tapada por el fundido)
+    this.offNav = scroll.onNavigate((el) => {
+      const section = vibe.closest('section');
+      if (
+        section &&
+        !section.contains(el) &&
+        vibe.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING
+      ) {
+        release();
+      }
     });
   }
 }
