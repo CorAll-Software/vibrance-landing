@@ -136,14 +136,24 @@ function markSeen(): void {
 
       @if (scene) {
         <!-- Escena fija: verde → círculo que limpia y muestra la frase → desliza a Proceso -->
-        <div #vibe class="vibe">
+        <div #vibe class="vibe" [style.--n]="words().count">
           <div class="vibe-track" dir="ltr">
             <div class="vibe-panel">
               <div class="vibe-green" aria-hidden="true">
                 <p class="vibe-intro font-display font-bold">{{ t('vibeIntro') }}</p>
               </div>
               <div class="vibe-reveal">
-                <p class="vibe-quote font-display font-bold">{{ t('quote') }}</p>
+                <p class="vibe-quote font-display font-bold" [attr.aria-label]="t('quote')">
+                  @for (w of words().parts; track $index) {
+                    <span
+                      class="qw"
+                      [class.qw--space]="w.i < 0"
+                      [style.--i]="w.i"
+                      aria-hidden="true"
+                      >{{ w.text }}</span
+                    >
+                  }
+                </p>
                 <app-butterfly class="vibe-bf" aria-hidden="true" />
               </div>
             </div>
@@ -171,6 +181,7 @@ function markSeen(): void {
   styles: `
     /* ---------- Escena fija (escritorio) ---------- */
     .vibe {
+      --p: 1; /* avance de llenado de la frase; completa mientras la escena se reproduce */
       position: relative;
       height: 100vh;
       height: 100svh;
@@ -259,6 +270,12 @@ function markSeen(): void {
       clip-path: none;
       background: none;
     }
+    /* Ya reproducida: la mariposa llega cuando la frase está completa (como en .quote-bf) */
+    .is-done .vibe-bf {
+      opacity: clamp(0, calc(var(--p) * 5 - 3), 1);
+      transform: translateY(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * -2.5rem))
+        rotate(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * 25deg));
+    }
 
     .quote-band {
       position: relative;
@@ -289,9 +306,9 @@ function markSeen(): void {
       display: block;
       width: 3.25rem;
       margin: 2rem auto 0;
-      opacity: clamp(0, calc(var(--p) * 7 - 6), 1);
-      transform: translateY(calc((1 - clamp(0, calc(var(--p) * 7 - 6), 1)) * -2.5rem))
-        rotate(calc((1 - clamp(0, calc(var(--p) * 7 - 6), 1)) * 25deg));
+      opacity: clamp(0, calc(var(--p) * 5 - 3), 1);
+      transform: translateY(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * -2.5rem))
+        rotate(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * 25deg));
     }
   `,
 })
@@ -324,6 +341,8 @@ export class NosotrosComponent {
   protected readonly scene =
     typeof window !== 'undefined' && window.matchMedia(SCENE_MQ).matches && !sceneSeen();
 
+  /** Llenado palabra por palabra de la frase una vez reproducida la escena. */
+  private fill?: ScrollTrigger;
   private readonly band = viewChild<ElementRef<HTMLElement>>('band');
   private readonly vibe = viewChild<ElementRef<HTMLElement>>('vibe');
 
@@ -357,6 +376,7 @@ export class NosotrosComponent {
     });
     inject(DestroyRef).onDestroy(() => {
       st?.kill();
+      this.fill?.kill();
       ctx?.revert();
     });
   }
@@ -463,7 +483,7 @@ export class NosotrosComponent {
     };
     /**
      * Una sola vez: tras reproducirse, la escena deja de estar fija y queda como un bloque con
-     * la frase (al volver a subir se ve completa, sin animación). También se recuerda para las
+     * la frase (al volver a subir se llena palabra por palabra con el scroll). También se recuerda para las
      * próximas visitas, igual que la intro de la mariposa.
      */
     let released = false;
@@ -479,28 +499,18 @@ export class NosotrosComponent {
         clearProps: 'all',
       });
       vibe.classList.add('is-done');
-      // Al volver a subir, la frase y la mariposa aparecen con un fundido suave
-      // (la escena ya quedó arriba: se dispara al volver a entrar en pantalla)
-      const fade = gsap.fromTo(
-        q('.vibe-quote, .vibe-bf'),
-        { autoAlpha: 0, y: 24 },
-        { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.25, ease: 'power2.out', paused: true },
-      );
-      // Se observa después del salto a Proceso (si no, se dispararía antes de tiempo)
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => {
-          const io = new IntersectionObserver(
-            ([e]) => {
-              if (!e.isIntersecting) return;
-              fade.play();
-              io.disconnect();
-            },
-            { threshold: 0.35 },
-          );
-          io.observe(vibe);
-        }),
-      );
+      // Al volver a subir, la frase se llena palabra por palabra con el scroll (igual que la
+      // banda de la versión sin escena); la mariposa llega cuando está completa
+      vibe.style.setProperty('--p', '0');
+      this.fill = ScrollTrigger.create({
+        trigger: vibe,
+        start: 'top 80%',
+        end: 'bottom 55%',
+        scrub: 0.4,
+        onUpdate: (self) => vibe.style.setProperty('--p', self.progress.toFixed(3)),
+      });
       ScrollTrigger.refresh();
+      vibe.style.setProperty('--p', this.fill.progress.toFixed(3));
     };
     const st = ScrollTrigger.create({
       trigger: vibe,

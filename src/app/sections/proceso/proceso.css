@@ -78,8 +78,14 @@
   /* Entrada desde la derecha al llegar desde la escena de Nosotros (la anima nosotros.ts) */
   .proceso-h .head,
   .proceso-h .track {
-    translate: var(--enter, 0px) 0;
     opacity: var(--enter-o, 1);
+  }
+  .proceso-h .head {
+    translate: var(--enter, 0px) 0;
+  }
+  /* El carril lo mueve GSAP con `transform` y deja `translate` en none: la entrada va con `left` */
+  .proceso-h .track {
+    left: var(--enter, 0px);
   }
   .proceso-h .progress {
     display: block;
