@@ -12,7 +12,6 @@ import {
   viewChild,
 } from '@angular/core';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LanguageService } from '../../../core/services/language.service';
 import { SmoothScrollService } from '../../../core/services/smooth-scroll.service';
 
@@ -69,6 +68,7 @@ export class CounterComponent {
     const zone = inject(NgZone);
     const scroll = inject(SmoothScrollService);
     let ctx: gsap.Context | undefined;
+    let observer: IntersectionObserver | undefined;
 
     afterNextRender(() => {
       if (scroll.reducedMotion()) {
@@ -79,11 +79,12 @@ export class CounterComponent {
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
           const state = { n: 0 };
-          ScrollTrigger.create({
-            trigger: host,
-            start: 'top 85%',
-            once: true,
-            onEnter: () =>
+          // IntersectionObserver en vez de ScrollTrigger: no depende de posiciones calculadas
+          // antes de que las secciones fijas de arriba terminen de medirse (disparaba demasiado pronto)
+          observer = new IntersectionObserver(
+            ([entry]) => {
+              if (!entry.isIntersecting) return;
+              observer?.disconnect();
               gsap.to(state, {
                 n: this.value(),
                 duration: 1.6,
@@ -104,12 +105,18 @@ export class CounterComponent {
                   );
                   this.done.set(true);
                 },
-              }),
-          });
+              });
+            },
+            { rootMargin: '0px 0px -15% 0px' },
+          );
+          observer.observe(host);
         });
       });
     });
 
-    inject(DestroyRef).onDestroy(() => ctx?.revert());
+    inject(DestroyRef).onDestroy(() => {
+      observer?.disconnect();
+      ctx?.revert();
+    });
   }
 }

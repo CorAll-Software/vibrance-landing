@@ -13,8 +13,6 @@ import { TranslocoDirective, TranslocoPipe, translateObjectSignal } from '@jsver
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { DESTINATIONS } from '../../data/destinos.data';
-import { productsForMarket } from '../../data/mercados.data';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { MapPeruComponent } from '../../shared/components/map-peru/map-peru';
 import { BasketComponent } from '../../shared/components/basket/basket';
@@ -91,7 +89,7 @@ const TRAVEL_REST = 5;
  * 1. (al entrar) Aparece el Perú y la mariposa llega volando con la cesta Vibrance vacía.
  * 2. Aparecen las frutas en sus regiones.
  * 3. De cada región sale su fruta y entra en la cesta.
- * 4. La mariposa se lleva la cesta y aparece "Dónde puede llegar" con los botones de acción.
+ * 4. La mariposa se lleva la cesta y aparece el cierre con los botones de acción.
  * La parte fija del mapa avanza con pausas (ver MAP_MODE); el paso al mapa sigue a ORIGEN_MODE.
  */
 @Component({
@@ -110,11 +108,6 @@ const TRAVEL_REST = 5;
   styleUrl: './origen.css',
 })
 export class OrigenComponent {
-  /** Mercados con cuántos productos tienen acceso (panel "Dónde puede llegar"). */
-  protected readonly markets = DESTINATIONS.map((d) => ({
-    id: d.id,
-    products: productsForMarket(d.id).length,
-  })).filter((m) => m.products > 0);
   protected readonly lines = translateObjectSignal('origen.lines') as unknown as () => string[];
   protected readonly scroll = inject(SmoothScrollService);
   protected readonly ui = inject(UiStateService);
@@ -421,7 +414,7 @@ export class OrigenComponent {
     basket.prepare();
     gsap.set(fills, { scaleX: 0, transformOrigin: '0 50%' });
     gsap.set(q('.markets'), { autoAlpha: 0, y: 24 });
-    gsap.set(q('.market, .origen-cta'), { autoAlpha: 0, y: 10 });
+    gsap.set(q('.origen-cta'), { autoAlpha: 0, y: 10 });
 
     /** Llena la barrita del momento. */
     const fillBeat = (tl: gsap.core.Timeline, i: number, at: number) => {
@@ -472,7 +465,7 @@ export class OrigenComponent {
           }
         }
       } else {
-        // Momento 4: la mariposa se lleva la cesta y aparece a dónde puede llegar
+        // Momento 4: la mariposa se lleva la cesta y aparece el cierre con los botones
         scene
           .to(
             q('.carrier'),
@@ -486,9 +479,8 @@ export class OrigenComponent {
             at + 0.05,
           )
           .to(q('.markets'), { autoAlpha: 1, y: 0, duration: 0.3, ease: 'power2.out' }, at + 0.45)
-          .to(q('.market'), { autoAlpha: 1, y: 0, duration: 0.2, stagger: 0.04 }, at + 0.55)
-          .to(q('.origen-cta'), { autoAlpha: 1, y: 0, duration: 0.2 }, at + 0.85);
-        end = Math.max(end, at + 1.05);
+          .to(q('.origen-cta'), { autoAlpha: 1, y: 0, duration: 0.2 }, at + 0.65);
+        end = Math.max(end, at + 0.85);
       }
       scene.addLabel(`m${n}`, end);
       cursor = end + HOLD;

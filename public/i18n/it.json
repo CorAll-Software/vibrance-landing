@@ -15,6 +15,7 @@
   },
   "nav": {
     "label": "Navigazione principale",
+    "sections": "Sezioni della pagina",
     "origen": "Origine",
     "proceso": "Processo",
     "productos": "Prodotti",
@@ -79,7 +80,9 @@
     "legendPort": "Porto d’imbarco",
     "legendRoute": "Percorso al porto",
     "treeLabel": "Albero illustrato su cui crescono mirtilli, avocado, uva, mango, mandarini e zenzero, che cadono in un cesto Vibrance.",
-    "marketsText": "Mercati con protocollo fitosanitario vigente per almeno uno dei nostri prodotti."
+    "closeTitle": "Da queste regioni alla tua tavola",
+
+    "closeText": "Dicci quale frutta ti serve e ti confermiamo disponibilità e accesso al tuo paese."
   },
   "proceso": {
     "heading": "Dal produttore al tuo magazzino",

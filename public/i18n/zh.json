@@ -14,6 +14,7 @@
   },
   "nav": {
     "label": "主导航",
+    "sections": "页面章节",
     "origen": "产地",
     "nosotros": "关于我们",
     "proceso": "流程",
@@ -63,7 +64,9 @@
     "legendPort": "装运港",
     "legendRoute": "前往港口的路线",
     "treeLabel": "一棵插画树上结出蓝莓、牛油果、葡萄、芒果、柑橘和生姜,落入 Vibrance 的竹篮中。",
-    "marketsText": "至少有一种我们的产品已获得植物检疫准入的市场。"
+    "closeTitle": "从这些产区，到您的餐桌",
+
+    "closeText": "告诉我们您需要的水果，我们会确认供应情况以及能否进入您的国家。"
   },
   "proceso": {
     "heading": "从生产商到您的仓库",

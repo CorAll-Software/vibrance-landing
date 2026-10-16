@@ -4,6 +4,7 @@ import { initReveals } from './core/utils/reveal';
 import { LoaderComponent } from './layout/loader/loader';
 import { HeaderComponent } from './layout/header/header';
 import { FooterComponent } from './layout/footer/footer';
+import { ScrollIndicatorComponent } from './layout/scroll-indicator/scroll-indicator';
 import { HeroComponent } from './sections/hero/hero';
 import { OrigenComponent } from './sections/origen/origen';
 import { NosotrosComponent } from './sections/nosotros/nosotros';
@@ -21,6 +22,7 @@ import { WhatsappButtonComponent } from './shared/components/whatsapp-button/wha
   imports: [
     LoaderComponent,
     HeaderComponent,
+    ScrollIndicatorComponent,
     FooterComponent,
     HeroComponent,
     OrigenComponent,

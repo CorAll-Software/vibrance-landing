@@ -121,24 +121,55 @@ export class MapWorldComponent {
   });
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     const zone = inject(NgZone);
     const scroll = inject(SmoothScrollService);
     let ctx: gsap.Context | undefined;
+    let observer: IntersectionObserver | undefined;
 
     afterNextRender(() => {
       if (this.managed() || scroll.reducedMotion()) return;
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
-          this.prepare();
-          gsap
-            .timeline({ scrollTrigger: { trigger: this.host, start: 'top 75%', once: true } })
-            .add(this.phase());
+          // Rutas y destinos viven dentro de *transloco: esperar a que existan antes de prepararlos
+          this.whenRendered(() => {
+            this.prepare();
+            // IntersectionObserver en vez de ScrollTrigger: no depende de posiciones calculadas
+            // antes de que las secciones fijas de arriba terminen de medirse (disparaba demasiado pronto)
+            observer = new IntersectionObserver(
+              ([entry]) => {
+                if (!entry.isIntersecting) return;
+                observer?.disconnect();
+                this.phase();
+              },
+              { rootMargin: '0px 0px -25% 0px' },
+            );
+            observer.observe(this.host);
+          });
         }, this.host);
       });
     });
-    inject(DestroyRef).onDestroy(() => ctx?.revert());
+    inject(DestroyRef).onDestroy(() => {
+      observer?.disconnect();
+      ctx?.revert();
+    });
+  }
+
+  /** Ejecuta `fn` cuando el mapa ya tiene sus rutas (el template espera a las traducciones). */
+  private whenRendered(fn: () => void): void {
+    if (this.host.querySelector('.route')) {
+      fn();
+      return;
+    }
+    const mo = new MutationObserver(() => {
+      if (!this.host.querySelector('.route')) return;
+      mo.disconnect();
+      fn();
+    });
+    mo.observe(this.host, { childList: true, subtree: true });
+    this.destroyRef.onDestroy(() => mo.disconnect());
   }
 
   /** Estado inicial: sin rutas ni destinos. */
