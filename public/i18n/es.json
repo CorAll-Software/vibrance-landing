@@ -79,7 +79,9 @@
     "legendPort": "Puerto de embarque",
     "legendRoute": "Ruta al puerto",
     "treeLabel": "Árbol ilustrado del que brotan arándano, palta, uva, mango, mandarina y kion, que caen en una cesta de Vibrance.",
-    "marketsText": "Mercados con protocolo fitosanitario vigente para al menos uno de nuestros productos."
+    "closeTitle": "De estas regiones, a tu mesa",
+
+    "closeText": "Dinos qué fruta necesitas y te confirmamos disponibilidad y si puede entrar a tu país."
   },
   "proceso": {
     "heading": "Del productor a tu almacén",

@@ -79,7 +79,9 @@
     "legendPort": "Shipping port",
     "legendRoute": "Route to port",
     "treeLabel": "Illustrated tree growing blueberries, avocados, grapes, mangoes, mandarins and ginger, which fall into a Vibrance basket.",
-    "marketsText": "Markets with an active phytosanitary protocol for at least one of our products."
+    "closeTitle": "From these regions to your table",
+
+    "closeText": "Tell us which fruit you need and we'll confirm availability and whether it can enter your country."
   },
   "proceso": {
     "heading": "From the grower to your warehouse",
