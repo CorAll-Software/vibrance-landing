@@ -82,10 +82,15 @@ function markSeen(): void {
             {{ t('heading') }}
           </h2>
           <p data-reveal class="measure mt-8 text-lg text-palta/80">{{ t('bio') }}</p>
-          <p data-reveal class="mt-6 font-display text-xl font-semibold text-palta">
-            {{ ceoName }}
-            <span class="block text-base font-medium text-palta/70">{{ t('role') }}</span>
-          </p>
+          <blockquote data-reveal class="mt-8 border-s-4 border-mandarina ps-5">
+            <p class="font-display text-xl leading-snug font-semibold text-palta md:text-2xl">
+              “{{ t('ceoQuote') }}”
+            </p>
+            <footer class="mt-4 font-display text-lg font-semibold text-palta">
+              {{ ceoName }}
+              <span class="block text-base font-medium text-palta/70">{{ t('role') }}</span>
+            </footer>
+          </blockquote>
 
           <ul data-reveal class="mt-10 grid gap-4">
             @for (k of pillars; track k) {
@@ -291,7 +296,7 @@ function markSeen(): void {
   `,
 })
 export class NosotrosComponent {
-  protected readonly ceoName = 'Melanie Calderon';
+  protected readonly ceoName = 'Melanie Calderón Vega';
   protected readonly pillars = ['contracts', 'insurance', 'credit'] as const;
   protected readonly story = ['p1', 'p2', 'p3'] as const;
 

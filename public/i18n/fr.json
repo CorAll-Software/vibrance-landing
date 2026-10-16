@@ -287,8 +287,9 @@
   "nosotros": {
     "kicker": "Qui nous sommes",
     "heading": "Chaque expédition, avec une garantie juridique et assurée",
-    "bio": "Je suis avocate et courtière en assurances, avec plus de 15 ans d'expérience en gestion des risques. J'applique cette exigence à chaque exportation : des contrats clairs, une assurance transport et une expérience des lettres de crédit et de l'assurance-crédit, pour que vous et le producteur travailliez l'esprit tranquille.",
-    "role": "CEO · Vibrance Inca Harvest",
+    "bio": "Avocate et courtière en assurances, forte de plus de 15 ans d'expérience en gestion des risques.",
+    "ceoQuote": "Chaque expédition vibre de l'amour de la terre du Pérou, avec un soutien juridique et une assurance.",
+    "role": "Fondatrice et PDG",
     "pillars": {
       "contracts": "Des contrats clairs entre producteur, négociant et importateur",
       "insurance": "Assurance transport sur chaque expédition",
@@ -298,9 +299,9 @@
     "vibeIntro": "Ce qui nous anime",
     "storyTitle": "La naissance de Vibrance",
     "story": {
-      "p1": "Vibrance Inca Harvest S.A.C. est née avec beaucoup d'affection et d'enthousiasme. Sa mission est de mettre de l'ordre dans les exportations et d'aider d'autres exportateurs.",
-      "p2": "Elle vise aussi à ce que les agriculteurs et les propriétaires de fermes reçoivent un prix plus juste pour les produits que la terre nous offre.",
-      "p3": "Elle naît avec une vibration d'amour pour provoquer un changement positif dans le cœur des Péruviens, si généreux envers le monde, tout en étant une entreprise rentable à l'impact positif sur le plan humain et économique."
+      "p1": "Vibrance Inca Harvest est née avec tout l'amour et l'enthousiasme du monde, avec un but clair : mettre de l'ordre et de la transparence dans l'exportation et accompagner d'autres exportateurs.",
+      "p2": "Nous voulons que les agriculteurs et les propriétaires de fermes reçoivent un prix plus juste pour les fruits que la terre et Dieu nous offrent.",
+      "p3": "Nous sommes nés avec une vibration d'amour : nous voulons générer un changement positif depuis le cœur des Péruviens, si généreux avec le monde, tout en étant une entreprise rentable qui a un impact positif sur les personnes et sur les affaires."
     }
   },
   "como": {

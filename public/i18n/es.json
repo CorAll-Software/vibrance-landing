@@ -274,8 +274,9 @@
   "nosotros": {
     "kicker": "Quiénes somos",
     "heading": "Cada embarque, con respaldo legal y asegurado",
-    "bio": "Soy abogada y bróker de seguros, con más de 15 años en gestión de riesgos. Llevo ese criterio a cada exportación: contratos claros, seguro de transporte y experiencia con carta de crédito y seguro de crédito, para que tú y el productor trabajen con tranquilidad.",
-    "role": "CEO · Vibrance Inca Harvest",
+    "bio": "Abogada y bróker de seguros con más de 15 años en gestión de riesgos.",
+    "ceoQuote": "Cada embarque vibra con el amor de la tierra del Perú, con respaldo legal y asegurado.",
+    "role": "Fundadora y CEO",
     "pillars": {
       "contracts": "Contratos claros entre productor, comercializadora e importador",
       "insurance": "Seguro de transporte en cada embarque",
@@ -285,9 +286,9 @@
     "vibeIntro": "Lo que nos mueve",
     "storyTitle": "Cómo nace Vibrance",
     "story": {
-      "p1": "Vibrance Inca Harvest S.A.C. nació con mucho cariño e ilusión. Su misión es ayudar a poner orden en las exportaciones y apoyar a otros exportadores.",
-      "p2": "También busca que los campesinos y dueños de fundos reciban un precio más justo por los productos que la tierra nos da.",
-      "p3": "Nace con una vibración de amor para lograr un cambio positivo en el corazón de los peruanos, tan generosos con el mundo, siendo a la vez una empresa rentable que impacta de forma positiva en lo humano y lo empresarial."
+      "p1": "Vibrance Inca Harvest nació con todo el cariño e ilusión del mundo, con un propósito claro: poner orden y transparencia en la exportación y acompañar a otros exportadores.",
+      "p2": "Queremos que los campesinos y dueños de fundos reciban un precio más justo por los frutos que la tierra y Dios nos regalan.",
+      "p3": "Nacimos con una vibración de amor: queremos generar un cambio positivo desde el corazón de los peruanos, tan generosos con el mundo, y al mismo tiempo ser una empresa rentable que impacte en lo humano y en lo empresarial."
     }
   },
   "como": {

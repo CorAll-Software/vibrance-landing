@@ -274,8 +274,9 @@
   "nosotros": {
     "kicker": "Chi siamo",
     "heading": "Ogni spedizione, con tutela legale e assicurata",
-    "bio": "Sono avvocata e broker assicurativo, con oltre 15 anni di esperienza nella gestione del rischio. Porto questo rigore in ogni esportazione: contratti chiari, assicurazione del trasporto ed esperienza con lettere di credito e assicurazione del credito, perché tu e il produttore possiate lavorare con serenità.",
-    "role": "CEO · Vibrance Inca Harvest",
+    "bio": "Avvocata e broker assicurativa con oltre 15 anni di esperienza nella gestione del rischio.",
+    "ceoQuote": "Ogni spedizione vibra dell'amore della terra del Perù, con tutela legale e assicurata.",
+    "role": "Fondatrice e CEO",
     "pillars": {
       "contracts": "Contratti chiari tra produttore, commerciante e importatore",
       "insurance": "Assicurazione del trasporto su ogni spedizione",
@@ -285,9 +286,9 @@
     "vibeIntro": "Ciò che ci muove",
     "storyTitle": "Come nasce Vibrance",
     "story": {
-      "p1": "Vibrance Inca Harvest S.A.C. è nata con grande affetto ed entusiasmo. La sua missione è portare ordine nelle esportazioni e aiutare altri esportatori.",
-      "p2": "Vuole anche far sì che agricoltori e proprietari di aziende agricole ricevano un prezzo più giusto per i prodotti che la terra ci dona.",
-      "p3": "Nasce con una vibrazione d'amore per ottenere un cambiamento positivo nel cuore dei peruviani, così generosi con il mondo, essendo allo stesso tempo un'azienda redditizia con un impatto positivo sul piano umano e imprenditoriale."
+      "p1": "Vibrance Inca Harvest è nata con tutto l'affetto e l'entusiasmo del mondo, con uno scopo chiaro: portare ordine e trasparenza nell'esportazione e affiancare altri esportatori.",
+      "p2": "Vogliamo che i contadini e i proprietari dei fondi agricoli ricevano un prezzo più giusto per i frutti che la terra e Dio ci donano.",
+      "p3": "Siamo nati con una vibrazione d'amore: vogliamo generare un cambiamento positivo dal cuore dei peruviani, così generosi con il mondo, e al tempo stesso essere un'azienda redditizia che abbia un impatto positivo sulle persone e sul business."
     }
   },
   "como": {
