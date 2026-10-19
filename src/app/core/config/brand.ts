@@ -12,21 +12,25 @@ export const LEGAL_NAME = 'Vibrance Inca Harvest S.A.C.';
 export const RUC = '20615112446';
 
 /**
- * Símbolo del logo (sol con hojas). Hay dos rutas en public/brand/:
- * - 'D': andenes curvos (se lee andino, no mesoamericano).
- * - 'C': andenes rectos escalonados (se lee mejor en tamaños muy pequeños).
+ * Símbolo del logo: sol con hojas sobre un mundo y mariposa con estela (feedback del 18-oct).
+ * Los SVG están en public/brand/logo-mundo/ y salen de branding/logo/generar-logo.mjs.
+ * La clienta pidió probar tres verdes para el mundo:
+ * - 'hoja': #4F7A3A (el mismo verde de las hojas).
+ * - 'vivo': #6BAA3A.
+ * - 'lima': #8CC152 (verde lima suave).
  * Cambiar esta constante cambia el logo del header, el loader y el footer.
- * El favicon está en public/brand/favicon-*.png y public/favicon.ico (ruta D).
+ * El favicon sigue siendo el del logo anterior (public/brand/favicon-*.png) hasta elegir el verde.
+ * El logo anterior (andenes, rutas C y D) queda en public/brand/logo-{C,D}-*.png.
  */
-export type LogoRoute = 'C' | 'D';
-export const LOGO_ROUTE: LogoRoute = 'D';
+export type WorldGreen = 'hoja' | 'vivo' | 'lima';
+export const WORLD_GREEN: WorldGreen = 'hoja';
 export const LOGO = {
   /** Para fondos claros (header sólido). */
-  light: `brand/logo-${LOGO_ROUTE}-claro.png`,
+  light: `brand/logo-mundo/completo-${WORLD_GREEN}-claro.svg`,
   /** Para fondos oscuros (header sobre el hero, loader, footer). */
-  dark: `brand/logo-${LOGO_ROUTE}-oscuro.png`,
-  width: 384,
-  height: 232,
+  dark: `brand/logo-mundo/completo-${WORLD_GREEN}-oscuro.svg`,
+  width: 400,
+  height: 270,
 } as const;
 
 /**
