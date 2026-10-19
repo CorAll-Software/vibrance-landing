@@ -287,9 +287,10 @@
   "nosotros": {
     "kicker": "Qui nous sommes",
     "heading": "Chaque expédition, avec une garantie juridique et assurée",
-    "bio": "Avocate et courtière en assurances, forte de plus de 15 ans d'expérience en gestion des risques.",
+    "bio": "Une équipe de formation juridique, forte de plus de 15 ans d'expérience en gestion des risques et en assurances.",
     "ceoQuote": "Chaque expédition vibre de l'amour de la terre du Pérou, avec un soutien juridique et une assurance.",
-    "role": "Fondatrice et PDG",
+    "signature": "L'équipe Vibrance Inca Harvest",
+    "illustrationAlt": "Illustration de la marque : un arbre avec le soleil, des oiseaux, des papillons et des abeilles",
     "pillars": {
       "contracts": "Des contrats clairs entre producteur, négociant et importateur",
       "insurance": "Assurance transport sur chaque expédition",

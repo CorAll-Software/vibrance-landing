@@ -16,7 +16,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { MOMENT_DURATION } from '../../core/config/scroll.config';
 import { ButterflyComponent } from '../../shared/components/butterfly/butterfly';
-import { PhotoPlaceholderComponent } from '../../shared/components/photo-placeholder/photo-placeholder';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +48,8 @@ function markSeen(): void {
 }
 
 /**
- * Quiénes somos: la CEO, su trayectoria y el mensaje de respaldo legal y asegurado.
+ * Quiénes somos: el equipo (sin datos personales, pedido de la clienta) y el mensaje de
+ * respaldo legal y asegurado, con la ilustración del árbol de la marca.
  * Cierra con la frase de la marca.
  * Escritorio: escena fija (imán). Al llegar, la vista es verde con un texto por un segundo y
  * luego, sola, un círculo crece desde el centro y "limpia" el verde mostrando la frase con la
@@ -59,7 +59,7 @@ function markSeen(): void {
  */
 @Component({
   selector: 'app-nosotros',
-  imports: [TranslocoDirective, PhotoPlaceholderComponent, ButterflyComponent],
+  imports: [TranslocoDirective, ButterflyComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
@@ -87,8 +87,7 @@ function markSeen(): void {
               “{{ t('ceoQuote') }}”
             </p>
             <footer class="mt-4 font-display text-lg font-semibold text-palta">
-              {{ ceoName }}
-              <span class="block text-base font-medium text-palta/70">{{ t('role') }}</span>
+              {{ t('signature') }}
             </footer>
           </blockquote>
 
@@ -118,13 +117,17 @@ function markSeen(): void {
         </div>
 
         <div class="lg:col-span-5 lg:col-start-8">
-          <!-- TODO: foto real de la CEO -->
-          <div
+          <!-- Ilustración del árbol (sin fondo: se integra con el de la sección) -->
+          <img
             data-reveal
-            class="relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-3xl bg-arena"
-          >
-            <app-photo-placeholder [caption]="ceoName" />
-          </div>
+            src="media/nosotros/arbol-vibrance.webp"
+            [alt]="t('illustrationAlt')"
+            width="615"
+            height="537"
+            loading="lazy"
+            decoding="async"
+            class="mx-auto mb-8 block h-auto w-full max-w-[34rem]"
+          />
           <div data-reveal class="mt-8 grid gap-5 text-palta/80">
             <h3 class="text-2xl font-semibold text-palta md:text-3xl">{{ t('storyTitle') }}</h3>
             @for (k of story; track k) {
@@ -313,7 +316,6 @@ function markSeen(): void {
   `,
 })
 export class NosotrosComponent {
-  protected readonly ceoName = 'Melanie Calderón Vega';
   protected readonly pillars = ['contracts', 'insurance', 'credit'] as const;
   protected readonly story = ['p1', 'p2', 'p3'] as const;
 
