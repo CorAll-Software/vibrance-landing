@@ -71,9 +71,12 @@ export const SHOW_PLACEHOLDER_NOTES = true;
 // TODO: dato real de la clienta
 export const CONTACT = {
   email: 'ventas@vibranceincaharvest.com',
-  /** Teléfono de la empresa (footer). */
+  /**
+   * Teléfono de la empresa. No se muestra en la web (pedido de la clienta: ningún número
+   * escrito, solo el correo y el botón de WhatsApp). Más adelante pasa a ser el de WhatsApp.
+   */
   phone: '+51 920 503 588',
-  /** Número del botón flotante de WhatsApp (con código de país). */
+  /** Número de los botones de WhatsApp (con código de país). Nunca se muestra en pantalla. */
   whatsapp: '+51 988 983 710',
   address: 'Lima, Perú',
   socials: [

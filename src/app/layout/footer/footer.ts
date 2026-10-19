@@ -9,10 +9,14 @@ import {
   RUC,
 } from '../../core/config/brand';
 import { LangSwitchComponent } from '../header/lang-switch';
+import {
+  WhatsappIconComponent,
+  injectWhatsappHref,
+} from '../../shared/components/whatsapp-button/whatsapp-button';
 
 @Component({
   selector: 'app-footer',
-  imports: [TranslocoDirective, LangSwitchComponent],
+  imports: [TranslocoDirective, LangSwitchComponent, WhatsappIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer class="bg-palta-deep text-niebla" *transloco="let t; prefix: 'footer'">
@@ -41,10 +45,17 @@ import { LangSwitchComponent } from '../header/lang-switch';
             <a [href]="'mailto:' + contact.email" class="hover:text-niebla hover:underline"
               ><bdi dir="ltr">{{ contact.email }}</bdi></a
             >
-            <a [href]="'tel:' + tel" class="hover:text-niebla hover:underline"
-              ><bdi dir="ltr">{{ contact.phone }}</bdi></a
-            >
             <span>{{ contact.address }}</span>
+            <!-- Sin números escritos: solo el correo y el botón de WhatsApp -->
+            <a
+              [href]="whatsappHref()"
+              target="_blank"
+              rel="noopener"
+              class="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-niebla/25 py-2 ps-3 pe-4 text-niebla transition-colors hover:bg-niebla hover:text-palta"
+            >
+              <app-whatsapp-icon class="size-5" />
+              <span *transloco="let c; prefix: 'common'">{{ c('whatsapp') }}</span>
+            </a>
           </address>
         </div>
 
@@ -103,7 +114,7 @@ import { LangSwitchComponent } from '../header/lang-switch';
 
       <div class="border-t border-niebla/10">
         <div
-          class="container-page flex flex-col gap-3 py-6 text-sm text-niebla/60 sm:flex-row sm:justify-between"
+          class="container-page flex flex-col gap-3 pt-6 pb-20 text-sm sm:pb-6 text-niebla/60 sm:flex-row sm:justify-between"
         >
           <p>
             © {{ year }} <bdi>{{ legalName }}</bdi> ·
@@ -125,6 +136,6 @@ export class FooterComponent {
   protected readonly logo = LOGO;
   protected readonly contact = CONTACT;
   protected readonly ruc = RUC;
-  protected readonly tel = CONTACT.phone.replace(/\s/g, '');
+  protected readonly whatsappHref = injectWhatsappHref();
   protected readonly year = new Date().getFullYear();
 }
