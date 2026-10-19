@@ -261,9 +261,10 @@ export class LoaderComponent {
   private target(symbol: HTMLElement | null): { x: number; y: number; scale: number } {
     if (!symbol) return { x: 0, y: -window.innerHeight / 2, scale: 0.2 };
     const r = symbol.getBoundingClientRect();
+    // centro visible del sol dentro del logo (sol + mundo, 400×270)
     return {
-      x: r.left + r.width * 0.5 - window.innerWidth / 2,
-      y: r.top + r.height * 0.62 - window.innerHeight / 2,
+      x: r.left + r.width * 0.48 - window.innerWidth / 2,
+      y: r.top + r.height * 0.56 - window.innerHeight / 2,
       scale: Math.max(0.16, (r.height * 0.9) / 120),
     };
   }
