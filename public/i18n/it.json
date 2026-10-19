@@ -346,7 +346,8 @@
   "form": {
     "title": "Richiedi un preventivo",
     "intro": "Compila i tuoi dati e ti risponderemo entro 48 ore lavorative.",
-    "required": "Tutti i campi sono obbligatori.",
+    "required": "I campi con * sono obbligatori; gli altri, se li hai a portata di mano.",
+    "optional": "facoltativo",
     "name": "Nome",
     "company": "Azienda",
     "country": "Paese di destinazione",

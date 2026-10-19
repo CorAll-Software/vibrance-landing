@@ -346,7 +346,8 @@
   "form": {
     "title": "Request a quote",
     "intro": "Fill in your details and we'll reply within 48 business hours.",
-    "required": "All fields are required.",
+    "required": "Fields marked * are required; fill in the rest if you have them at hand.",
+    "optional": "optional",
     "name": "Name",
     "company": "Company",
     "country": "Destination country",

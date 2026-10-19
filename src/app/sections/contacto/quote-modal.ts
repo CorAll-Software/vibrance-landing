@@ -53,18 +53,24 @@ export class QuoteModalComponent {
   protected readonly submitted = signal(false);
   protected readonly sentTo = signal('');
 
+  /**
+   * Solo nombre, empresa, país, correo y producto son obligatorios (pedido de la clienta): que
+   * nadie deje de escribir por no tener a mano volumen, puerto, fecha o Incoterm.
+   * Los opcionales se validan solo si se completan.
+   */
   protected readonly form = inject(FormBuilder).nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(80)]],
     company: ['', [Validators.required, Validators.maxLength(120)]],
     country: ['', [Validators.required, Validators.maxLength(60)]],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required, Validators.pattern(/^[+d][ds().-]{5,}$/)]],
+    // + opcional, luego dígitos, espacios, paréntesis, puntos o guiones (al menos 6 dígitos)
+    phone: ['', Validators.pattern(/^\+?(?:[\s().-]*\d){6,}[\s().-]*$/)],
     product: ['', Validators.required],
-    volume: ['', [Validators.required, Validators.maxLength(80)]],
-    incoterm: ['', Validators.required],
-    destPort: ['', [Validators.required, Validators.maxLength(80)]],
-    shipDate: ['', Validators.required],
-    message: ['', [Validators.required, Validators.minLength(MESSAGE_MIN)]],
+    volume: ['', Validators.maxLength(80)],
+    incoterm: [''],
+    destPort: ['', Validators.maxLength(80)],
+    shipDate: [''],
+    message: ['', Validators.minLength(MESSAGE_MIN)],
   });
 
   protected readonly fields: { name: FieldName; type: string; autocomplete: string }[] = [
@@ -96,6 +102,10 @@ export class QuoteModalComponent {
         });
       }
     });
+  }
+
+  protected isRequired(field: FieldName): boolean {
+    return this.form.controls[field].hasValidator(Validators.required);
   }
 
   protected showError(field: FieldName): boolean {

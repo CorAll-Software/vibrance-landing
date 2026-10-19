@@ -359,7 +359,8 @@
   "form": {
     "title": "Demander un devis",
     "intro": "Remplissez vos coordonnées, nous vous répondrons sous 48 heures ouvrées.",
-    "required": "Tous les champs sont obligatoires.",
+    "required": "Les champs marqués d'un * sont obligatoires ; remplissez les autres si vous les avez sous la main.",
+    "optional": "facultatif",
     "name": "Nom",
     "company": "Entreprise",
     "country": "Pays de destination",

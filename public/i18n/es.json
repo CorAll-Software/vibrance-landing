@@ -346,7 +346,8 @@
   "form": {
     "title": "Solicitar cotización",
     "intro": "Completa los datos y te responderemos en un plazo de 48 horas hábiles.",
-    "required": "Todos los campos son obligatorios.",
+    "required": "Los campos con * son obligatorios; el resto, si los tienes a mano.",
+    "optional": "opcional",
     "name": "Nombre",
     "company": "Empresa",
     "country": "País de destino",

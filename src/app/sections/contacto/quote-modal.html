@@ -48,13 +48,21 @@
       >
         @for (f of fields; track f.name) {
           <div class="flex flex-col gap-1.5">
-            <label [for]="'q-' + f.name" class="text-sm font-semibold">{{ t(f.name) }}</label>
+            <label [for]="'q-' + f.name" class="text-sm font-semibold"
+              >{{ t(f.name) }}
+              @if (isRequired(f.name)) {
+                <span aria-hidden="true"> *</span>
+              } @else {
+                <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
+              }
+            </label>
             <input
               [id]="'q-' + f.name"
               [type]="f.type"
               [formControlName]="f.name"
               [autocomplete]="f.autocomplete"
               [attr.min]="f.type === 'date' ? today : null"
+              [attr.aria-required]="isRequired(f.name)"
               [attr.aria-invalid]="showError(f.name)"
               [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
               class="field"
@@ -68,11 +76,19 @@
         }
 
         <div class="flex flex-col gap-1.5 sm:col-span-2">
-          <label for="q-product" class="text-sm font-semibold">{{ t('product') }}</label>
+          <label for="q-product" class="text-sm font-semibold"
+            >{{ t('product') }}
+            @if (isRequired('product')) {
+              <span aria-hidden="true"> *</span>
+            } @else {
+              <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
+            }
+          </label>
           <select
             id="q-product"
             formControlName="product"
             class="field"
+            [attr.aria-required]="isRequired('product')"
             [attr.aria-invalid]="showError('product')"
             [attr.aria-describedby]="showError('product') ? 'q-product-err' : null"
           >
@@ -89,13 +105,21 @@
 
         @for (f of shipFields; track f.name) {
           <div class="flex flex-col gap-1.5">
-            <label [for]="'q-' + f.name" class="text-sm font-semibold">{{ t(f.name) }}</label>
+            <label [for]="'q-' + f.name" class="text-sm font-semibold"
+              >{{ t(f.name) }}
+              @if (isRequired(f.name)) {
+                <span aria-hidden="true"> *</span>
+              } @else {
+                <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
+              }
+            </label>
             <input
               [id]="'q-' + f.name"
               [type]="f.type"
               [formControlName]="f.name"
               [autocomplete]="f.autocomplete"
               [attr.min]="f.type === 'date' ? today : null"
+              [attr.aria-required]="isRequired(f.name)"
               [attr.aria-invalid]="showError(f.name)"
               [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
               class="field"
@@ -109,15 +133,23 @@
         }
 
         <div class="flex flex-col gap-1.5">
-          <label for="q-incoterm" class="text-sm font-semibold">{{ t('incoterm') }}</label>
+          <label for="q-incoterm" class="text-sm font-semibold"
+            >{{ t('incoterm') }}
+            @if (isRequired('incoterm')) {
+              <span aria-hidden="true"> *</span>
+            } @else {
+              <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
+            }
+          </label>
           <select
             id="q-incoterm"
             formControlName="incoterm"
             class="field"
+            [attr.aria-required]="isRequired('incoterm')"
             [attr.aria-invalid]="showError('incoterm')"
             [attr.aria-describedby]="showError('incoterm') ? 'q-incoterm-err' : null"
           >
-            <option value="" disabled>{{ t('incotermPlaceholder') }}</option>
+            <option value="">{{ t('incotermPlaceholder') }}</option>
             @for (i of incoterms; track i) {
               <option [value]="i">{{ i }}</option>
             }
@@ -128,13 +160,21 @@
         </div>
 
         <div class="flex flex-col gap-1.5 sm:col-span-2">
-          <label for="q-message" class="text-sm font-semibold">{{ t('message') }}</label>
+          <label for="q-message" class="text-sm font-semibold"
+            >{{ t('message') }}
+            @if (isRequired('message')) {
+              <span aria-hidden="true"> *</span>
+            } @else {
+              <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
+            }
+          </label>
           <textarea
             id="q-message"
             rows="4"
             formControlName="message"
             class="field resize-y"
             [placeholder]="t('messagePlaceholder')"
+            [attr.aria-required]="isRequired('message')"
             [attr.aria-invalid]="showError('message')"
             [attr.aria-describedby]="showError('message') ? 'q-message-err' : null"
           ></textarea>
