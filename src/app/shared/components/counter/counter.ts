@@ -23,7 +23,10 @@ import { SmoothScrollService } from '../../../core/services/smooth-scroll.servic
   selector: 'app-counter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <span class="sr-only">{{ finalText() }}</span>
+    <!-- Valor final para lectores de pantalla. Queda justo encima de la cifra que cuenta y en
+         Safari (iOS) el recorte de sr-only puede fallar un instante mientras el bloque entra
+         animado: se veían dos números encimados. opacity-0 lo oculta igual (y se sigue leyendo). -->
+    <span class="sr-only opacity-0 select-none">{{ finalText() }}</span>
     <span aria-hidden="true" class="inline-flex items-end gap-[0.12em]">
       <span #num class="inline-block origin-bottom tabular-nums"
         >{{ prefix() }}{{ formatted() }}{{ suffix() }}</span
