@@ -239,6 +239,8 @@ const REACH: Record<Term, number> = { fob: 2, cfr: 3, cif: 3 };
       font-size: 0.8rem;
       font-weight: 600;
       white-space: nowrap;
+      /* por encima de las paradas (que se dibujan después) */
+      z-index: 2;
       opacity: 0;
       transform: translateY(6px) scale(0.9);
       transition:
@@ -252,6 +254,15 @@ const REACH: Record<Term, number> = { fob: 2, cfr: 3, cif: 3 };
       opacity: 1;
       transform: none;
       transition-delay: 0.5s;
+    }
+    /* En celular el tramo es más angosto que la etiqueta: va sobre los círculos, no detrás */
+    @media (max-width: 767px) {
+      .route {
+        margin-top: 4.25rem;
+      }
+      .route-insurance {
+        bottom: 2.1rem;
+      }
     }
     .route-stops {
       position: relative;

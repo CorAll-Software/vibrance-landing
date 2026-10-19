@@ -117,13 +117,16 @@ function markSeen(): void {
         </div>
 
         <div class="lg:col-span-5 lg:col-start-8">
-          <!-- Ilustración del árbol (sin fondo: se integra con el de la sección) -->
+          <!-- Ilustración del árbol (versión HD de la clienta, sin fondo: branding/nosotros/).
+               Dos tamaños: el celular baja el de 600 px -->
           <img
             data-reveal
-            src="media/nosotros/arbol-vibrance.webp"
+            src="media/nosotros/arbol-vibrance-1100.webp"
+            srcset="media/nosotros/arbol-vibrance-600.webp 600w, media/nosotros/arbol-vibrance-1100.webp 1100w"
+            sizes="(min-width: 640px) 34rem, calc(100vw - 2.5rem)"
             [alt]="t('illustrationAlt')"
-            width="615"
-            height="537"
+            width="1100"
+            height="961"
             loading="lazy"
             decoding="async"
             class="mx-auto mb-8 block h-auto w-full max-w-[34rem]"
