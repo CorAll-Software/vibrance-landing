@@ -4,14 +4,14 @@
   *transloco="let t; prefix: 'hero'"
   aria-labelledby="hero-title"
 >
-  <!-- Fondo: cadena de hasta 3 videos con fundido (core/config/media.config.ts) -->
+  <!-- Fondo: cadena de hasta 4 videos con fundido (core/config/media.config.ts) -->
   <div class="hero-bg absolute inset-0 -z-10 scale-110">
     <img [ngSrc]="media.poster" alt="" fill priority sizes="100vw" class="object-cover" />
     @if (showVideo()) {
       @for (v of videos; track $index; let i = $index) {
         <video
-          class="hero-video absolute inset-0 h-full w-full object-cover transition-opacity ease-in-out"
-          [style.transition-duration.s]="media.fade"
+          class="hero-video absolute inset-0 h-full w-full object-cover transition-opacity ease-in-out will-change-[opacity]"
+          [style.transition-duration.s]="previous() === -1 ? 0 : media.fade"
           [style.z-index]="i === current() ? 2 : 1"
           [class.opacity-0]="!(i === current() && visible()) && i !== previous()"
           [muted]="true"
@@ -21,6 +21,7 @@
           [attr.preload]="i === 0 ? 'auto' : 'none'"
           disablepictureinpicture
           aria-hidden="true"
+          (loadeddata)="onFirstFrame(i)"
           (playing)="onPlaying(i)"
           (timeupdate)="onTime(i)"
           (ended)="next(i)"

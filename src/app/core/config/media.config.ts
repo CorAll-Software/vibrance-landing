@@ -25,6 +25,13 @@ export interface VideoSrc {
 
 export interface HeroVideo extends VideoSrc {
   /**
+   * Video propio en 4 calidades: ruta base sin terminación, p. ej. 'media/hero/hero-1'
+   * usa hero-1-720.mp4, -1080, -1440 y -2160. Cada visitante recibe la
+   * calidad que su pantalla puede mostrar (ver public/media/README.md para generarlas).
+   * Si se indica, reemplaza a `mp4` / `webm`.
+   */
+  local?: string;
+  /**
    * Opcional: segundos que se muestra antes de pasar al siguiente.
    * Si no se indica, se muestra completo.
    */
@@ -41,20 +48,22 @@ export interface SectionMedia {
 /* ───────────────────────────── HERO ───────────────────────────── */
 
 export const HERO = {
-  /** Imagen de fondo inicial (y la que se comparte en redes, ver src/index.html). */
-  poster: 'media/campo.png',
   /**
-   * Cadena de videos (máximo 3). Se reproducen en orden y pasan de uno a otro con
+   * Imagen de fondo inicial: es el primer cuadro del primer video, así al arrancar la imagen
+   * "cobra vida" sin que se note el cambio. Si cambias el primer video, saca su primer cuadro
+   * (ver public/media/README.md). La imagen para redes está aparte, en src/index.html.
+   */
+  poster: 'media/hero/hero-1-poster.webp',
+  /**
+   * Cadena de videos (máximo 4). Se reproducen en orden y pasan de uno a otro con
    * un fundido; al terminar el último vuelve al primero. Con uno solo, se repite.
+   * Originales de Pexels: 12384756, 11760126, 3596844 y 15909393.
    */
   videos: [
-    {
-      mp4: 'https://www.pexels.com/es-es/download/video/28443572/',
-      webm: 'https://www.pexels.com/es-es/download/video/28443572/',
-    },
-    { mp4: 'https://www.pexels.com/es-es/download/video/11760126/', seconds: 20 },
-    { mp4: 'https://www.pexels.com/es-es/download/video/3596844/' },
-    { mp4: 'https://www.pexels.com/es-es/download/video/15909393/' },
+    { local: 'media/hero/hero-1' },
+    { local: 'media/hero/hero-2', seconds: 20 },
+    { local: 'media/hero/hero-3' },
+    { local: 'media/hero/hero-4' },
   ] as HeroVideo[],
   /** Duración del fundido entre videos, en segundos. */
   fade: 1.2,
@@ -73,11 +82,11 @@ export interface OrigenMedia extends SectionMedia {
 
 export const ORIGEN: OrigenMedia = {
   image:
-    'https://images.unsplash.com/photo-1597916829826-02e5bb4a54e0?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1715151696354-73e9544b3a2e?q=80&w=1229&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
   // video: { mp4: 'https://…/desierto-cultivo.mp4' },
   back: {
     // TODO: cambiar por la imagen o el video que se mostrará al voltear la tarjeta
-    image: 'media/hero-campo-poster.webp',
+    image: 'https://plus.unsplash.com/premium_photo-1682126515886-7ae6955bb38d?q=80&w=734&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     // video: { mp4: 'https://…/seleccion-productores.mp4' },
   },
 };
@@ -88,40 +97,28 @@ export const PROCESO: Record<
   'productores' | 'calidad' | 'empaque' | 'frio' | 'envio',
   SectionMedia
 > = {
+  // Videos propios en 4:3 (1080×810, 30 fps): la medida de la tarjeta. La imagen es el primer
+  // cuadro de cada video, así al empezar a moverse no se nota el cambio.
+  // Originales de Pexels: 31463341, 8633312, 8633311, 10576684 y 6390323.
   productores: {
-    image: 'media/uvas.png',
-    video: {
-      mp4: 'https://www.pexels.com/es-es/download/video/31463341/',
-      webm: 'https://www.pexels.com/es-es/download/video/31463341/',
-    },
+    image: 'media/proceso/productores-poster.webp',
+    video: { mp4: 'media/proceso/productores.mp4' },
   },
   calidad: {
-    image: 'media/proceso-2-calidad-poster.webp',
-    video: {
-      mp4: 'https://www.pexels.com/es-es/download/video/8633312/',
-      webm: 'https://www.pexels.com/es-es/download/video/8633312/',
-    },
+    image: 'media/proceso/calidad-poster.webp',
+    video: { mp4: 'media/proceso/calidad.mp4' },
   },
   empaque: {
-    image: 'media/proceso-3-empaque-poster.webp',
-    video: {
-      mp4: 'https://www.pexels.com/es-es/download/video/8633311/',
-      webm: 'https://www.pexels.com/es-es/download/video/8633311/',
-    },
+    image: 'media/proceso/empaque-poster.webp',
+    video: { mp4: 'media/proceso/empaque.mp4' },
   },
   frio: {
-    image: 'media/proceso-4-frio.webp',
-    video: {
-      mp4: 'https://www.pexels.com/es-es/download/video/10576684/',
-      webm: 'https://www.pexels.com/es-es/download/video/10576684/',
-    },
+    image: 'media/proceso/frio-poster.webp',
+    video: { mp4: 'media/proceso/frio.mp4' },
   },
   envio: {
-    image: 'media/proceso-5-envio-poster.webp',
-    video: {
-      mp4: 'https://www.pexels.com/es-es/download/video/6390323/',
-      webm: 'https://www.pexels.com/es-es/download/video/6390323/',
-    },
+    image: 'media/proceso/envio-poster.webp',
+    video: { mp4: 'media/proceso/envio.mp4' },
   },
 };
 

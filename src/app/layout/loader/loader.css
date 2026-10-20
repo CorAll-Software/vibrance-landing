@@ -12,6 +12,9 @@
   inset: 0;
   background: radial-gradient(circle at 50% 46%, #26493b 0%, var(--color-palta) 55%);
   pointer-events: auto;
+  /* Capa propia: se disuelve sobre el video del hero ya en movimiento; sin esto se repinta
+     el degradado a pantalla completa en cada cuadro y la llegada al hero se traba */
+  will-change: opacity;
 }
 
 /* Semilla */

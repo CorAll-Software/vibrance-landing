@@ -14,13 +14,37 @@ import { NgOptimizedImage } from '@angular/common';
 import { TranslocoDirective, translateSignal } from '@jsverse/transloco';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { HERO } from '../../core/config/media.config';
+import { HERO, HeroVideo } from '../../core/config/media.config';
 import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
 import { UiStateService } from '../../core/services/ui-state.service';
 
-/** Espera antes de arrancar el video del hero (la página ya muestra la imagen). */
-const VIDEO_DELAY_MS = 100;
+/** Reintento si el video del hero todavía no está en la página al momento de arrancar. */
+const VIDEO_RETRY_MS = 100;
+
+/**
+ * Altura del video según los píxeles reales que el fondo ocupa en la pantalla: no se
+ * descarga ni decodifica más de lo que se puede ver. Celular → 720p, laptop Full HD → 1080p;
+ * 1440p y 4K quedan para monitores grandes.
+ */
+function pickVideoHeight(): number {
+  if (typeof window === 'undefined') return 1080;
+  // Una versión anterior guardaba aquí un tope de calidad: se borra para no quedar en 720p
+  try {
+    localStorage.removeItem('hero-video-cap');
+  } catch {
+    /* almacenamiento no disponible */
+  }
+  // El fondo es 16:9 recortado a la pantalla y está ampliado un 10 % (scale-110)
+  const width = Math.max(window.innerWidth, (window.innerHeight * 16) / 9) * 1.1;
+  const needed = ((width * (window.devicePixelRatio || 1)) * 9) / 16;
+  return needed <= 820 ? 720 : needed <= 1250 ? 1080 : needed <= 1700 ? 1440 : 2160;
+}
+
+/** Con `local`, apunta al archivo de la calidad elegida. */
+function resolveVideo(v: HeroVideo, height: number): HeroVideo {
+  return v.local ? { mp4: `${v.local}-${height}.mp4`, seconds: v.seconds } : v;
+}
 
 @Component({
   selector: 'app-hero',
@@ -44,8 +68,12 @@ const VIDEO_DELAY_MS = 100;
 })
 export class HeroComponent {
   protected readonly media = HERO;
-  /** Máximo 3 videos con fuente válida. */
-  protected readonly videos = HERO.videos.filter((v) => v.mp4 || v.webm).slice(0, 4);
+  private readonly videoHeight = pickVideoHeight();
+  /** Máximo 4 videos con fuente válida, en la calidad que corresponde a esta pantalla. */
+  protected readonly videos = HERO.videos
+    .filter((v) => v.local || v.mp4 || v.webm)
+    .slice(0, 4)
+    .map((v) => resolveVideo(v, this.videoHeight));
   protected readonly ui = inject(UiStateService);
   private readonly scroll = inject(SmoothScrollService);
 
@@ -64,7 +92,7 @@ export class HeroComponent {
   protected readonly current = signal(0);
   /** Video que está saliendo: se mantiene visible debajo mientras entra el nuevo. */
   protected readonly previous = signal(-1);
-  /** true cuando el primer video ya se reproduce (entra con fundido sobre la imagen). */
+  /** true cuando el primer video ya muestra su primer cuadro (reemplaza a la imagen, sin fundido). */
   protected readonly visible = signal(false);
   private host!: HTMLElement;
   private switching = false;
@@ -102,13 +130,19 @@ export class HeroComponent {
       }
     });
 
+    // El video arranca cuando la mariposa despega de la semilla: al disolverse el loader ya
+    // se ve el campo en movimiento. Sin loader (o al saltarlo), arranca con la entrada del hero.
+    let kicked = false;
+    effect(() => {
+      if (kicked || !ready() || !(this.ui.introFlight() || this.ui.introDone())) return;
+      kicked = true;
+      this.startVideo();
+    });
+
     // Entrada del hero: espera a que termine el loader (una sola vez)
     effect(() => {
       if (!this.ui.introDone() || played || !ready()) return;
       played = true;
-      // El video arranca 1 s después de mostrarse la página, desde el inicio,
-      // para que no se vea "empezado" cuando aparece sobre la imagen
-      this.startTimer = setTimeout(() => this.startVideo(), VIDEO_DELAY_MS);
       if (this.scroll.reducedMotion()) return;
       zone.runOutsideAngular(() => {
         ctx = gsap.context(() => {
@@ -146,10 +180,23 @@ export class HeroComponent {
 
   private startVideo(): void {
     const v = this.videoEl(0);
-    if (!v) return;
+    if (!v) {
+      // El <video> aún no está en la página (recién se activó showVideo): reintenta
+      if (this.showVideo()) this.startTimer = setTimeout(() => this.startVideo(), VIDEO_RETRY_MS);
+      return;
+    }
     this.started = true;
-    v.currentTime = 0;
+    if (v.currentTime !== 0) v.currentTime = 0;
     v.play().catch(() => {});
+  }
+
+  /**
+   * El primer video se muestra quieto, en su primer cuadro, apenas carga: es idéntico a la
+   * imagen de fondo, así que el cambio no se ve y al darle play la imagen empieza a moverse.
+   * Sin fundido: mezclar un video en movimiento con la imagen quieta deja una imagen doble.
+   */
+  protected onFirstFrame(i: number): void {
+    if (i === 0 && this.current() === 0) this.visible.set(true);
   }
 
   /**
@@ -180,13 +227,17 @@ export class HeroComponent {
   }
 
   protected onPlaying(i: number): void {
-    if (i !== this.current()) return;
-    this.visible.set(true);
-    // Mientras se ve el actual, se precarga el siguiente
-    const nextEl = this.videoEl((i + 1) % this.videos.length);
-    if (nextEl && nextEl !== this.videoEl(i) && nextEl.preload !== 'auto') {
-      nextEl.preload = 'auto';
-      nextEl.load();
+    // Al entrar con fundido, `playing` llega antes de que `current` cambie: la precarga no
+    // depende de esa condición
+    if (i === this.current()) this.visible.set(true);
+    // Mientras se ve el actual, se precargan los dos siguientes (un video corto no da
+    // tiempo a que cargue el que viene después)
+    for (const step of [1, 2]) {
+      const el = this.videoEl((i + step) % this.videos.length);
+      if (el && el !== this.videoEl(i) && el.preload !== 'auto') {
+        el.preload = 'auto';
+        el.load();
+      }
     }
   }
 
@@ -205,10 +256,16 @@ export class HeroComponent {
     const curEl = this.videoEl(i)!;
     const nextEl = this.videoEl(n)!;
     let done = false;
+    const start = () =>
+      nextEl.play().then(
+        () => finish(true),
+        () => finish(false),
+      );
     const finish = (ok: boolean) => {
       if (done) return;
       done = true;
       clearTimeout(guard);
+      nextEl.removeEventListener('canplaythrough', start);
       if (!ok) {
         // El siguiente no cargó (link caído o red lenta): se repite el actual
         nextEl.pause();
@@ -229,10 +286,9 @@ export class HeroComponent {
     };
     const guard = setTimeout(() => finish(false), 5000);
     nextEl.currentTime = 0;
-    nextEl.play().then(
-      () => finish(true),
-      () => finish(false),
-    );
+    // Solo arranca cuando ya tiene cargado lo suficiente para no trabarse en el fundido
+    if (nextEl.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) start();
+    else nextEl.addEventListener('canplaythrough', start, { once: true });
   }
 
   protected goToProducts(event: Event): void {

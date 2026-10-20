@@ -6,6 +6,11 @@ import { ProductId } from '../../data/productos.data';
 export class UiStateService {
   /** true cuando el loader terminó (o no se mostró). La entrada del hero espera esto. */
   readonly introDone = signal(false);
+  /**
+   * true cuando la mariposa del loader despega de la semilla. El video del hero arranca
+   * aquí, para que al disolverse el loader ya se vea el campo en movimiento.
+   */
+  readonly introFlight = signal(false);
 
   readonly quoteOpen = signal(false);
   /** Producto preseleccionado al abrir la cotización desde una card. */

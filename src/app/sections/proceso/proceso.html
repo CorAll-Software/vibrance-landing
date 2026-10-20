@@ -61,10 +61,11 @@
               sizes="(min-width: 1024px) 34vw, 100vw"
               class="object-cover"
             />
-            <!-- Video opcional de la etapa: se reproduce solo mientras está a la vista -->
+            <!-- Video opcional de la etapa: se reproduce solo mientras está a la vista. Sin
+                 fundido: la imagen es su primer cuadro, así que simplemente empieza a moverse -->
             @if (s.video && !scroll.reducedMotion()) {
               <video
-                class="step-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700"
+                class="step-video absolute inset-0 h-full w-full object-cover opacity-0"
                 [muted]="true"
                 muted
                 loop

@@ -187,6 +187,7 @@ export class LoaderComponent {
     // 5 · Vuela al sol del logo (curva cúbica) mientras el fondo se disuelve
     const target = this.target(symbol);
     tl.addLabel('fly', 'open+=0.85')
+      .add(() => this.ui.introFlight.set(true), 'fly') // el video del hero arranca al despegar
       .add(() => flap.timeScale(1.3), 'fly') // aletea más rápido al volar
       .to(
         q('.bf'),
