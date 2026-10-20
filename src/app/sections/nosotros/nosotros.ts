@@ -454,12 +454,13 @@ export class NosotrosComponent {
       scroll.start();
     };
     /**
-     * Entrada a la escena (bajando o subiendo desde Proceso): siempre la misma secuencia, verde
-     * con "Lo que nos mueve" y luego el círculo que abre "Vibrance es una empresa…". Solo si la
-     * escena está a la vista (con medidas desfasadas el aviso puede llegar antes de tiempo).
+     * Entrada a la escena: verde con "Lo que nos mueve" y luego el círculo que abre "Vibrance es
+     * una empresa…". Una sola vez: si la frase ya se mostró, al volver se queda en la frase (repetir
+     * el verde al pasar de nuevo se veía como un destello de "Lo que nos mueve"). Solo si la escena
+     * está a la vista (con medidas desfasadas el aviso puede llegar antes de tiempo).
      */
     const start = () => {
-      if (!inView()) return;
+      if (!inView() || current !== 0) return;
       tl.pause(0);
       current = 0;
       go(1);
@@ -544,8 +545,7 @@ export class NosotrosComponent {
       onEnter: () => !passing() && start(),
       // Si se vuelve sin haberla visto, empieza igual que al bajar
       onEnterBack: () => !passing() && start(),
-      // Al salir por arriba se reinicia, para que la próxima vez vuelva a empezar en verde
-      onLeaveBack: () => !passing() && go(0),
+      // Al salir por arriba no se rebobina: se queda en la frase (ver start)
       // El siguiente scroll (momento) desliza hasta Proceso
       onUpdate: (self) => {
         // Se decide por lo que realmente se movió la página: un recálculo de posiciones (al
@@ -553,7 +553,11 @@ export class NosotrosComponent {
         const dy = window.scrollY - lastY;
         lastY = window.scrollY;
         if (passing() || !inView() || dy === 0) return;
-        go(dy > 0 && self.progress >= 0.35 ? 2 : 1);
+        // Con la frase ya en pantalla, cualquier scroll hacia abajo pasa a Proceso (antes había
+        // que recorrer un 35 % y un scroll corto no hacía nada). Mientras se abre la frase, solo
+        // un scroll largo la salta.
+        const quoteShown = tl.time() >= tl.labels['m1'] - 0.05;
+        go(dy > 0 && (quoteShown || self.progress >= 0.35) ? 2 : 1);
       },
     });
 
@@ -566,7 +570,8 @@ export class NosotrosComponent {
       onUpdate: (self) => {
         if (scroll.autoScrolling || self.direction < 0) return;
         if (self.progress < 0.05 || self.progress > 0.97) return;
-        scroll.scrollToY(st.start, MOMENT_DURATION);
+        // Un poco adentro del inicio: justo en el borde la escena no se activa y queda verde vacía
+        scroll.scrollToY(st.start + 2, MOMENT_DURATION);
       },
     });
 
