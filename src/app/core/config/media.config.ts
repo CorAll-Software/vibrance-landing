@@ -83,8 +83,7 @@ export interface OrigenMedia extends SectionMedia {
 }
 
 export const ORIGEN: OrigenMedia = {
-  image:
-    'https://images.unsplash.com/photo-1715151696354-73e9544b3a2e?q=80&w=1229&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
+  image: 'media/origen/campos-andinos.webp',
   // video: { mp4: 'https://…/desierto-cultivo.mp4' },
   back: {
     // TODO: cambiar por la imagen o el video que se mostrará al voltear la tarjeta

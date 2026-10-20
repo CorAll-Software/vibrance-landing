@@ -313,25 +313,30 @@
     max-width: min(28rem, calc((100svh - 330px) * 0.8));
   }
   .stage-right {
+    position: relative;
     justify-content: center;
     gap: 1.5rem;
     height: 100%;
   }
   .visual {
-    position: relative;
     display: block;
   }
   .carrier {
     width: min(13.5rem, calc((100svh - 350px) * 0.42));
   }
-  /* El panel de mercados ocupa el lugar de la cesta cuando la mariposa se va
-     (anclado abajo: si es más alto que la cesta, crece hacia arriba) */
+  /* El panel de mercados aparece cuando la mariposa se lleva la cesta, centrado en la columna
+     (que tiene el mismo centro que el mapa): queda justo frente al mapa. Se centra con márgenes
+     y no con transform: GSAP anima su `y`. */
   .markets {
+    --w: min(30rem, 42vw);
     position: absolute;
-    bottom: 0;
+    inset-block: 0;
     left: 50%;
-    width: 27rem;
-    margin-left: -13.5rem;
+    width: var(--w);
+    max-width: none;
+    height: fit-content;
+    margin-block: auto;
+    margin-left: calc(var(--w) / -2);
     padding: 1.25rem 1.5rem;
     visibility: hidden;
   }
@@ -348,6 +353,12 @@
     }
     .markets .origen-cta {
       margin-top: 1rem;
+    }
+  }
+  /* Laptops bajas: centrado exacto quedaría pegado a la frase; sube un poco para dejarle aire */
+  @media (max-height: 820px) {
+    .markets {
+      inset-block: 0 3rem;
     }
   }
   @media (max-height: 760px) {
