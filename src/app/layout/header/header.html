@@ -1,10 +1,12 @@
 <header
   *transloco="let t; prefix: 'nav'"
-  class="fixed inset-x-0 top-0 z-50 transition-[background-color,color,box-shadow] duration-300"
+  class="fixed inset-x-0 top-0 z-50"
   [class]="
-    solid() || menuOpen()
-      ? 'bg-niebla/95 text-palta shadow-[0_1px_0_rgb(30_59_47/0.1)]'
-      : 'bg-transparent text-niebla'
+    menuOpen()
+      ? 'bg-niebla text-palta'
+      : solid()
+        ? 'bg-niebla/95 text-palta shadow-[0_1px_0_rgb(30_59_47/0.1)] transition-[background-color,color,box-shadow] duration-300'
+        : 'bg-transparent text-niebla transition-[background-color,color,box-shadow] duration-300'
   "
   (keydown.escape)="menuOpen.set(false)"
 >
@@ -64,7 +66,7 @@
     </nav>
 
     <div class="flex shrink-0 items-center gap-3" data-intro-fade>
-      <app-lang-switch class="hidden sm:block" />
+      <app-lang-switch />
       <button
         type="button"
         class="btn-primary hidden min-h-11 !px-5 !py-2 text-sm whitespace-nowrap md:inline-flex lg:hidden xl:inline-flex"
@@ -107,29 +109,43 @@
       class="mobile-menu h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-palta/10 bg-niebla lg:hidden"
     >
       <nav
-        class="container-page flex h-full flex-col justify-between py-8"
+        class="container-page flex min-h-full flex-col justify-between gap-8 py-6"
         [attr.aria-label]="t('label')"
       >
-        <ul class="flex flex-col gap-1">
+        <ul class="flex flex-col">
           @for (id of items; track id) {
-            <li>
+            <li class="border-b border-palta/10">
               <a
                 [href]="'#' + id"
-                class="block py-2 font-display text-4xl font-semibold"
-                [class]="section.active() === id ? 'text-hoja' : ''"
+                class="flex items-center justify-between py-3.5 font-display text-2xl font-semibold sm:text-3xl"
+                [class]="section.active() === id ? 'text-hoja' : 'text-palta'"
                 [attr.aria-current]="section.active() === id ? 'location' : null"
                 (click)="go($event, id)"
-                >{{ t(id) }}</a
-              >
+                >{{ t(id) }}
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  class="shrink-0 opacity-40 rtl:-scale-x-100"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M9 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
             </li>
           }
         </ul>
-        <div class="flex flex-col gap-4">
-          <app-lang-switch class="self-start" [dropUp]="true" />
-          <button type="button" class="btn-primary w-full" (click)="quote()">
-            {{ t('cta') }}
-          </button>
-        </div>
+        <!-- El idioma ya está en la barra superior (visible en todos los tamaños) -->
+        <button type="button" class="btn-primary w-full" (click)="quote()">
+          {{ t('cta') }}
+        </button>
       </nav>
     </div>
   }

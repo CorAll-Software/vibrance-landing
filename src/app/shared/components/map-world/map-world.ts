@@ -31,7 +31,8 @@ const project = (p: GeoPoint) => ({
   imports: [TranslocoDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <figure class="relative w-full" *transloco="let t; prefix: 'datos'">
+    <!-- overflow-x-clip: los tooltips (aunque estén ocultos) no deben ensanchar la página en móvil -->
+    <figure class="relative w-full overflow-x-clip" *transloco="let t; prefix: 'datos'">
       <img
         src="svg/world-dots.svg"
         alt=""
@@ -80,9 +81,13 @@ const project = (p: GeoPoint) => ({
               <span
                 class="size-3 rounded-full bg-mandarina ring-4 ring-mandarina/25 transition-transform duration-200 group-hover:scale-150"
               ></span>
+              <!-- Cerca de los bordes el tooltip se abre hacia adentro para no salirse de la pantalla -->
               <span
                 role="tooltip"
-                class="pointer-events-none absolute bottom-full left-1/2 w-max -translate-x-1/2 translate-y-1 rounded-md bg-palta px-2.5 py-1 text-sm font-medium text-white opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+                class="pointer-events-none absolute bottom-full w-max translate-y-1 rounded-md bg-palta px-2.5 py-1 text-sm font-medium text-white opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+                [class]="
+                  d.left > 70 ? 'right-0' : d.left < 30 ? 'left-0' : 'left-1/2 -translate-x-1/2'
+                "
               >
                 <strong class="block font-semibold">{{ t('destinos.' + d.id) }}</strong>
                 <span class="text-xs text-white/85">{{

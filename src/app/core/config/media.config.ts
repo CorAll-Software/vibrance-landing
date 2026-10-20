@@ -21,6 +21,8 @@
 export interface VideoSrc {
   mp4?: string;
   webm?: string;
+  /** Opcional: versión liviana (MP4) que se usa en celulares en lugar de `mp4`. */
+  mobile?: string;
 }
 
 export interface HeroVideo extends VideoSrc {
@@ -97,28 +99,29 @@ export const PROCESO: Record<
   'productores' | 'calidad' | 'empaque' | 'frio' | 'envio',
   SectionMedia
 > = {
-  // Videos propios en 4:3 (1080×810, 30 fps): la medida de la tarjeta. La imagen es el primer
-  // cuadro de cada video, así al empezar a moverse no se nota el cambio.
+  // Videos propios en 4:3 (1080×810, 30 fps; en celular, `mobile` de 720×540): la medida de
+  // la tarjeta. La imagen es el primer cuadro de cada video, así al empezar a moverse no se
+  // nota el cambio.
   // Originales de Pexels: 31463341, 8633312, 8633311, 10576684 y 6390323.
   productores: {
     image: 'media/proceso/productores-poster.webp',
-    video: { mp4: 'media/proceso/productores.mp4' },
+    video: { mp4: 'media/proceso/productores.mp4', mobile: 'media/proceso/productores-m.mp4' },
   },
   calidad: {
     image: 'media/proceso/calidad-poster.webp',
-    video: { mp4: 'media/proceso/calidad.mp4' },
+    video: { mp4: 'media/proceso/calidad.mp4', mobile: 'media/proceso/calidad-m.mp4' },
   },
   empaque: {
     image: 'media/proceso/empaque-poster.webp',
-    video: { mp4: 'media/proceso/empaque.mp4' },
+    video: { mp4: 'media/proceso/empaque.mp4', mobile: 'media/proceso/empaque-m.mp4' },
   },
   frio: {
     image: 'media/proceso/frio-poster.webp',
-    video: { mp4: 'media/proceso/frio.mp4' },
+    video: { mp4: 'media/proceso/frio.mp4', mobile: 'media/proceso/frio-m.mp4' },
   },
   envio: {
     image: 'media/proceso/envio-poster.webp',
-    video: { mp4: 'media/proceso/envio.mp4' },
+    video: { mp4: 'media/proceso/envio.mp4', mobile: 'media/proceso/envio-m.mp4' },
   },
 };
 

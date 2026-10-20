@@ -24,8 +24,9 @@ const VIDEO_RETRY_MS = 100;
 
 /**
  * Altura del video según los píxeles reales que el fondo ocupa en la pantalla: no se
- * descarga ni decodifica más de lo que se puede ver. Celular → 720p, laptop Full HD → 1080p;
- * 1440p y 4K quedan para monitores grandes.
+ * descarga ni decodifica más de lo que se puede ver. Laptop Full HD → 1080p; 1440p y 4K
+ * quedan para monitores grandes. Celulares y tablets: máximo 1080p (en vertical la fórmula
+ * pediría 4K por la densidad de la pantalla, y decodificarlo traba el scroll en Android).
  */
 function pickVideoHeight(): number {
   if (typeof window === 'undefined') return 1080;
@@ -38,7 +39,9 @@ function pickVideoHeight(): number {
   // El fondo es 16:9 recortado a la pantalla y está ampliado un 10 % (scale-110)
   const width = Math.max(window.innerWidth, (window.innerHeight * 16) / 9) * 1.1;
   const needed = ((width * (window.devicePixelRatio || 1)) * 9) / 16;
-  return needed <= 820 ? 720 : needed <= 1250 ? 1080 : needed <= 1700 ? 1440 : 2160;
+  const height = needed <= 820 ? 720 : needed <= 1250 ? 1080 : needed <= 1700 ? 1440 : 2160;
+  const handheld = Math.min(window.screen.width, window.screen.height) < 768;
+  return handheld ? Math.min(height, 1080) : height;
 }
 
 /** Con `local`, apunta al archivo de la calidad elegida. */

@@ -1,4 +1,4 @@
-import { PROCESO } from '../core/config/media.config';
+import { PROCESO, VideoSrc } from '../core/config/media.config';
 
 /**
  * Etapas del proceso de una comercializadora (la empresa no cultiva): del productor al importador.
@@ -8,7 +8,7 @@ import { PROCESO } from '../core/config/media.config';
 export interface ProcessStep {
   id: 'productores' | 'calidad' | 'empaque' | 'frio' | 'envio';
   image: string;
-  video?: { webm?: string; mp4?: string };
+  video?: VideoSrc;
 }
 
 const IDS: ProcessStep['id'][] = ['productores', 'calidad', 'empaque', 'frio', 'envio'];

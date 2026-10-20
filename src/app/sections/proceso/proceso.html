@@ -79,7 +79,10 @@
                   <source [src]="s.video.webm" type="video/webm" />
                 }
                 @if (s.video.mp4) {
-                  <source [src]="s.video.mp4" type="video/mp4" />
+                  <source
+                    [src]="handheld && s.video.mobile ? s.video.mobile : s.video.mp4"
+                    type="video/mp4"
+                  />
                 }
               </video>
             }
