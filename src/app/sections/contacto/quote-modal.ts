@@ -71,6 +71,8 @@ export class QuoteModalComponent {
     destPort: ['', Validators.maxLength(80)],
     shipDate: [''],
     message: ['', Validators.minLength(MESSAGE_MIN)],
+    // Casilla obligatoria de la política de privacidad
+    privacy: [false, Validators.requiredTrue],
   });
 
   protected readonly fields: { name: FieldName; type: string; autocomplete: string }[] = [
@@ -106,6 +108,11 @@ export class QuoteModalComponent {
 
   protected isRequired(field: FieldName): boolean {
     return this.form.controls[field].hasValidator(Validators.required);
+  }
+
+  protected showPrivacyError(): boolean {
+    const c = this.form.controls.privacy;
+    return c.invalid && (c.touched || this.submitted());
   }
 
   protected showError(field: FieldName): boolean {

@@ -11,7 +11,9 @@
     "placeholderNote": "Données d'exemple, en attente de confirmation.",
     "skip_intro": "Passer l'intro",
     "whatsapp": "Écrivez-nous sur WhatsApp",
-    "whatsappMessage": "Bonjour, je souhaite un devis pour des fruits péruviens avec Vibrance."
+    "whatsappMessage": "Bonjour, je souhaite un devis pour des fruits péruviens avec Vibrance.",
+    "buyers": "Acheteurs",
+    "partners": "Producteurs partenaires"
   },
   "nav": {
     "label": "Navigation principale",
@@ -81,8 +83,8 @@
     "legendRoute": "Route vers le port",
     "treeLabel": "Arbre illustré où poussent myrtilles, avocats, raisins, mangues, mandarines et gingembre, qui tombent dans un panier Vibrance.",
     "closeTitle": "De ces régions à votre table",
-
-    "closeText": "Dites-nous quel fruit vous cherchez et nous confirmons la disponibilité et l'accès à votre pays."
+    "closeText": "Dites-nous quel fruit vous cherchez et nous confirmons la disponibilité et l'accès à votre pays.",
+    "partner": "Vous êtes producteur et souhaitez devenir notre partenaire ? Nous portons vos fruits dans le monde, à un prix juste et avec une relation transparente. Écrivez-nous à"
   },
   "proceso": {
     "heading": "Du producteur à votre entrepôt",
@@ -381,7 +383,8 @@
       "email": "Saisissez un e-mail valide, par ex. nom@entreprise.com.",
       "minlength": "Saisissez au moins {{n}} caractères.",
       "pattern": "Saisissez un numéro de téléphone valide, par exemple +51 999 999 999.",
-      "summary": "{{n}} champs à corriger. Vérifiez les messages en rouge."
+      "summary": "{{n}} champs à corriger. Vérifiez les messages en rouge.",
+      "privacy": "Vous devez accepter la politique de confidentialité pour envoyer."
     },
     "submit": "Envoyer la demande",
     "sending": "Envoi…",
@@ -390,7 +393,10 @@
     "errorTitle": "Nous n'avons pas pu envoyer votre demande",
     "errorText": "Un problème de connexion a empêché l'envoi. Vérifiez votre connexion et réessayez ; vous ne perdrez pas ce que vous avez écrit.",
     "retry": "Réessayer",
-    "again": "Envoyer une autre demande"
+    "again": "Envoyer une autre demande",
+    "privacyBefore": "J’ai lu et j’accepte la ",
+    "privacyLink": "Politique de confidentialité",
+    "privacyAfter": "."
   },
   "footer": {
     "tagline": "Négoce de fruits frais du Pérou pour importateurs et distributeurs du monde entier.",

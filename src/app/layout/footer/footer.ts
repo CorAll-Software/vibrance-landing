@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import {
   BRAND_DESCRIPTOR,
   BRAND_NAME,
@@ -7,7 +7,9 @@ import {
   LEGAL_NAME,
   LOGO,
   RUC,
+  SHOW_SOCIALS,
 } from '../../core/config/brand';
+import { UiStateService } from '../../core/services/ui-state.service';
 import { LangSwitchComponent } from '../header/lang-switch';
 import {
   WhatsappIconComponent,
@@ -16,7 +18,7 @@ import {
 
 @Component({
   selector: 'app-footer',
-  imports: [TranslocoDirective, LangSwitchComponent, WhatsappIconComponent],
+  imports: [TranslocoDirective, TranslocoPipe, LangSwitchComponent, WhatsappIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer class="bg-palta-deep text-niebla" *transloco="let t; prefix: 'footer'">
@@ -42,26 +44,37 @@ import {
         <div class="md:col-span-3">
           <h2 class="font-sans text-base font-semibold">{{ t('contact') }}</h2>
           <address class="mt-3 flex flex-col gap-1.5 not-italic text-niebla/75">
-            <a [href]="'mailto:' + contact.email" class="hover:text-niebla hover:underline"
-              ><bdi dir="ltr">{{ contact.email }}</bdi></a
-            >
+            <span *transloco="let c; prefix: 'common'">
+              {{ c('buyers') }}:
+              <a [href]="'mailto:' + contact.email" class="hover:text-niebla hover:underline"
+                ><bdi dir="ltr">{{ contact.email }}</bdi></a
+              >
+              <br />
+              {{ c('partners') }}:
+              <a
+                [href]="'mailto:' + contact.partnersEmail"
+                class="hover:text-niebla hover:underline"
+                ><bdi dir="ltr">{{ contact.partnersEmail }}</bdi></a
+              >
+            </span>
             <span>{{ contact.address }}</span>
             <!-- Sin números escritos: solo el correo y el botón de WhatsApp -->
             <a
               [href]="whatsappHref()"
               target="_blank"
               rel="noopener"
-              class="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-niebla/25 py-2 ps-3 pe-4 text-niebla transition-colors hover:bg-niebla hover:text-palta"
+              [attr.aria-label]="'common.whatsapp' | transloco"
+              class="mt-3 grid size-11 place-items-center rounded-full border border-niebla/25 text-niebla transition-colors hover:bg-niebla hover:text-palta"
             >
-              <app-whatsapp-icon class="size-5" />
-              <span *transloco="let c; prefix: 'common'">{{ c('whatsapp') }}</span>
+              <app-whatsapp-icon class="size-6" />
             </a>
           </address>
         </div>
 
         <div class="flex flex-col gap-6 md:col-span-4">
-          <div>
-            <h2 class="font-sans text-base font-semibold">{{ t('follow') }}</h2>
+          @if (showSocials) {
+            <div>
+              <h2 class="font-sans text-base font-semibold">{{ t('follow') }}</h2>
             <ul class="mt-3 flex gap-2">
               @for (s of contact.socials; track s.id) {
                 <li>
@@ -103,8 +116,9 @@ import {
                   </a>
                 </li>
               }
-            </ul>
-          </div>
+              </ul>
+            </div>
+          }
           <div>
             <h2 class="font-sans text-base font-semibold">{{ t('language') }}</h2>
             <app-lang-switch class="mt-3" [dropUp]="true" />
@@ -121,9 +135,13 @@ import {
             <bdi dir="ltr" class="whitespace-nowrap">RUC {{ ruc }}</bdi>
             · {{ t('rights') }}
           </p>
-          <a [href]="contact.privacyHref" class="hover:text-niebla hover:underline">{{
-            t('privacy')
-          }}</a>
+          <button
+            type="button"
+            class="w-fit hover:text-niebla hover:underline"
+            (click)="ui.openPrivacy()"
+          >
+            {{ t('privacy') }}
+          </button>
         </div>
       </div>
     </footer>
@@ -135,6 +153,8 @@ export class FooterComponent {
   protected readonly legalName = LEGAL_NAME;
   protected readonly logo = LOGO;
   protected readonly contact = CONTACT;
+  protected readonly showSocials = SHOW_SOCIALS;
+  protected readonly ui = inject(UiStateService);
   protected readonly ruc = RUC;
   protected readonly whatsappHref = injectWhatsappHref();
   protected readonly year = new Date().getFullYear();

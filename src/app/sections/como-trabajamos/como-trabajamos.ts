@@ -234,7 +234,7 @@ const REACH: Record<Term, number> = { fob: 2, cfr: 3, cif: 3 };
       gap: 0.35rem;
       padding: 0.3rem 0.7rem;
       border-radius: 999px;
-      background: var(--color-arandano);
+      background: var(--color-hoja);
       color: var(--color-niebla);
       font-size: 0.8rem;
       font-weight: 600;

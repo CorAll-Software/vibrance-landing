@@ -40,7 +40,7 @@ export class WhatsappIconComponent {}
 
 /**
  * Botón flotante de WhatsApp (abajo, al final de la línea: a la derecha, o a la izquierda en
- * árabe/hebreo). Dice "Escríbenos por WhatsApp", sin mostrar el número.
+ * árabe/hebreo). Solo el ícono (el texto queda como etiqueta accesible), sin mostrar el número.
  * El número se cambia en core/config/brand.ts → CONTACT.whatsapp.
  */
 @Component({
@@ -54,10 +54,11 @@ export class WhatsappIconComponent {}
         [href]="href()"
         target="_blank"
         rel="noopener"
-        class="wa fixed end-4 bottom-4 z-40 flex h-12 items-center gap-2 rounded-full bg-[#25D366] ps-3 pe-4 text-sm font-semibold text-white shadow-[0_8px_24px_rgb(20_42_32/0.28)] transition-transform duration-200 hover:scale-105 focus-visible:scale-105 md:end-8 md:bottom-8 md:h-14 md:ps-4 md:pe-5 md:text-base"
+        [attr.aria-label]="t('whatsapp')"
+        [attr.title]="t('whatsapp')"
+        class="wa fixed end-4 bottom-4 z-40 grid size-12 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_rgb(20_42_32/0.28)] transition-transform duration-200 hover:scale-105 focus-visible:scale-105 md:end-8 md:bottom-8 md:size-14"
       >
         <app-whatsapp-icon class="size-7 md:size-8" />
-        {{ t('whatsapp') }}
       </a>
     }
   `,

@@ -185,6 +185,34 @@
           }
         </div>
 
+        <div class="flex flex-col gap-1.5 sm:col-span-2">
+          <div class="flex items-start gap-3">
+            <input
+              id="q-privacy"
+              type="checkbox"
+              formControlName="privacy"
+              class="mt-1 size-5 shrink-0 accent-hoja"
+              aria-required="true"
+              [attr.aria-invalid]="showPrivacyError()"
+              [attr.aria-describedby]="showPrivacyError() ? 'q-privacy-err' : null"
+            />
+            <label for="q-privacy" class="text-sm"
+              >{{ t('privacyBefore')
+              }}<button
+                type="button"
+                class="font-semibold underline underline-offset-2"
+                (click)="ui.openPrivacy()"
+              >
+                {{ t('privacyLink') }}</button
+              >{{ t('privacyAfter') }}
+              <span aria-hidden="true">*</span></label
+            >
+          </div>
+          @if (showPrivacyError()) {
+            <p id="q-privacy-err" class="text-sm text-red-700">{{ t('errors.privacy') }}</p>
+          }
+        </div>
+
         <div class="sm:col-span-2">
           <button
             type="submit"

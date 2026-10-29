@@ -14,6 +14,7 @@ import { ProductosComponent } from './sections/productos/productos';
 import { DatosComponent } from './sections/datos/datos';
 import { ContactoComponent } from './sections/contacto/contacto';
 import { QuoteModalComponent } from './sections/contacto/quote-modal';
+import { PrivacyModalComponent } from './shared/components/privacy-modal/privacy-modal';
 import { ProductDetailComponent } from './shared/components/product-detail/product-detail';
 import { WhatsappButtonComponent } from './shared/components/whatsapp-button/whatsapp-button';
 
@@ -34,6 +35,7 @@ import { WhatsappButtonComponent } from './shared/components/whatsapp-button/wha
     ContactoComponent,
     ProductDetailComponent,
     QuoteModalComponent,
+    PrivacyModalComponent,
     WhatsappButtonComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

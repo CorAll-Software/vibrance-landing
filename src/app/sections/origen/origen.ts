@@ -19,6 +19,7 @@ import { BasketComponent } from '../../shared/components/basket/basket';
 import { ButterflyComponent } from '../../shared/components/butterfly/butterfly';
 import { FruitIconComponent } from '../../shared/components/fruit-icon/fruit-icon';
 import { UiStateService } from '../../core/services/ui-state.service';
+import { CONTACT } from '../../core/config/brand';
 import type { ProductId } from '../../data/productos.data';
 import { ORIGEN } from '../../core/config/media.config';
 import { MOMENT_DURATION, SCENE_MODE } from '../../core/config/scroll.config';
@@ -111,6 +112,7 @@ export class OrigenComponent {
   protected readonly lines = translateObjectSignal('origen.lines') as unknown as () => string[];
   protected readonly scroll = inject(SmoothScrollService);
   protected readonly ui = inject(UiStateService);
+  protected readonly partnersEmail = CONTACT.partnersEmail;
   protected readonly flyers = DELIVERY.flatMap(([, fruits]) => fruits);
   protected readonly trails = TRAILS;
   /** Foto / video de la parte "Nace en el desierto que florece" (core/config/media.config.ts). */

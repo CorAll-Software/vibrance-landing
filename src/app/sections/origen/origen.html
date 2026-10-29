@@ -23,7 +23,18 @@
         <h2 id="origen-title" class="intro-title font-bold">{{ t('heading') }}</h2>
         <div class="intro-lines">
           @for (line of lines(); track $index) {
-            <p class="intro-line">{{ line }}</p>
+            <div class="intro-line">
+              <p>{{ line }}</p>
+              <!-- Productores aliados: va pegado al último párrafo para que aparezca con él -->
+              @if ($last) {
+                <p class="partner-note">
+                  {{ t('partner') }}
+                  <a [href]="'mailto:' + partnersEmail" class="partner-mail"
+                    ><bdi dir="ltr">{{ partnersEmail }}</bdi></a
+                  >
+                </p>
+              }
+            </div>
           }
         </div>
       </div>

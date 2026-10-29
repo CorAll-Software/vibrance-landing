@@ -11,7 +11,9 @@
     "placeholderNote": "Sample data, pending confirmation.",
     "skip_intro": "Skip intro",
     "whatsapp": "Message us on WhatsApp",
-    "whatsappMessage": "Hello, I'd like a quote for Peruvian fruit from Vibrance."
+    "whatsappMessage": "Hello, I'd like a quote for Peruvian fruit from Vibrance.",
+    "buyers": "Buyers",
+    "partners": "Partner growers"
   },
   "nav": {
     "label": "Main navigation",
@@ -81,8 +83,8 @@
     "legendRoute": "Route to port",
     "treeLabel": "Illustrated tree growing blueberries, avocados, grapes, mangoes, mandarins and ginger, which fall into a Vibrance basket.",
     "closeTitle": "From these regions to your table",
-
-    "closeText": "Tell us which fruit you need and we'll confirm availability and whether it can enter your country."
+    "closeText": "Tell us which fruit you need and we'll confirm availability and whether it can enter your country.",
+    "partner": "Are you a grower and want to become our partner? We take your fruit to the world with a fair price and transparent dealings. Write to us at"
   },
   "proceso": {
     "heading": "From the grower to your warehouse",
@@ -368,7 +370,8 @@
       "email": "Enter a valid email, e.g. name@company.com.",
       "minlength": "Enter at least {{n}} characters.",
       "pattern": "Enter a valid phone number, for example +51 999 999 999.",
-      "summary": "{{n}} fields need attention. Check the messages in red."
+      "summary": "{{n}} fields need attention. Check the messages in red.",
+      "privacy": "You must accept the privacy policy to submit."
     },
     "submit": "Send request",
     "sending": "Sending…",
@@ -377,7 +380,10 @@
     "errorTitle": "We couldn't send your request",
     "errorText": "There was a connection problem and your details weren't sent. Check your internet and try again; you won't lose what you wrote.",
     "retry": "Try again",
-    "again": "Send another request"
+    "again": "Send another request",
+    "privacyBefore": "I have read and accept the ",
+    "privacyLink": "Privacy Policy",
+    "privacyAfter": "."
   },
   "footer": {
     "tagline": "Peruvian fresh fruit trading company for importers and distributors worldwide.",

@@ -11,7 +11,9 @@
     "placeholderNote": "Dati di esempio, in attesa di conferma.",
     "skip_intro": "Salta intro",
     "whatsapp": "Scrivici su WhatsApp",
-    "whatsappMessage": "Buongiorno, vorrei un preventivo per frutta peruviana da Vibrance."
+    "whatsappMessage": "Buongiorno, vorrei un preventivo per frutta peruviana da Vibrance.",
+    "buyers": "Acquirenti",
+    "partners": "Produttori partner"
   },
   "nav": {
     "label": "Navigazione principale",
@@ -81,8 +83,8 @@
     "legendRoute": "Percorso al porto",
     "treeLabel": "Albero illustrato su cui crescono mirtilli, avocado, uva, mango, mandarini e zenzero, che cadono in un cesto Vibrance.",
     "closeTitle": "Da queste regioni alla tua tavola",
-
-    "closeText": "Dicci quale frutta ti serve e ti confermiamo disponibilità e accesso al tuo paese."
+    "closeText": "Dicci quale frutta ti serve e ti confermiamo disponibilità e accesso al tuo paese.",
+    "partner": "Sei un produttore e vuoi diventare nostro partner? Portiamo la tua frutta nel mondo a un prezzo giusto e con un trattamento trasparente. Scrivici a"
   },
   "proceso": {
     "heading": "Dal produttore al tuo magazzino",
@@ -368,7 +370,8 @@
       "email": "Inserisci un'e-mail valida, ad es. nome@azienda.com.",
       "minlength": "Inserisci almeno {{n}} caratteri.",
       "pattern": "Inserisci un numero di telefono valido, ad esempio +51 999 999 999.",
-      "summary": "{{n}} campi da correggere. Controlla i messaggi in rosso."
+      "summary": "{{n}} campi da correggere. Controlla i messaggi in rosso.",
+      "privacy": "Devi accettare l’informativa sulla privacy per inviare."
     },
     "submit": "Invia richiesta",
     "sending": "Invio…",
@@ -377,7 +380,10 @@
     "errorTitle": "Non è stato possibile inviare la richiesta",
     "errorText": "Un problema di connessione ha impedito l'invio. Controlla la connessione e riprova: non perderai ciò che hai scritto.",
     "retry": "Riprova",
-    "again": "Invia un'altra richiesta"
+    "again": "Invia un'altra richiesta",
+    "privacyBefore": "Ho letto e accetto l’",
+    "privacyLink": "Informativa sulla privacy",
+    "privacyAfter": "."
   },
   "footer": {
     "tagline": "Commercio di frutta fresca peruviana per importatori e distributori di tutto il mondo.",
