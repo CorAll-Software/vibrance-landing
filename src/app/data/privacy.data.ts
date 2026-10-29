@@ -4,10 +4,8 @@ import { LEGAL_NAME, RUC } from '../core/config/brand';
  * Texto de la política de privacidad (anexo del tercer informe de la clienta).
  * Solo existe en español e inglés: los demás idiomas muestran la versión en inglés,
  * que remite a la española en caso de discrepancia.
- * TODO: la clienta completa el domicilio fiscal antes de publicar (ADDRESS_ES / ADDRESS_EN).
+ * La clienta decidió no publicar el domicilio: se identifica a la empresa por razón social y RUC.
  */
-const ADDRESS_ES = '[domicilio fiscal]';
-const ADDRESS_EN = '[registered address]';
 
 export const SALES_EMAIL = 'ventas@vibranceincaharvest.com';
 export const PARTNERS_EMAIL = 'aliados@vibranceincaharvest.com';
@@ -26,7 +24,7 @@ export const PRIVACY: Record<'es' | 'en', PrivacyPolicy> = {
     sections: [
       {
         title: 'Responsable',
-        text: `${LEGAL_NAME}, con RUC ${RUC} y domicilio en ${ADDRESS_ES}, Lima, Perú, es responsable del tratamiento de tus datos personales. Contacto: ${SALES_EMAIL}.`,
+        text: `${LEGAL_NAME}, con RUC ${RUC}, con sede en Lima, Perú, es responsable del tratamiento de tus datos personales. Contacto: ${SALES_EMAIL}.`,
       },
       {
         title: 'Datos que recopilamos',
@@ -65,8 +63,7 @@ export const PRIVACY: Record<'es' | 'en', PrivacyPolicy> = {
         text: 'Podemos actualizar esta política; la versión vigente siempre estará publicada en esta página.',
       },
     ],
-    legal:
-      'Marco legal: Ley N.º 29733, Ley de Protección de Datos Personales, y su Reglamento.',
+    legal: 'Marco legal: Ley N.º 29733, Ley de Protección de Datos Personales, y su Reglamento.',
   },
   en: {
     title: `Privacy Policy — ${LEGAL_NAME}`,
@@ -74,7 +71,7 @@ export const PRIVACY: Record<'es' | 'en', PrivacyPolicy> = {
     sections: [
       {
         title: 'Data controller',
-        text: `${LEGAL_NAME}, Taxpayer ID (RUC) ${RUC}, with registered address at ${ADDRESS_EN}, Lima, Peru, is responsible for processing your personal data. Contact: ${SALES_EMAIL}.`,
+        text: `${LEGAL_NAME}, Taxpayer ID (RUC) ${RUC}, based in Lima, Peru, is responsible for processing your personal data. Contact: ${SALES_EMAIL}.`,
       },
       {
         title: 'Data we collect',
