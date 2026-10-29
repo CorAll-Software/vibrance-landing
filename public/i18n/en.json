@@ -348,8 +348,7 @@
   "form": {
     "title": "Request a quote",
     "intro": "Fill in your details and we'll reply within 48 business hours.",
-    "required": "Fields marked * are required; fill in the rest if you have them at hand.",
-    "optional": "optional",
+    "required": "indicates a required field",
     "name": "Name",
     "company": "Company",
     "country": "Destination country",
@@ -368,7 +367,6 @@
     "errors": {
       "required": "Please fill in this field.",
       "email": "Enter a valid email, e.g. name@company.com.",
-      "minlength": "Enter at least {{n}} characters.",
       "pattern": "Enter a valid phone number, for example +51 999 999 999.",
       "summary": "{{n}} fields need attention. Check the messages in red.",
       "privacy": "You must accept the privacy policy to submit."
@@ -383,7 +381,8 @@
     "again": "Send another request",
     "privacyBefore": "I have read and accept the ",
     "privacyLink": "Privacy Policy",
-    "privacyAfter": "."
+    "privacyAfter": ".",
+    "successTextPhone": "We received your request. We'll write to {{email}} or contact you at {{phone}} within 48 business hours and confirm the current protocol for your country."
   },
   "footer": {
     "tagline": "Peruvian fresh fruit trading company for importers and distributors worldwide.",

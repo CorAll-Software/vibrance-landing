@@ -360,8 +360,7 @@
   "form": {
     "title": "获取报价",
     "intro": "请填写信息,我们将在 48 个工作小时内回复。",
-    "required": "带 * 的为必填项；其余信息如有可一并填写。",
-    "optional": "选填",
+    "required": "表示必填项",
     "name": "姓名",
     "company": "公司",
     "country": "目的国家",
@@ -380,7 +379,6 @@
     "errors": {
       "required": "请填写此项。",
       "email": "请输入有效的邮箱,例如 name@company.com。",
-      "minlength": "请至少输入 {{n}} 个字符。",
       "pattern": "请输入有效的电话号码,例如 +51 999 999 999。",
       "summary": "有 {{n}} 个字段需要修改,请查看红色提示。",
       "privacy": "请先接受隐私政策再提交。"
@@ -395,7 +393,8 @@
     "again": "再提交一份申请",
     "privacyBefore": "我已阅读并接受",
     "privacyLink": "隐私政策",
-    "privacyAfter": "。"
+    "privacyAfter": "。",
+    "successTextPhone": "我们已收到您的申请,将在 48 个工作小时内通过 {{email}} 或电话 {{phone}} 联系您,并确认贵国目前的准入协议情况。"
   },
   "footer": {
     "tagline": "面向全球进口商和分销商的秘鲁新鲜水果贸易商。",

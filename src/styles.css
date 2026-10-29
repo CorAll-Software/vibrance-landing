@@ -162,6 +162,10 @@
     color: var(--color-palta);
     transition: border-color 150ms ease;
   }
+  /* Los selects miden lo mismo que los inputs, para que las filas del formulario queden a ras */
+  select.field {
+    height: 3rem;
+  }
   .field:hover {
     border-color: rgb(30 59 47 / 0.5);
   }

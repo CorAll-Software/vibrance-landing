@@ -348,8 +348,7 @@
   "form": {
     "title": "Solicitar cotización",
     "intro": "Completa los datos y te responderemos en un plazo de 48 horas hábiles.",
-    "required": "Los campos con * son obligatorios; el resto, si los tienes a mano.",
-    "optional": "opcional",
+    "required": "indica un campo obligatorio",
     "name": "Nombre",
     "company": "Empresa",
     "country": "País de destino",
@@ -368,7 +367,6 @@
     "errors": {
       "required": "Completa este campo.",
       "email": "Escribe un correo válido, por ejemplo nombre@empresa.com.",
-      "minlength": "Escribe al menos {{n}} caracteres.",
       "pattern": "Escribe un teléfono válido, por ejemplo +51 999 999 999.",
       "summary": "Hay {{n}} campos por corregir. Revisa los mensajes en rojo.",
       "privacy": "Debes aceptar la política de privacidad para enviar."
@@ -383,7 +381,8 @@
     "again": "Enviar otra solicitud",
     "privacyBefore": "He leído y acepto la ",
     "privacyLink": "Política de privacidad",
-    "privacyAfter": "."
+    "privacyAfter": ".",
+    "successTextPhone": "Recibimos tu solicitud. Te escribiremos a {{email}} o te contactaremos al {{phone}} en un plazo de 48 horas hábiles, confirmando también el protocolo vigente para tu país."
   },
   "footer": {
     "tagline": "Comercializadora de fruta fresca peruana para importadores y distribuidores de todo el mundo.",

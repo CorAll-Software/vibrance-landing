@@ -348,8 +348,7 @@
   "form": {
     "title": "Richiedi un preventivo",
     "intro": "Compila i tuoi dati e ti risponderemo entro 48 ore lavorative.",
-    "required": "I campi con * sono obbligatori; gli altri, se li hai a portata di mano.",
-    "optional": "facoltativo",
+    "required": "indica un campo obbligatorio",
     "name": "Nome",
     "company": "Azienda",
     "country": "Paese di destinazione",
@@ -368,7 +367,6 @@
     "errors": {
       "required": "Compila questo campo.",
       "email": "Inserisci un'e-mail valida, ad es. nome@azienda.com.",
-      "minlength": "Inserisci almeno {{n}} caratteri.",
       "pattern": "Inserisci un numero di telefono valido, ad esempio +51 999 999 999.",
       "summary": "{{n}} campi da correggere. Controlla i messaggi in rosso.",
       "privacy": "Devi accettare l’informativa sulla privacy per inviare."
@@ -383,7 +381,8 @@
     "again": "Invia un'altra richiesta",
     "privacyBefore": "Ho letto e accetto l’",
     "privacyLink": "Informativa sulla privacy",
-    "privacyAfter": "."
+    "privacyAfter": ".",
+    "successTextPhone": "Abbiamo ricevuto la tua richiesta. Scriveremo a {{email}} o ti contatteremo al {{phone}} entro 48 ore lavorative confermando il protocollo vigente per il tuo paese."
   },
   "footer": {
     "tagline": "Commercio di frutta fresca peruviana per importatori e distributori di tutto il mondo.",

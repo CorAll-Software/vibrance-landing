@@ -1,30 +1,59 @@
 <app-modal [open]="ui.quoteOpen()" labelledBy="quote-title" (closed)="close()">
   <div class="p-6 sm:p-10" *transloco="let t; prefix: 'form'">
     @if (status() === 'success') {
-      <div class="py-8" role="status">
-        <svg viewBox="0 0 48 48" width="56" height="56" aria-hidden="true" class="text-hoja">
-          <circle cx="24" cy="24" r="22" fill="currentColor" fill-opacity="0.15" />
-          <path
-            d="M14 25l7 7 13-15"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        <h2 id="quote-title" class="mt-6 text-4xl font-semibold">{{ t('successTitle') }}</h2>
-        <p class="mt-3 text-lg text-palta/80">{{ t('successText', { email: sentTo() }) }}</p>
+      <!-- Envío exitoso: tarjeta de marca con el logo y la mariposa que sale volando -->
+      <div
+        class="relative overflow-hidden rounded-3xl bg-palta px-7 py-9 text-niebla sm:px-10 sm:py-12"
+        role="status"
+      >
+        <app-butterfly class="sent-bf" />
+        <img
+          [src]="logo.dark"
+          alt=""
+          [width]="logo.width"
+          [height]="logo.height"
+          class="h-14 w-auto"
+        />
+        <h2 id="quote-title" class="mt-6 text-4xl leading-tight font-semibold sm:text-5xl">
+          {{ t('successTitle') }}
+        </h2>
+        <p class="mt-4 max-w-[34rem] text-lg text-niebla/80">
+          @if (sentPhone()) {
+            {{ t('successTextPhone', { email: sentTo(), phone: sentPhone() }) }}
+          } @else {
+            {{ t('successText', { email: sentTo() }) }}
+          }
+        </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <button type="button" class="btn-primary" (click)="close()">
             {{ 'common.close' | transloco }}
           </button>
-          <button type="button" class="btn-ghost" (click)="reset()">{{ t('again') }}</button>
+          <button
+            type="button"
+            class="rounded-full border border-niebla/40 px-6 py-3 font-semibold text-niebla transition-colors hover:bg-niebla hover:text-palta"
+            (click)="reset()"
+          >
+            {{ t('again') }}
+          </button>
         </div>
       </div>
     } @else {
-      <h2 id="quote-title" class="pr-12 text-4xl font-semibold">{{ t('title') }}</h2>
-      <p class="mt-2 text-palta/75">{{ t('intro') }} {{ t('required') }}</p>
+      <div class="flex items-center gap-3 pe-12">
+        <img
+          [src]="logo.light"
+          alt=""
+          [width]="logo.width"
+          [height]="logo.height"
+          class="h-11 w-auto shrink-0 sm:h-12"
+        />
+        <h2 id="quote-title" class="text-3xl leading-tight font-semibold sm:text-4xl">
+          {{ t('title') }}
+        </h2>
+      </div>
+      <p class="mt-3 text-palta/75">{{ t('intro') }}</p>
+      <p class="mt-1 text-sm text-palta/60">
+        <span class="font-semibold text-red-600" aria-hidden="true">*</span> {{ t('required') }}
+      </p>
 
       <div aria-live="assertive" class="empty:hidden">
         @if (showSummary()) {
@@ -41,32 +70,67 @@
       </div>
 
       <form
-        class="mt-6 grid gap-5 sm:grid-cols-2"
+        class="mt-6 grid items-start gap-x-4 gap-y-5 sm:grid-cols-2"
         [formGroup]="form"
         (ngSubmit)="submit()"
         novalidate
       >
         @for (f of fields; track f.name) {
           <div class="flex flex-col gap-1.5">
-            <label [for]="'q-' + f.name" class="text-sm font-semibold"
+            <label [for]="'q-' + f.name" class="text-sm leading-snug font-semibold"
               >{{ t(f.name) }}
               @if (isRequired(f.name)) {
-                <span aria-hidden="true"> *</span>
-              } @else {
-                <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
+                <span class="text-red-600" aria-hidden="true">*</span>
               }
             </label>
-            <input
-              [id]="'q-' + f.name"
-              [type]="f.type"
-              [formControlName]="f.name"
-              [autocomplete]="f.autocomplete"
-              [attr.min]="f.type === 'date' ? today : null"
-              [attr.aria-required]="isRequired(f.name)"
-              [attr.aria-invalid]="showError(f.name)"
-              [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
-              class="field"
-            />
+            @switch (f.kind) {
+              @case ('product') {
+                <select
+                  [id]="'q-' + f.name"
+                  [formControlName]="f.name"
+                  class="field"
+                  [attr.aria-required]="isRequired(f.name)"
+                  [attr.aria-invalid]="showError(f.name)"
+                  [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
+                >
+                  <option value="" disabled>{{ t('productPlaceholder') }}</option>
+                  @for (p of products; track p.id) {
+                    <option [value]="p.id">
+                      {{ 'productos.items.' + p.id + '.name' | transloco }}
+                    </option>
+                  }
+                  <option value="varios">{{ t('productSeveral') }}</option>
+                </select>
+              }
+              @case ('incoterm') {
+                <select
+                  [id]="'q-' + f.name"
+                  [formControlName]="f.name"
+                  class="field"
+                  [attr.aria-required]="isRequired(f.name)"
+                  [attr.aria-invalid]="showError(f.name)"
+                  [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
+                >
+                  <option value="">{{ t('incotermPlaceholder') }}</option>
+                  @for (i of incoterms; track i) {
+                    <option [value]="i">{{ i }}</option>
+                  }
+                </select>
+              }
+              @default {
+                <input
+                  [id]="'q-' + f.name"
+                  [type]="f.kind"
+                  [formControlName]="f.name"
+                  [autocomplete]="f.autocomplete"
+                  [attr.min]="f.kind === 'date' ? today : null"
+                  [attr.aria-required]="isRequired(f.name)"
+                  [attr.aria-invalid]="showError(f.name)"
+                  [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
+                  class="field"
+                />
+              }
+            }
             @if (showError(f.name)) {
               <p [id]="'q-' + f.name + '-err'" class="text-sm text-red-700">
                 {{ t('errors.' + firstError(f.name)) }}
@@ -76,119 +140,28 @@
         }
 
         <div class="flex flex-col gap-1.5 sm:col-span-2">
-          <label for="q-product" class="text-sm font-semibold"
-            >{{ t('product') }}
-            @if (isRequired('product')) {
-              <span aria-hidden="true"> *</span>
-            } @else {
-              <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
-            }
-          </label>
-          <select
-            id="q-product"
-            formControlName="product"
-            class="field"
-            [attr.aria-required]="isRequired('product')"
-            [attr.aria-invalid]="showError('product')"
-            [attr.aria-describedby]="showError('product') ? 'q-product-err' : null"
-          >
-            <option value="" disabled>{{ t('productPlaceholder') }}</option>
-            @for (p of products; track p.id) {
-              <option [value]="p.id">{{ 'productos.items.' + p.id + '.name' | transloco }}</option>
-            }
-            <option value="varios">{{ t('productSeveral') }}</option>
-          </select>
-          @if (showError('product')) {
-            <p id="q-product-err" class="text-sm text-red-700">{{ t('errors.required') }}</p>
-          }
-        </div>
-
-        @for (f of shipFields; track f.name) {
-          <div class="flex flex-col gap-1.5">
-            <label [for]="'q-' + f.name" class="text-sm font-semibold"
-              >{{ t(f.name) }}
-              @if (isRequired(f.name)) {
-                <span aria-hidden="true"> *</span>
-              } @else {
-                <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
-              }
-            </label>
-            <input
-              [id]="'q-' + f.name"
-              [type]="f.type"
-              [formControlName]="f.name"
-              [autocomplete]="f.autocomplete"
-              [attr.min]="f.type === 'date' ? today : null"
-              [attr.aria-required]="isRequired(f.name)"
-              [attr.aria-invalid]="showError(f.name)"
-              [attr.aria-describedby]="showError(f.name) ? 'q-' + f.name + '-err' : null"
-              class="field"
-            />
-            @if (showError(f.name)) {
-              <p [id]="'q-' + f.name + '-err'" class="text-sm text-red-700">
-                {{ t('errors.' + firstError(f.name)) }}
-              </p>
-            }
-          </div>
-        }
-
-        <div class="flex flex-col gap-1.5">
-          <label for="q-incoterm" class="text-sm font-semibold"
-            >{{ t('incoterm') }}
-            @if (isRequired('incoterm')) {
-              <span aria-hidden="true"> *</span>
-            } @else {
-              <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
-            }
-          </label>
-          <select
-            id="q-incoterm"
-            formControlName="incoterm"
-            class="field"
-            [attr.aria-required]="isRequired('incoterm')"
-            [attr.aria-invalid]="showError('incoterm')"
-            [attr.aria-describedby]="showError('incoterm') ? 'q-incoterm-err' : null"
-          >
-            <option value="">{{ t('incotermPlaceholder') }}</option>
-            @for (i of incoterms; track i) {
-              <option [value]="i">{{ i }}</option>
-            }
-          </select>
-          @if (showError('incoterm')) {
-            <p id="q-incoterm-err" class="text-sm text-red-700">{{ t('errors.required') }}</p>
-          }
-        </div>
-
-        <div class="flex flex-col gap-1.5 sm:col-span-2">
-          <label for="q-message" class="text-sm font-semibold"
-            >{{ t('message') }}
-            @if (isRequired('message')) {
-              <span aria-hidden="true"> *</span>
-            } @else {
-              <span class="font-normal text-palta/60"> ({{ t('optional') }})</span>
-            }
-          </label>
+          <label for="q-message" class="text-sm leading-snug font-semibold">{{
+            t('message')
+          }}</label>
           <textarea
             id="q-message"
             rows="4"
             formControlName="message"
             class="field resize-y"
             [placeholder]="t('messagePlaceholder')"
-            [attr.aria-required]="isRequired('message')"
-            [attr.aria-invalid]="showError('message')"
-            [attr.aria-describedby]="showError('message') ? 'q-message-err' : null"
           ></textarea>
-          @if (showError('message')) {
-            <p id="q-message-err" class="text-sm text-red-700">
-              {{ t('errors.' + firstError('message'), { n: messageMin }) }}
-            </p>
-          }
         </div>
 
         <!-- Campo trampa: fuera de pantalla y sin foco; solo lo llenan los bots -->
         <div class="sr-only" aria-hidden="true">
           <label for="q-website">Website</label>
-          <input id="q-website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+          <input
+            id="q-website"
+            type="text"
+            formControlName="website"
+            tabindex="-1"
+            autocomplete="off"
+          />
         </div>
 
         <div class="flex flex-col gap-1.5 sm:col-span-2">
@@ -210,8 +183,7 @@
                 (click)="ui.openPrivacy()"
               >
                 {{ t('privacyLink') }}</button
-              >{{ t('privacyAfter') }}
-              <span aria-hidden="true">*</span></label
+              >{{ t('privacyAfter') }} <span class="text-red-600" aria-hidden="true">*</span></label
             >
           </div>
           @if (showPrivacyError()) {

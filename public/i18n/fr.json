@@ -361,8 +361,7 @@
   "form": {
     "title": "Demander un devis",
     "intro": "Remplissez vos coordonnées, nous vous répondrons sous 48 heures ouvrées.",
-    "required": "Les champs marqués d'un * sont obligatoires ; remplissez les autres si vous les avez sous la main.",
-    "optional": "facultatif",
+    "required": "indique un champ obligatoire",
     "name": "Nom",
     "company": "Entreprise",
     "country": "Pays de destination",
@@ -381,7 +380,6 @@
     "errors": {
       "required": "Veuillez remplir ce champ.",
       "email": "Saisissez un e-mail valide, par ex. nom@entreprise.com.",
-      "minlength": "Saisissez au moins {{n}} caractères.",
       "pattern": "Saisissez un numéro de téléphone valide, par exemple +51 999 999 999.",
       "summary": "{{n}} champs à corriger. Vérifiez les messages en rouge.",
       "privacy": "Vous devez accepter la politique de confidentialité pour envoyer."
@@ -396,7 +394,8 @@
     "again": "Envoyer une autre demande",
     "privacyBefore": "J’ai lu et j’accepte la ",
     "privacyLink": "Politique de confidentialité",
-    "privacyAfter": "."
+    "privacyAfter": ".",
+    "successTextPhone": "Nous avons bien reçu votre demande. Nous écrirons à {{email}} ou vous contacterons au {{phone}} sous 48 heures ouvrées et confirmerons le protocole en vigueur pour votre pays."
   },
   "footer": {
     "tagline": "Négoce de fruits frais du Pérou pour importateurs et distributeurs du monde entier.",

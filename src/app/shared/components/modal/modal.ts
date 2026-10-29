@@ -62,8 +62,8 @@ import { SmoothScrollService } from '../../../core/services/smooth-scroll.servic
       border-radius: 1.5rem;
       background: var(--color-niebla);
       color: var(--color-palta);
-      overflow: auto;
-      overscroll-behavior: contain;
+      /* El scroll vive en el panel (más abajo), para que quede dentro de las esquinas redondeadas */
+      overflow: hidden;
       opacity: 0;
       transform: translateY(16px) scale(0.98);
       transition:
@@ -102,6 +102,24 @@ import { SmoothScrollService } from '../../../core/services/smooth-scroll.servic
     }
     .modal__panel {
       position: relative;
+      max-height: min(100dvh - 2rem, 54rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      /* Scroll discreto: delgado, sin carril visible y en el verde de la marca */
+      scrollbar-width: thin;
+      scrollbar-color: rgb(30 59 47 / 0.3) transparent;
+    }
+    @supports not (scrollbar-color: auto) {
+      .modal__panel::-webkit-scrollbar {
+        width: 8px;
+      }
+      .modal__panel::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .modal__panel::-webkit-scrollbar-thumb {
+        background: rgb(30 59 47 / 0.3);
+        border-radius: 999px;
+      }
     }
     /* Fijo arriba a la derecha aunque se recorra el contenido (no ocupa espacio: margen negativo) */
     .modal__close {

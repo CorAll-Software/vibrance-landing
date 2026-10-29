@@ -14,6 +14,8 @@ import { ModalComponent } from '../../shared/components/modal/modal';
 import { UiStateService } from '../../core/services/ui-state.service';
 import { QuoteService } from '../../core/services/quote.service';
 import { PRODUCTS } from '../../data/productos.data';
+import { LOGO } from '../../core/config/brand';
+import { ButterflyComponent } from '../../shared/components/butterfly/butterfly';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 type FieldName =
@@ -31,14 +33,50 @@ type FieldName =
 
 export const INCOTERMS = ['FOB', 'CFR', 'CIF'] as const;
 
-const MESSAGE_MIN = 10;
+/** Cómo se dibuja cada campo: input de texto/correo/teléfono/fecha o uno de los dos selects. */
+type FieldKind = 'text' | 'email' | 'tel' | 'date' | 'product' | 'incoterm';
+interface FieldDef {
+  name: FieldName;
+  kind: FieldKind;
+  autocomplete: string;
+}
 
 /** Modal "Solicitar cotización" con formulario reactivo y validaciones. */
 @Component({
   selector: 'app-quote-modal',
-  imports: [ModalComponent, ReactiveFormsModule, TranslocoDirective, TranslocoPipe],
+  imports: [
+    ModalComponent,
+    ReactiveFormsModule,
+    TranslocoDirective,
+    TranslocoPipe,
+    ButterflyComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './quote-modal.html',
+  styles: `
+    /* Mariposa de la pantalla de envío: sale volando hacia arriba, junto a la X */
+    .sent-bf {
+      position: absolute;
+      top: 1.75rem;
+      inset-inline-end: 5.25rem;
+      width: 3.75rem;
+      filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.3));
+      animation: sent-fly 4s ease-in-out infinite alternate;
+    }
+    @keyframes sent-fly {
+      from {
+        transform: translate(0, 6px) rotate(-6deg);
+      }
+      to {
+        transform: translate(-6px, -8px) rotate(6deg);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sent-bf {
+        animation: none;
+      }
+    }
+  `,
 })
 export class QuoteModalComponent {
   protected readonly ui = inject(UiStateService);
@@ -46,12 +84,14 @@ export class QuoteModalComponent {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
 
   protected readonly products = PRODUCTS;
-  protected readonly messageMin = MESSAGE_MIN;
+  protected readonly logo = LOGO;
   protected readonly incoterms = INCOTERMS;
   protected readonly today = new Date().toISOString().slice(0, 10);
   protected readonly status = signal<Status>('idle');
   protected readonly submitted = signal(false);
   protected readonly sentTo = signal('');
+  /** Teléfono que escribió la persona (vacío si no lo dio): la pantalla de envío lo muestra solo si existe. */
+  protected readonly sentPhone = signal('');
 
   /**
    * Solo nombre, empresa, país, correo y producto son obligatorios (pedido de la clienta): que
@@ -70,25 +110,30 @@ export class QuoteModalComponent {
     incoterm: [''],
     destPort: ['', Validators.maxLength(80)],
     shipDate: [''],
-    message: ['', Validators.minLength(MESSAGE_MIN)],
+    // Sin mínimo de caracteres: un comentario corto también vale
+    message: [''],
     // Casilla obligatoria de la política de privacidad
     privacy: [false, Validators.requiredTrue],
     // Campo trampa anti-spam (oculto): debe quedar vacío
     website: [''],
   });
 
-  protected readonly fields: { name: FieldName; type: string; autocomplete: string }[] = [
-    { name: 'name', type: 'text', autocomplete: 'name' },
-    { name: 'company', type: 'text', autocomplete: 'organization' },
-    { name: 'country', type: 'text', autocomplete: 'country-name' },
-    { name: 'email', type: 'email', autocomplete: 'email' },
-    { name: 'phone', type: 'tel', autocomplete: 'tel' },
-  ];
-
-  protected readonly shipFields: { name: FieldName; type: string; autocomplete: string }[] = [
-    { name: 'volume', type: 'text', autocomplete: 'off' },
-    { name: 'destPort', type: 'text', autocomplete: 'off' },
-    { name: 'shipDate', type: 'date', autocomplete: 'off' },
+  /**
+   * Los campos van de dos en dos para que las filas queden simétricas (el mensaje y la casilla
+   * ocupan todo el ancho): nombre y empresa, país y correo, teléfono y producto, volumen y puerto,
+   * fecha e Incoterm.
+   */
+  protected readonly fields: FieldDef[] = [
+    { name: 'name', kind: 'text', autocomplete: 'name' },
+    { name: 'company', kind: 'text', autocomplete: 'organization' },
+    { name: 'country', kind: 'text', autocomplete: 'country-name' },
+    { name: 'email', kind: 'email', autocomplete: 'email' },
+    { name: 'phone', kind: 'tel', autocomplete: 'tel' },
+    { name: 'product', kind: 'product', autocomplete: 'off' },
+    { name: 'volume', kind: 'text', autocomplete: 'off' },
+    { name: 'destPort', kind: 'text', autocomplete: 'off' },
+    { name: 'shipDate', kind: 'date', autocomplete: 'off' },
+    { name: 'incoterm', kind: 'incoterm', autocomplete: 'off' },
   ];
 
   /** Contador de errores para el resumen (se recalcula en cada intento de envío). */
@@ -122,12 +167,11 @@ export class QuoteModalComponent {
     return c.invalid && (c.touched || this.submitted());
   }
 
-  protected firstError(field: FieldName): 'required' | 'email' | 'minlength' | 'pattern' | null {
+  protected firstError(field: FieldName): 'required' | 'email' | 'pattern' | null {
     const e = this.form.controls[field].errors;
     if (!e) return null;
     if (e['required']) return 'required';
     if (e['email']) return 'email';
-    if (e['minlength']) return 'minlength';
     if (e['pattern']) return 'pattern';
     return 'required';
   }
@@ -146,6 +190,7 @@ export class QuoteModalComponent {
     try {
       await this.quotes.send(this.form.getRawValue());
       this.sentTo.set(this.form.controls.email.value);
+      this.sentPhone.set(this.form.controls.phone.value.trim());
       this.status.set('success');
     } catch {
       // Conservamos lo escrito para que pueda reintentar
