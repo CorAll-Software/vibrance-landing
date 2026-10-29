@@ -10,7 +10,9 @@
     "placeholderNote": "示例数据,待确认。",
     "skip_intro": "跳过开场动画",
     "whatsapp": "通过 WhatsApp 联系我们",
-    "whatsappMessage": "您好,我想向 Vibrance 询价秘鲁水果。"
+    "whatsappMessage": "您好,我想向 Vibrance 询价秘鲁水果。",
+    "buyers": "买家",
+    "partners": "合作生产商"
   },
   "nav": {
     "label": "主导航",
@@ -46,11 +48,26 @@
     "mapText": "我们从这些地区的生产商处采购,每个地区的气候都最适合其作物。",
     "mapLabel": "标示产品产地的秘鲁地图",
     "zonas": {
-      "piura": { "name": "皮乌拉", "crops": "芒果和葡萄" },
-      "la_libertad": { "name": "拉利伯塔德", "crops": "蓝莓和牛油果" },
-      "lima": { "name": "利马", "crops": "柑橘和牛油果" },
-      "junin": { "name": "胡宁", "crops": "生姜和柑橘" },
-      "ica": { "name": "伊卡", "crops": "葡萄、牛油果和柑橘" }
+      "piura": {
+        "name": "皮乌拉",
+        "crops": "芒果和葡萄"
+      },
+      "la_libertad": {
+        "name": "拉利伯塔德",
+        "crops": "蓝莓和牛油果"
+      },
+      "lima": {
+        "name": "利马",
+        "crops": "柑橘和牛油果"
+      },
+      "junin": {
+        "name": "胡宁",
+        "crops": "生姜和柑橘"
+      },
+      "ica": {
+        "name": "伊卡",
+        "crops": "葡萄、牛油果和柑橘"
+      }
     },
     "regions": {
       "costa": "海岸",
@@ -65,8 +82,8 @@
     "legendRoute": "前往港口的路线",
     "treeLabel": "一棵插画树上结出蓝莓、牛油果、葡萄、芒果、柑橘和生姜,落入 Vibrance 的竹篮中。",
     "closeTitle": "从这些产区，到您的餐桌",
-
-    "closeText": "告诉我们您需要的水果，我们会确认供应情况以及能否进入您的国家。"
+    "closeText": "告诉我们您需要的水果，我们会确认供应情况以及能否进入您的国家。",
+    "partner": "您是生产商，想成为我们的合作伙伴吗？我们以公平的价格和透明的方式，将您的水果带向世界。请发送邮件至"
   },
   "proceso": {
     "heading": "从生产商到您的仓库",
@@ -114,8 +131,34 @@
     "available": "供应中",
     "notAvailable": "非产季",
     "quoteThis": "询价:{{name}}",
-    "months": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-    "monthsLong": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+    "months": [
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月",
+      "6月",
+      "7月",
+      "8月",
+      "9月",
+      "10月",
+      "11月",
+      "12月"
+    ],
+    "monthsLong": [
+      "一月",
+      "二月",
+      "三月",
+      "四月",
+      "五月",
+      "六月",
+      "七月",
+      "八月",
+      "九月",
+      "十月",
+      "十一月",
+      "十二月"
+    ],
     "items": {
       "arandano": {
         "name": "蓝莓",
@@ -180,10 +223,18 @@
     "heading": "数据看我们的供应",
     "intro": "一家贸易商,全年为您供应多种秘鲁产品。",
     "stats": {
-      "productos": { "label": "种新鲜产品" },
-      "meses": { "label": "个月全年有货" },
-      "regiones": { "label": "个产区" },
-      "mercados": { "label": "个市场对秘鲁水果设有有效的植物检疫准入" }
+      "productos": {
+        "label": "种新鲜产品"
+      },
+      "meses": {
+        "label": "个月全年有货"
+      },
+      "regiones": {
+        "label": "个产区"
+      },
+      "mercados": {
+        "label": "个市场对秘鲁水果设有有效的植物检疫准入"
+      }
     },
     "mapTitle": "可以送达哪里",
     "mapText": "至少有一种我们的产品已获得植物检疫准入的市场。将光标移到每个点上可查看数量。",
@@ -208,12 +259,30 @@
     "accessAsk": "待咨询",
     "certText": "我们与通过认证(BRCGS、HACCP、BPM)、获 SENASA 授权并在 FDA 注册的包装厂合作。每批货物的工厂和认证信息将在报价中确认。",
     "certs": {
-      "brcgs": { "name": "BRCGS", "desc": "食品安全" },
-      "haccp": { "name": "HACCP", "desc": "关键控制点" },
-      "bpm": { "name": "BPM", "desc": "良好生产规范" },
-      "senasa": { "name": "SENASA", "desc": "授权工厂" },
-      "fda": { "name": "FDA", "desc": "已注册工厂(美国)" },
-      "eti": { "name": "Ethical Trading Initiative", "desc": "道德贸易" }
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "食品安全"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "关键控制点"
+      },
+      "bpm": {
+        "name": "BPM",
+        "desc": "良好生产规范"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "授权工厂"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "已注册工厂(美国)"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "道德贸易"
+      }
     }
   },
   "nosotros": {
@@ -313,7 +382,8 @@
       "email": "请输入有效的邮箱,例如 name@company.com。",
       "minlength": "请至少输入 {{n}} 个字符。",
       "pattern": "请输入有效的电话号码,例如 +51 999 999 999。",
-      "summary": "有 {{n}} 个字段需要修改,请查看红色提示。"
+      "summary": "有 {{n}} 个字段需要修改,请查看红色提示。",
+      "privacy": "请先接受隐私政策再提交。"
     },
     "submit": "提交申请",
     "sending": "发送中……",
@@ -322,7 +392,10 @@
     "errorTitle": "无法发送您的申请",
     "errorText": "出现连接问题,您的信息未能发送。请检查网络后重试;您填写的内容不会丢失。",
     "retry": "重试",
-    "again": "再提交一份申请"
+    "again": "再提交一份申请",
+    "privacyBefore": "我已阅读并接受",
+    "privacyLink": "隐私政策",
+    "privacyAfter": "。"
   },
   "footer": {
     "tagline": "面向全球进口商和分销商的秘鲁新鲜水果贸易商。",

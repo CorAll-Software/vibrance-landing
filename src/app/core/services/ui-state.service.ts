@@ -20,6 +20,16 @@ export class UiStateService {
     this.quoteOpen.set(false);
   }
 
+  readonly privacyOpen = signal(false);
+
+  openPrivacy(): void {
+    this.privacyOpen.set(true);
+  }
+
+  closePrivacy(): void {
+    this.privacyOpen.set(false);
+  }
+
   /** Producto abierto en el modal de detalle (catálogo y mapa de Origen). */
   readonly productDetail = signal<ProductId | null>(null);
 

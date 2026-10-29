@@ -7,7 +7,7 @@ import {
   afterNextRender,
   inject,
 } from '@angular/core';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import { gsap } from 'gsap';
 import { UiStateService } from '../../core/services/ui-state.service';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
@@ -23,7 +23,7 @@ import {
  */
 @Component({
   selector: 'app-contacto',
-  imports: [TranslocoDirective, WhatsappIconComponent],
+  imports: [TranslocoDirective, TranslocoPipe, WhatsappIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
@@ -52,9 +52,18 @@ import {
           data-reveal
           class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 text-niebla/80"
         >
-          <a [href]="'mailto:' + email" class="hover:text-niebla hover:underline"
-            ><bdi dir="ltr">{{ email }}</bdi></a
-          >
+          <p class="text-start">
+            <span class="block text-sm text-niebla/60">{{ 'common.buyers' | transloco }}</span>
+            <a [href]="'mailto:' + email" class="hover:text-niebla hover:underline"
+              ><bdi dir="ltr">{{ email }}</bdi></a
+            >
+          </p>
+          <p class="text-start">
+            <span class="block text-sm text-niebla/60">{{ 'common.partners' | transloco }}</span>
+            <a [href]="'mailto:' + partnersEmail" class="hover:text-niebla hover:underline"
+              ><bdi dir="ltr">{{ partnersEmail }}</bdi></a
+            >
+          </p>
           <a
             [href]="whatsappHref()"
             target="_blank"
@@ -72,6 +81,7 @@ import {
 export class ContactoComponent {
   protected readonly ui = inject(UiStateService);
   protected readonly email = CONTACT.email;
+  protected readonly partnersEmail = CONTACT.partnersEmail;
   protected readonly whatsappHref = injectWhatsappHref();
 
   constructor() {

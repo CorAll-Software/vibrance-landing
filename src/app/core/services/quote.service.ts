@@ -12,6 +12,8 @@ export interface QuoteRequest {
   destPort: string;
   shipDate: string;
   message: string;
+  /** Aceptó la política de privacidad (casilla obligatoria). */
+  privacy: boolean;
 }
 
 /**

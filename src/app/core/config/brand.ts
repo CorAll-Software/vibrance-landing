@@ -70,7 +70,10 @@ export const SHOW_PLACEHOLDER_NOTES = true;
 
 // TODO: dato real de la clienta
 export const CONTACT = {
+  /** Compradores (cotizaciones, consultas). */
   email: 'ventas@vibranceincaharvest.com',
+  /** Productores que quieren vender su fruta con Vibrance. Siempre va con su etiqueta. */
+  partnersEmail: 'aliados@vibranceincaharvest.com',
   /**
    * Teléfono de la empresa. No se muestra en la web (pedido de la clienta: ningún número
    * escrito, solo el correo y el botón de WhatsApp). Más adelante pasa a ser el de WhatsApp.
@@ -83,5 +86,7 @@ export const CONTACT = {
     { id: 'linkedin', label: 'LinkedIn', href: '#' },
     { id: 'instagram', label: 'Instagram', href: '#' },
   ],
-  privacyHref: '#',
 } as const;
+
+/** Oculta los íconos de redes del footer hasta que existan las cuentas (pedido de la clienta). */
+export const SHOW_SOCIALS = false;

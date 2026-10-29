@@ -11,7 +11,9 @@
     "placeholderNote": "Datos de ejemplo, pendientes de confirmar.",
     "skip_intro": "Saltar intro",
     "whatsapp": "Escríbenos por WhatsApp",
-    "whatsappMessage": "Hola, me interesa cotizar fruta peruana con Vibrance."
+    "whatsappMessage": "Hola, me interesa cotizar fruta peruana con Vibrance.",
+    "buyers": "Compradores",
+    "partners": "Productores aliados"
   },
   "nav": {
     "label": "Navegación principal",
@@ -81,8 +83,8 @@
     "legendRoute": "Ruta al puerto",
     "treeLabel": "Árbol ilustrado del que brotan arándano, palta, uva, mango, mandarina y kion, que caen en una cesta de Vibrance.",
     "closeTitle": "De estas regiones, a tu mesa",
-
-    "closeText": "Dinos qué fruta necesitas y te confirmamos disponibilidad y si puede entrar a tu país."
+    "closeText": "Dinos qué fruta necesitas y te confirmamos disponibilidad y si puede entrar a tu país.",
+    "partner": "¿Eres productor y quieres ser nuestro aliado? Llevamos tu fruta al mundo con un precio justo y un trato transparente. Escríbenos a"
   },
   "proceso": {
     "heading": "Del productor a tu almacén",
@@ -368,7 +370,8 @@
       "email": "Escribe un correo válido, por ejemplo nombre@empresa.com.",
       "minlength": "Escribe al menos {{n}} caracteres.",
       "pattern": "Escribe un teléfono válido, por ejemplo +51 999 999 999.",
-      "summary": "Hay {{n}} campos por corregir. Revisa los mensajes en rojo."
+      "summary": "Hay {{n}} campos por corregir. Revisa los mensajes en rojo.",
+      "privacy": "Debes aceptar la política de privacidad para enviar."
     },
     "submit": "Enviar solicitud",
     "sending": "Enviando…",
@@ -377,7 +380,10 @@
     "errorTitle": "No pudimos enviar tu solicitud",
     "errorText": "Hubo un problema de conexión y tus datos no se enviaron. Revisa tu internet e inténtalo de nuevo; no perderás lo que escribiste.",
     "retry": "Intentar de nuevo",
-    "again": "Enviar otra solicitud"
+    "again": "Enviar otra solicitud",
+    "privacyBefore": "He leído y acepto la ",
+    "privacyLink": "Política de privacidad",
+    "privacyAfter": "."
   },
   "footer": {
     "tagline": "Comercializadora de fruta fresca peruana para importadores y distribuidores de todo el mundo.",
