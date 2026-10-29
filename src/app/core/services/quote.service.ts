@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QUOTE_ENDPOINT } from '../config/brand';
+import { QUOTE_ACCESS_KEY, QUOTE_ENDPOINT } from '../config/brand';
 
 export interface QuoteRequest {
   name: string;
@@ -18,15 +18,15 @@ export interface QuoteRequest {
 }
 
 /**
- * Envío de la solicitud de cotización a Formspree (el destino, ventas@, se configura en su panel).
- * El endpoint está en brand.ts → QUOTE_ENDPOINT. Mientras esté vacío simula la llamada.
+ * Envío de la solicitud de cotización a Web3Forms (el destino, ventas@, va ligado a la clave de acceso).
+ * La clave está en brand.ts → QUOTE_ACCESS_KEY. Mientras esté vacía simula la llamada.
  * Para probar el mensaje de error, abre la página con `?simular-error`.
  */
 @Injectable({ providedIn: 'root' })
 export class QuoteService {
   async send(request: QuoteRequest): Promise<void> {
     const fail = typeof location !== 'undefined' && location.search.includes('simular-error');
-    if (!QUOTE_ENDPOINT) {
+    if (!QUOTE_ACCESS_KEY) {
       return new Promise((resolve, reject) =>
         setTimeout(() => (fail ? reject(new Error('network')) : resolve()), 900),
       );
@@ -38,8 +38,10 @@ export class QuoteService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
-        _subject: `Nueva cotización: ${request.company} (${request.country})`,
-        _replyto: request.email,
+        access_key: QUOTE_ACCESS_KEY,
+        subject: `Nueva cotización: ${request.company} (${request.country})`,
+        from_name: 'Web Vibrance',
+        replyto: request.email,
         Nombre: request.name,
         Empresa: request.company,
         'País de destino': request.country,
@@ -54,6 +56,7 @@ export class QuoteService {
         'Aceptó la política de privacidad': request.privacy ? 'Sí' : 'No',
       }),
     });
-    if (!res.ok) throw new Error(`quote ${res.status}`);
+    const data = (await res.json().catch(() => null)) as { success?: boolean } | null;
+    if (!res.ok || !data?.success) throw new Error(`quote ${res.status}`);
   }
 }

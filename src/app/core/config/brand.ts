@@ -92,7 +92,9 @@ export const CONTACT = {
 export const SHOW_SOCIALS = false;
 
 /**
- * Endpoint de Formspree del formulario de cotización (https://formspree.io/f/xxxxxxxx).
- * Mientras esté vacío el formulario solo simula el envío.
+ * Envío del formulario de cotización con Web3Forms (https://web3forms.com).
+ * La clave de acceso es pública y está ligada al correo de destino que se registró en su panel
+ * (ventas@vibranceincaharvest.com en producción). Mientras esté vacía el formulario solo simula el envío.
  */
-export const QUOTE_ENDPOINT = '';
+export const QUOTE_ENDPOINT = 'https://api.web3forms.com/submit';
+export const QUOTE_ACCESS_KEY = '';
