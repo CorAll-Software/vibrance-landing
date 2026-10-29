@@ -242,6 +242,10 @@ html:lang(ja) {
   --font-display: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', 'Noto Sans JP', system-ui, sans-serif;
   --font-sans: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', 'Noto Sans JP', system-ui, sans-serif;
 }
+html:lang(zh) {
+  --font-display: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  --font-sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+}
 html:lang(ko) {
   --font-display: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif;
   --font-sans: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif;
@@ -256,7 +260,7 @@ html:lang(he) {
 }
 /* El interletrado (abierto o cerrado) e interlineado muy cerrado solo funcionan bien en latino:
    en árabe separa letras que van unidas */
-html:is(:lang(ar), :lang(he), :lang(ja), :lang(ko))
+html:is(:lang(ar), :lang(he), :lang(ja), :lang(ko), :lang(zh))
   :is(h1, h2, h3, .font-display, .tracking-tight, .vibe-quote, .quote-text) {
   letter-spacing: 0;
 }
