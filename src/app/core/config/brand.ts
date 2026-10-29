@@ -90,3 +90,9 @@ export const CONTACT = {
 
 /** Oculta los íconos de redes del footer hasta que existan las cuentas (pedido de la clienta). */
 export const SHOW_SOCIALS = false;
+
+/**
+ * Endpoint de Formspree del formulario de cotización (https://formspree.io/f/xxxxxxxx).
+ * Mientras esté vacío el formulario solo simula el envío.
+ */
+export const QUOTE_ENDPOINT = '';
