@@ -44,9 +44,17 @@
   place-items: center;
   rotate: 45deg;
 }
+/* La fruta queda centrada en el pin: el contenedor y el SVG llenan el mismo espacio
+   (antes el SVG medía el 70 % de un contenedor de 28 px y se corría arriba a la izquierda).
+   El 56 % conserva el tamaño que ya tenían. */
+.pin__icon app-fruit-icon {
+  display: block;
+  width: 56%;
+  height: 56%;
+}
 .pin__icon ::ng-deep svg {
-  width: 70%;
-  height: 70%;
+  width: 100%;
+  height: 100%;
 }
 .marker:hover .pin,
 .marker:focus-visible .pin,

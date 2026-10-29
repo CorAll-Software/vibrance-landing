@@ -7,23 +7,18 @@ import {
   afterNextRender,
   inject,
 } from '@angular/core';
-import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoDirective } from '@jsverse/transloco';
 import { gsap } from 'gsap';
 import { UiStateService } from '../../core/services/ui-state.service';
 import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
-import { CONTACT } from '../../core/config/brand';
-import {
-  WhatsappIconComponent,
-  injectWhatsappHref,
-} from '../../shared/components/whatsapp-button/whatsapp-button';
 
 /**
- * Cierre: eslogan muy grande + llamada a cotizar, y debajo el correo y WhatsApp
- * (sin números escritos, pedido de la clienta).
+ * Cierre: eslogan muy grande + llamada a cotizar. Los correos y WhatsApp no se repiten aquí:
+ * están en el footer y en el botón flotante.
  */
 @Component({
   selector: 'app-contacto',
-  imports: [TranslocoDirective, TranslocoPipe, WhatsappIconComponent],
+  imports: [TranslocoDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
@@ -48,41 +43,12 @@ import {
         >
           {{ t('cta') }}
         </button>
-        <div
-          data-reveal
-          class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 text-niebla/80"
-        >
-          <p class="text-start">
-            <span class="block text-sm text-niebla/60">{{ 'common.buyers' | transloco }}</span>
-            <a [href]="'mailto:' + email" class="hover:text-niebla hover:underline"
-              ><bdi dir="ltr">{{ email }}</bdi></a
-            >
-          </p>
-          <p class="text-start">
-            <span class="block text-sm text-niebla/60">{{ 'common.partners' | transloco }}</span>
-            <a [href]="'mailto:' + partnersEmail" class="hover:text-niebla hover:underline"
-              ><bdi dir="ltr">{{ partnersEmail }}</bdi></a
-            >
-          </p>
-          <a
-            [href]="whatsappHref()"
-            target="_blank"
-            rel="noopener"
-            [attr.aria-label]="'common.whatsapp' | transloco"
-            class="grid size-12 place-items-center rounded-full border border-niebla/30 text-niebla transition-colors hover:bg-niebla hover:text-palta"
-          >
-            <app-whatsapp-icon class="size-6" />
-          </a>
-        </div>
       </div>
     </section>
   `,
 })
 export class ContactoComponent {
   protected readonly ui = inject(UiStateService);
-  protected readonly email = CONTACT.email;
-  protected readonly partnersEmail = CONTACT.partnersEmail;
-  protected readonly whatsappHref = injectWhatsappHref();
 
   constructor() {
     const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;

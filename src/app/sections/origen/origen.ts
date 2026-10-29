@@ -518,6 +518,18 @@ export class OrigenComponent {
      * bajando, se suelta la parte fija para que al volver a subir la sección se vea completa
      * sin tener que recorrerla otra vez.
      */
+    /*
+     * Si la persona salta de golpe más allá de Origen (p. ej. "Contacto" en el menú al cargar), la
+     * entrada de la cesta (momento 1, que se dispara una sola vez) y la escena fija corren a la
+     * vez sobre la misma cesta, y la entrada termina última dejándola en el centro, encima del
+     * cierre. Antes de que la escena avance, la entrada se da por terminada de una vez.
+     */
+    const settleIntro = () => {
+      if (intro.progress() >= 1) return;
+      intro.scrollTrigger?.kill(false, true); // el disparador ya no hace falta; la animación se conserva
+      intro.progress(1);
+    };
+
     let done = false;
     let left = false;
     let released = false;
@@ -547,11 +559,13 @@ export class OrigenComponent {
         if (!released) scene.invalidate().time(scene.time());
       },
       onLeave: () => {
+        settleIntro();
         left = true;
         if (done) release();
       },
       onEnterBack: () => (left = false),
       onUpdate: (self) => {
+        if (self.progress > 0.05) settleIntro();
         if (done) return;
         if (MAP_MODE === 'pausas') {
           // Sigue al scroll con un leve retraso; los descansos están en la línea de tiempo
