@@ -97,4 +97,13 @@ export const SHOW_SOCIALS = false;
  * (ventas@vibranceincaharvest.com en producción). Mientras esté vacía el formulario solo simula el envío.
  */
 export const QUOTE_ENDPOINT = 'https://api.web3forms.com/submit';
+/**
+ * Cómo se envía el formulario:
+ * - 'web3forms': directo a Web3Forms (QUOTE_ENDPOINT + QUOTE_ACCESS_KEY).
+ * - 'api': a la función de Cloudflare /api/cotizacion (functions/api/cotizacion.ts), que manda el
+ *   correo con Resend desde no-reply@ del dominio. Cambiar a 'api' al desplegar con las variables
+ *   de entorno listas (ver docs/envio-cotizaciones.md).
+ */
+export const QUOTE_TRANSPORT: 'web3forms' | 'api' = 'web3forms';
+export const QUOTE_API = '/api/cotizacion';
 export const QUOTE_ACCESS_KEY = '';
