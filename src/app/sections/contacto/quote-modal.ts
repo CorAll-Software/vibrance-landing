@@ -73,6 +73,8 @@ export class QuoteModalComponent {
     message: ['', Validators.minLength(MESSAGE_MIN)],
     // Casilla obligatoria de la política de privacidad
     privacy: [false, Validators.requiredTrue],
+    // Campo trampa anti-spam (oculto): debe quedar vacío
+    website: [''],
   });
 
   protected readonly fields: { name: FieldName; type: string; autocomplete: string }[] = [

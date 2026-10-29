@@ -46,3 +46,7 @@ Thumbs.db
 # Videos originales (pesados): no se publican ni se suben al repo; la web usa las versiones comprimidas de public/media
 public/media/videos/
 branding/_video-previews/
+
+# Cloudflare (variables locales de Wrangler)
+.dev.vars
+.wrangler/

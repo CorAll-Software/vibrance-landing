@@ -185,6 +185,12 @@
           }
         </div>
 
+        <!-- Campo trampa: fuera de pantalla y sin foco; solo lo llenan los bots -->
+        <div class="sr-only" aria-hidden="true">
+          <label for="q-website">Website</label>
+          <input id="q-website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+        </div>
+
         <div class="flex flex-col gap-1.5 sm:col-span-2">
           <div class="flex items-start gap-3">
             <input
