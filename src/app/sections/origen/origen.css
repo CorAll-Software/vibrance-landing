@@ -47,14 +47,21 @@
   font-size: clamp(1.05rem, 1.6vw, 1.3rem);
   line-height: 1.5;
 }
-/* Aviso a productores aliados, bajo el último párrafo */
+/* Aviso a productores aliados, bajo el último párrafo: mariposa de la marca + texto */
 .partner-note {
-  margin-top: 1rem;
-  padding-inline-start: 0.9rem;
-  border-inline-start: 3px solid var(--color-hoja);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-top: 1.1rem;
   font-size: 0.95rem;
   line-height: 1.45;
   color: rgb(30 59 47 / 0.85);
+}
+.partner-bf {
+  flex: none;
+  width: 2rem;
+  margin-top: 0.1rem;
+  filter: drop-shadow(0 3px 5px rgb(20 42 32 / 0.2));
 }
 .partner-mail {
   font-weight: 600;
