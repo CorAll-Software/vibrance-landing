@@ -52,9 +52,9 @@ import { SmoothScrollService } from '../../core/services/smooth-scroll.service';
       height: min(20rem, 56svh);
       padding: 0.6rem 0.35rem;
       border-radius: 999px;
-      background: rgb(247 248 245 / 0.8);
+      /* Sin backdrop-filter: fijo sobre el video del hero, obliga a re-desenfocar cada cuadro */
+      background: rgb(247 248 245 / 0.92);
       border: 1px solid rgb(30 59 47 / 0.1);
-      backdrop-filter: blur(8px);
       transform: translateY(-50%);
       opacity: 0.3;
       transition: opacity 400ms var(--ease-out-soft);

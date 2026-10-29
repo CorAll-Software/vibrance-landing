@@ -16,15 +16,17 @@ export function initReveals(reducedMotion: boolean): () => void {
 
   gsap.set(els, { autoAlpha: 0, y: distance });
   const triggers = ScrollTrigger.batch(els, {
-    start: 'top 90%',
+    // En celular el scroll con el dedo es rápido: la entrada empieza un poco antes de que el
+    // bloque aparezca, para no mostrar huecos vacíos que parecen "cargando"
+    start: mobile ? 'top bottom+=80' : 'top 90%',
     once: true,
     onEnter: (batch) =>
       gsap.to(batch, {
         autoAlpha: 1,
         y: 0,
-        duration: mobile ? 0.6 : 0.9,
+        duration: mobile ? 0.45 : 0.9,
         ease: 'power3.out',
-        stagger: 0.1,
+        stagger: mobile ? 0.06 : 0.1,
         overwrite: true,
         clearProps: 'transform',
       }),
