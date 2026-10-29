@@ -48,6 +48,9 @@ export class ProcesoComponent {
     this.goToStep?.(i);
   }
   protected readonly steps = PROCESS_STEPS;
+  /** Celular: usa la versión liviana de los videos (`video.mobile`). */
+  protected readonly handheld =
+    typeof window !== 'undefined' && Math.min(window.screen.width, window.screen.height) < 768;
   protected readonly active = signal(0);
   protected readonly lang = inject(LanguageService);
   protected readonly scroll = inject(SmoothScrollService);

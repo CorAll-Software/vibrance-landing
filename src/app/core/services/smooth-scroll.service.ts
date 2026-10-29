@@ -171,14 +171,18 @@ export class SmoothScrollService {
   /**
    * Desplaza a una posición vertical exacta (px) con una transición completa.
    * Mientras dura, el scroll del usuario queda en pausa para que la transición no se corte.
+   * Con `soft` (imanes): curva suave al empezar y al terminar (sin tirones) y el usuario puede
+   * interrumpirla con su propio scroll (no se siente como si la página lo "jalara").
    */
-  scrollToY(y: number, duration = 0.7): void {
+  scrollToY(y: number, duration = 0.7, { soft = false } = {}): void {
     this.markAuto(duration);
     if (this.lenis) {
       this.lenis.scrollTo(y, {
         duration,
-        lock: true,
-        easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+        lock: !soft,
+        easing: soft
+          ? (t) => -(Math.cos(Math.PI * t) - 1) / 2
+          : (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
       });
     } else {
       window.scrollTo({ top: y, behavior: this.reducedMotion() ? 'auto' : 'smooth' });

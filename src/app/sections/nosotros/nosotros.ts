@@ -26,6 +26,10 @@ const SCENE_MQ =
 const INTRO_HOLD = 1;
 /** Segundos que tarda la frase en salir por la izquierda antes de que entre Proceso. */
 const SLIDE = 0.6;
+/** El imán actúa cuando el scroll va más lento que esto (px/s): el usuario ya soltó la rueda. */
+const MAGNET_MAX_SPEED = 250;
+/** Breve espera con el scroll lento antes de acomodar la página. */
+const MAGNET_IDLE_MS = 80;
 
 /** La escena se reproduce una sola vez por visitante (como la intro de la mariposa). */
 const SEEN_KEY = 'vibe-seen';
@@ -239,7 +243,7 @@ function markSeen(): void {
       text-align: center;
       font-size: clamp(2rem, min(6vw, 11svh), 5.25rem);
       line-height: 1.05;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.01em;
       color: var(--color-palta);
     }
     .vibe-bf {
@@ -296,7 +300,7 @@ function markSeen(): void {
       margin-inline: auto;
       font-size: clamp(2.4rem, 6vw, 5.25rem);
       line-height: 1.05;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.01em;
       color: var(--color-palta);
     }
     /* Cada palabra pasa de tenue a plena según el avance (n = palabras, i = posición) */
@@ -454,12 +458,13 @@ export class NosotrosComponent {
       scroll.start();
     };
     /**
-     * Entrada a la escena (bajando o subiendo desde Proceso): siempre la misma secuencia, verde
-     * con "Lo que nos mueve" y luego el círculo que abre "Vibrance es una empresa…". Solo si la
-     * escena está a la vista (con medidas desfasadas el aviso puede llegar antes de tiempo).
+     * Entrada a la escena: verde con "Lo que nos mueve" y luego el círculo que abre "Vibrance es
+     * una empresa…". Una sola vez: si la frase ya se mostró, al volver se queda en la frase (repetir
+     * el verde al pasar de nuevo se veía como un destello de "Lo que nos mueve"). Solo si la escena
+     * está a la vista (con medidas desfasadas el aviso puede llegar antes de tiempo).
      */
     const start = () => {
-      if (!inView()) return;
+      if (!inView() || current !== 0) return;
       tl.pause(0);
       current = 0;
       go(1);
@@ -515,6 +520,7 @@ export class NosotrosComponent {
       unlock();
       st.kill();
       magnet.kill();
+      cancelMagnet();
       tl.kill();
       // Queda como al inicio: la frase con poco aire arriba y abajo (ver .vibe.is-done)
       gsap.set(q('.vibe-track, .vibe-reveal, .vibe-intro, .vibe-quote, .vibe-bf'), {
@@ -544,29 +550,51 @@ export class NosotrosComponent {
       onEnter: () => !passing() && start(),
       // Si se vuelve sin haberla visto, empieza igual que al bajar
       onEnterBack: () => !passing() && start(),
-      // Al salir por arriba se reinicia, para que la próxima vez vuelva a empezar en verde
-      onLeaveBack: () => !passing() && go(0),
+      // Al salir por arriba no se rebobina: se queda en la frase (ver start)
       // El siguiente scroll (momento) desliza hasta Proceso
       onUpdate: (self) => {
         // Se decide por lo que realmente se movió la página: un recálculo de posiciones (al
         // liberar el scroll) no cuenta como bajar y no debe llevar solo a Proceso
         const dy = window.scrollY - lastY;
         lastY = window.scrollY;
-        if (passing() || !inView() || dy === 0) return;
-        go(dy > 0 && self.progress >= 0.35 ? 2 : 1);
+        // El desplazamiento del imán (autoScrolling) no cuenta: solo el scroll del usuario avanza
+        if (passing() || !inView() || dy === 0 || scroll.autoScrolling) return;
+        // Con la frase ya en pantalla, cualquier scroll hacia abajo pasa a Proceso (antes había
+        // que recorrer un 35 % y un scroll corto no hacía nada). Mientras se abre la frase, solo
+        // un scroll largo la salta.
+        const quoteShown = tl.time() >= tl.labels['m1'] - 0.05;
+        go(dy > 0 && (quoteShown || self.progress >= 0.35) ? 2 : 1);
       },
     });
 
-    // Imán: al acercarse a la escena bajando, la página se acomoda sola en ella
+    // Imán suave: al acercarse a la escena bajando, cuando el scroll ya va lento (el usuario soltó
+    // la rueda), la página termina de llegar sola con una curva suave. No corta un scroll rápido
+    // en curso y el usuario lo puede interrumpir con su propio scroll.
+    let magnetTimer: ReturnType<typeof setTimeout> | undefined;
+    const cancelMagnet = () => {
+      clearTimeout(magnetTimer);
+      magnetTimer = undefined;
+    };
     const magnet = ScrollTrigger.create({
       trigger: vibe,
       start: 'top 75%',
       end: 'top top',
       invalidateOnRefresh: true,
       onUpdate: (self) => {
-        if (scroll.autoScrolling || self.direction < 0) return;
-        if (self.progress < 0.05 || self.progress > 0.97) return;
-        scroll.scrollToY(st.start, MOMENT_DURATION);
+        if (scroll.autoScrolling) return;
+        const outside = self.progress < 0.05 || self.progress > 0.97;
+        if (self.direction < 0 || outside || Math.abs(self.getVelocity()) > MAGNET_MAX_SPEED) {
+          return cancelMagnet();
+        }
+        magnetTimer ??= setTimeout(() => {
+          magnetTimer = undefined;
+          if (!magnet.isActive || scroll.autoScrolling) return;
+          // Un poco adentro del inicio: justo en el borde la escena no se activa y queda verde vacía
+          const y = st.start + 2;
+          // Tramos cortos, rápido; tramos largos, sin pasar de MOMENT_DURATION
+          const duration = gsap.utils.clamp(0.7, MOMENT_DURATION, Math.abs(y - window.scrollY) / 500);
+          scroll.scrollToY(y, duration, { soft: true });
+        }, MAGNET_IDLE_MS);
       },
     });
 
