@@ -147,7 +147,7 @@ Lo provisional está marcado con `TODO: dato real de la clienta`.
 
 - Las ramas siguen el formato `<tipo>/<descripción-corta>`, por ejemplo `feat/proceso` o `fix/optimizacion`.
 - Los commits usan [Conventional Commits](https://www.conventionalcommits.org/es/) en español: `tipo: descripción`.
-- El trabajo se integra en `develop`, y `main` guarda la versión estable.
+- Cada rama se integra a `main` mediante un pull request que cierra su issue (`Closes #n`).
 
 ## Estado del proyecto
 
