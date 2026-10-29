@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { TranslocoDirective } from '@jsverse/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@jsverse/transloco';
 import {
   BRAND_DESCRIPTOR,
   BRAND_NAME,
@@ -18,7 +18,7 @@ import {
 
 @Component({
   selector: 'app-footer',
-  imports: [TranslocoDirective, LangSwitchComponent, WhatsappIconComponent],
+  imports: [TranslocoDirective, TranslocoPipe, LangSwitchComponent, WhatsappIconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer class="bg-palta-deep text-niebla" *transloco="let t; prefix: 'footer'">
@@ -63,10 +63,10 @@ import {
               [href]="whatsappHref()"
               target="_blank"
               rel="noopener"
-              class="mt-3 inline-flex w-fit items-center gap-2 rounded-full border border-niebla/25 py-2 ps-3 pe-4 text-niebla transition-colors hover:bg-niebla hover:text-palta"
+              [attr.aria-label]="'common.whatsapp' | transloco"
+              class="mt-3 grid size-11 place-items-center rounded-full border border-niebla/25 text-niebla transition-colors hover:bg-niebla hover:text-palta"
             >
-              <app-whatsapp-icon class="size-5" />
-              <span *transloco="let c; prefix: 'common'">{{ c('whatsapp') }}</span>
+              <app-whatsapp-icon class="size-6" />
             </a>
           </address>
         </div>

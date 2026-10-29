@@ -68,10 +68,10 @@ import {
             [href]="whatsappHref()"
             target="_blank"
             rel="noopener"
-            class="inline-flex items-center gap-2 rounded-full border border-niebla/30 py-2 ps-3 pe-4 font-semibold text-niebla transition-colors hover:bg-niebla hover:text-palta"
+            [attr.aria-label]="'common.whatsapp' | transloco"
+            class="grid size-12 place-items-center rounded-full border border-niebla/30 text-niebla transition-colors hover:bg-niebla hover:text-palta"
           >
-            <app-whatsapp-icon class="size-5" />
-            <span *transloco="let c; prefix: 'common'">{{ c('whatsapp') }}</span>
+            <app-whatsapp-icon class="size-6" />
           </a>
         </div>
       </div>
