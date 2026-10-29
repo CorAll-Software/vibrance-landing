@@ -58,16 +58,6 @@ import {
               >
             </span>
             <span>{{ contact.address }}</span>
-            <!-- Sin números escritos: solo el correo y el botón de WhatsApp -->
-            <a
-              [href]="whatsappHref()"
-              target="_blank"
-              rel="noopener"
-              [attr.aria-label]="'common.whatsapp' | transloco"
-              class="mt-3 grid size-11 place-items-center rounded-full border border-niebla/25 text-niebla transition-colors hover:bg-niebla hover:text-palta"
-            >
-              <app-whatsapp-icon class="size-6" />
-            </a>
           </address>
         </div>
 
@@ -75,47 +65,47 @@ import {
           @if (showSocials) {
             <div>
               <h2 class="font-sans text-base font-semibold">{{ t('follow') }}</h2>
-            <ul class="mt-3 flex gap-2">
-              @for (s of contact.socials; track s.id) {
-                <li>
-                  <a
-                    [href]="s.href"
-                    class="grid size-11 place-items-center rounded-full border border-niebla/25 transition-colors hover:bg-niebla hover:text-palta"
-                    [attr.aria-label]="s.label"
-                  >
-                    @switch (s.id) {
-                      @case ('linkedin') {
-                        <svg
-                          viewBox="0 0 24 24"
-                          width="18"
-                          height="18"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21H9z"
-                          />
-                        </svg>
+              <ul class="mt-3 flex gap-2">
+                @for (s of contact.socials; track s.id) {
+                  <li>
+                    <a
+                      [href]="s.href"
+                      class="grid size-11 place-items-center rounded-full border border-niebla/25 transition-colors hover:bg-niebla hover:text-palta"
+                      [attr.aria-label]="s.label"
+                    >
+                      @switch (s.id) {
+                        @case ('linkedin') {
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="18"
+                            height="18"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21H9z"
+                            />
+                          </svg>
+                        }
+                        @case ('instagram') {
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="18"
+                            height="18"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                          >
+                            <rect x="3" y="3" width="18" height="18" rx="5" />
+                            <circle cx="12" cy="12" r="4" />
+                            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                          </svg>
+                        }
                       }
-                      @case ('instagram') {
-                        <svg
-                          viewBox="0 0 24 24"
-                          width="18"
-                          height="18"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          aria-hidden="true"
-                        >
-                          <rect x="3" y="3" width="18" height="18" rx="5" />
-                          <circle cx="12" cy="12" r="4" />
-                          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                        </svg>
-                      }
-                    }
-                  </a>
-                </li>
-              }
+                    </a>
+                  </li>
+                }
               </ul>
             </div>
           }
@@ -123,6 +113,16 @@ import {
             <h2 class="font-sans text-base font-semibold">{{ t('language') }}</h2>
             <app-lang-switch class="mt-3" [dropUp]="true" />
           </div>
+          <!-- Sin números escritos: solo el botón de WhatsApp -->
+          <a
+            [href]="whatsappHref()"
+            target="_blank"
+            rel="noopener"
+            [attr.aria-label]="'common.whatsapp' | transloco"
+            class="grid size-11 place-items-center rounded-full border border-niebla/25 text-niebla transition-colors hover:bg-niebla hover:text-palta"
+          >
+            <app-whatsapp-icon class="size-6" />
+          </a>
         </div>
       </div>
 
