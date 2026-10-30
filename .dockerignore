@@ -2,11 +2,7 @@ node_modules
 dist
 .angular
 .git
-.wrangler
-.dev.vars
 graphify-out
 branding
-docs
-functions
 public/media/videos
 public/media/**/*.mp4
