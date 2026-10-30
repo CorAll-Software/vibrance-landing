@@ -1,7 +1,0 @@
-# Copia este archivo a .dev.vars (está en .gitignore) para probar la función en local con
-#   npm run build && npx wrangler pages dev
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxx
-MAIL_FROM=Web Vibrance <no-reply@vibranceincaharvest.com>
-MAIL_TO=ventas@vibranceincaharvest.com
-# Opcional: si lo defines, la función exige el token de Turnstile
-# TURNSTILE_SECRET=

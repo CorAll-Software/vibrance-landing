@@ -20,8 +20,8 @@
  * /public ni en git). Se suben con la misma estructura de carpetas: hero/…, proceso/….
  */
 
-/** URL pública del bucket R2 con los videos propios. */
-const VIDEOS = 'https://pub-8fe73c852b544716958f89ae45287ac2.r2.dev';
+/** Dominio propio del bucket R2 con los videos propios. */
+const VIDEOS = 'https://media-vibrance.corall.dev';
 
 /** Un video: basta con `mp4`. `webm` es opcional (si existe, el navegador lo prefiere). */
 export interface VideoSrc {

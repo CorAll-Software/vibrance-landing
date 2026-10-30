@@ -1,5 +1,0 @@
-# Cloudflare Pages: la web estática + la función de /functions (POST /api/cotizacion).
-# Las variables secretas NO van aquí: ver docs/envio-cotizaciones.md y .dev.vars.example.
-name = "vibrance"
-compatibility_date = "2026-10-01"
-pages_build_output_dir = "dist/MelanieFruit/browser"
