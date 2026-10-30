@@ -15,7 +15,13 @@
  * `image` / `poster`: imagen que se ve mientras carga el video y cuando el visitante
  * tiene activado "reducir movimiento" o "ahorro de datos". Conviene que sea un cuadro
  * del mismo video para que el cambio sea imperceptible.
+ *
+ * Videos propios: viven en el bucket público de Cloudflare R2 `vibrance-prod-public` (no en
+ * /public ni en git). Se suben con la misma estructura de carpetas: hero/…, proceso/….
  */
+
+/** URL pública del bucket R2 con los videos propios. */
+const VIDEOS = 'https://pub-8fe73c852b544716958f89ae45287ac2.r2.dev';
 
 /** Un video: basta con `mp4`. `webm` es opcional (si existe, el navegador lo prefiere). */
 export interface VideoSrc {
@@ -62,10 +68,10 @@ export const HERO = {
    * Originales de Pexels: 12384756, 11760126, 3596844 y 15909393.
    */
   videos: [
-    { local: 'media/hero/hero-1' },
-    { local: 'media/hero/hero-2', seconds: 20 },
-    { local: 'media/hero/hero-3' },
-    { local: 'media/hero/hero-4' },
+    { local: `${VIDEOS}/hero/hero-1` },
+    { local: `${VIDEOS}/hero/hero-2`, seconds: 20 },
+    { local: `${VIDEOS}/hero/hero-3` },
+    { local: `${VIDEOS}/hero/hero-4` },
   ] as HeroVideo[],
   /** Duración del fundido entre videos, en segundos. */
   fade: 1.2,
@@ -87,7 +93,8 @@ export const ORIGEN: OrigenMedia = {
   // video: { mp4: 'https://…/desierto-cultivo.mp4' },
   back: {
     // TODO: cambiar por la imagen o el video que se mostrará al voltear la tarjeta
-    image: 'https://plus.unsplash.com/premium_photo-1682126515886-7ae6955bb38d?q=80&w=734&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
+    image:
+      'https://plus.unsplash.com/premium_photo-1682126515886-7ae6955bb38d?q=80&w=734&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
     // video: { mp4: 'https://…/seleccion-productores.mp4' },
   },
 };
@@ -104,23 +111,26 @@ export const PROCESO: Record<
   // Originales de Pexels: 31463341, 8633312, 8633311, 10576684 y 6390323.
   productores: {
     image: 'media/proceso/productores-poster.webp',
-    video: { mp4: 'media/proceso/productores.mp4', mobile: 'media/proceso/productores-m.mp4' },
+    video: {
+      mp4: `${VIDEOS}/proceso/productores.mp4`,
+      mobile: `${VIDEOS}/proceso/productores-m.mp4`,
+    },
   },
   calidad: {
     image: 'media/proceso/calidad-poster.webp',
-    video: { mp4: 'media/proceso/calidad.mp4', mobile: 'media/proceso/calidad-m.mp4' },
+    video: { mp4: `${VIDEOS}/proceso/calidad.mp4`, mobile: `${VIDEOS}/proceso/calidad-m.mp4` },
   },
   empaque: {
     image: 'media/proceso/empaque-poster.webp',
-    video: { mp4: 'media/proceso/empaque.mp4', mobile: 'media/proceso/empaque-m.mp4' },
+    video: { mp4: `${VIDEOS}/proceso/empaque.mp4`, mobile: `${VIDEOS}/proceso/empaque-m.mp4` },
   },
   frio: {
     image: 'media/proceso/frio-poster.webp',
-    video: { mp4: 'media/proceso/frio.mp4', mobile: 'media/proceso/frio-m.mp4' },
+    video: { mp4: `${VIDEOS}/proceso/frio.mp4`, mobile: `${VIDEOS}/proceso/frio-m.mp4` },
   },
   envio: {
     image: 'media/proceso/envio-poster.webp',
-    video: { mp4: 'media/proceso/envio.mp4', mobile: 'media/proceso/envio-m.mp4' },
+    video: { mp4: `${VIDEOS}/proceso/envio.mp4`, mobile: `${VIDEOS}/proceso/envio-m.mp4` },
   },
 };
 

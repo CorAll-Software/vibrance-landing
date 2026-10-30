@@ -47,6 +47,9 @@ Thumbs.db
 public/media/videos/
 branding/_video-previews/
 
+# Videos comprimidos: se sirven desde el bucket R2 vibrance-prod-public (ver media.config.ts)
+public/media/**/*.mp4
+
 # Cloudflare (variables locales de Wrangler)
 .dev.vars
 .wrangler/
