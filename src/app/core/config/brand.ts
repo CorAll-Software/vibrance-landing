@@ -97,4 +97,4 @@ export const SHOW_SOCIALS = false;
  * (ventas@vibranceincaharvest.com en producción). Mientras esté vacía el formulario solo simula el envío.
  */
 export const QUOTE_ENDPOINT = 'https://api.web3forms.com/submit';
-export const QUOTE_ACCESS_KEY = '';
+export const QUOTE_ACCESS_KEY = 'ad5b6598-8dbe-4d68-917e-5a83bb38f2ac';
