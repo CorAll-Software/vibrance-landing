@@ -1,8 +1,9 @@
 node_modules
 dist
-.angular
+.astro
 .git
 graphify-out
 branding
+legacy-angular
 public/media/videos
 public/media/**/*.mp4
