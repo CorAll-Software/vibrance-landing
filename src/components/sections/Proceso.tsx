@@ -108,6 +108,7 @@ export function Proceso() {
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          refreshPriority: 1,
           onRefresh: () => goTo(current, 0),
           // Al pasar la última etapa hacia abajo, la sección se suelta (ver release)
           onLeave: () => release(),

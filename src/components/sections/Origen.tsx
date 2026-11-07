@@ -104,6 +104,8 @@ function buildIntro(host: HTMLElement): void {
       pin: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
+      // Los pins se refrescan en el orden de la página (Origen → Nosotros → Proceso), no en el de creación
+      refreshPriority: 4,
     },
   });
   // Montañas: se desplazan apenas (siguen a la vista durante toda la escena)
@@ -445,6 +447,7 @@ function buildScene(host: HTMLElement): void {
     pin: true,
     anticipatePin: 1,
     invalidateOnRefresh: true,
+    refreshPriority: 3,
     // Si cambia el tamaño de la ventana, se recalculan las posiciones de vuelo
     onRefresh: () => {
       if (!released) scene.invalidate().time(scene.time());

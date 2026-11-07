@@ -218,6 +218,7 @@ function buildScene(vibe: HTMLElement): () => void {
     pin: true,
     anticipatePin: 1,
     invalidateOnRefresh: true,
+    refreshPriority: 2,
     // Al llegar: verde con texto, y el círculo se abre solo (sin scroll)
     onEnter: () => !passing() && start(),
     // Si se vuelve sin haberla visto, empieza igual que al bajar
