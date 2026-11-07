@@ -50,3 +50,6 @@ branding/_video-previews/
 
 # Videos comprimidos: se sirven desde el bucket R2 vibrance-prod-public (ver media.config.ts)
 public/media/**/*.mp4
+
+# Instrucciones locales de Claude Code
+CLAUDE.local.md
