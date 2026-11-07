@@ -1,29 +1,129 @@
 ---
 import '@fontsource-variable/hanken-grotesk/index.css';
 import '../styles/global.css';
-import es from '../i18n/es.json';
-import { BRAND_NAME } from '../config/brand';
+import {
+  AVAILABLE_LANGS,
+  BRAND_DESCRIPTOR,
+  BRAND_NAME,
+  CONTACT,
+  DEFAULT_LANG,
+  LANG_META,
+  LEGAL_NAME,
+  LOGO,
+  RUC,
+  type Lang,
+} from '../config/brand';
+import { OG_IMAGE, SITE_URL } from '../config/site';
+import { loadDict } from '../lib/dicts';
+import { langPath } from '../lib/routes';
 
-const title = es.seo.title.replace('{{brand}}', BRAND_NAME);
-const description = es.seo.description;
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const meta = LANG_META[lang];
+const seo = (await loadDict(lang)).seo as { title: string; description: string };
+const title = seo.title.replace('{{brand}}', BRAND_NAME);
+const description = seo.description;
+const fullName = `${BRAND_NAME} ${BRAND_DESCRIPTOR}`;
+
+const abs = (path: string) => new URL(path, `${SITE_URL}/`).href;
+const url = abs(langPath(lang));
+const alternates = AVAILABLE_LANGS.map((l) => ({ hreflang: LANG_META[l].hreflang, href: abs(langPath(l)) }));
+
+// Datos estructurados (schema.org): la empresa, el sitio y esta página. Sin teléfono: la clienta
+// pidió no publicar números (solo correo y WhatsApp).
+const orgId = abs('/#organization');
+const siteId = abs('/#website');
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': orgId,
+      name: BRAND_NAME,
+      alternateName: fullName,
+      legalName: LEGAL_NAME,
+      taxID: RUC,
+      url: abs('/'),
+      logo: { '@type': 'ImageObject', url: abs(LOGO.light), width: LOGO.width, height: LOGO.height },
+      image: OG_IMAGE.url,
+      email: CONTACT.email,
+      address: { '@type': 'PostalAddress', addressLocality: 'Lima', addressCountry: 'PE' },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          email: CONTACT.email,
+          availableLanguage: AVAILABLE_LANGS.map((l) => LANG_META[l].hreflang),
+        },
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': siteId,
+      url: abs('/'),
+      name: fullName,
+      publisher: { '@id': orgId },
+      inLanguage: AVAILABLE_LANGS.map((l) => LANG_META[l].hreflang),
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${url}#webpage`,
+      url,
+      name: title,
+      description,
+      inLanguage: meta.hreflang,
+      isPartOf: { '@id': siteId },
+      about: { '@id': orgId },
+      primaryImageOfPage: { '@type': 'ImageObject', url: OG_IMAGE.url },
+    },
+  ],
+};
+// Escapa "<" para que ningún texto pueda cerrar el <script> del JSON-LD
+const jsonLdHtml = JSON.stringify(jsonLd).replace(/</g, '\u003c');
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={meta.hreflang} dir={meta.dir}>
   <head>
     <meta charset="utf-8" />
-    <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#1E3B2F" />
 
-    <!-- Open Graph (se actualiza por idioma desde src/lib/i18n.ts) -->
+    <!-- Una URL por idioma: la canónica es la propia y hreflang enlaza las demás (x-default: la raíz) -->
+    <link rel="canonical" href={url} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={abs(langPath(DEFAULT_LANG))} />
+
+    <!-- Open Graph y Twitter (al cambiar de idioma en vivo los actualiza src/lib/i18n.ts) -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={fullName} />
+    <meta property="og:url" content={url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/media/campo.webp" />
-    <meta property="og:locale" content="es_PE" />
-    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image" content={OG_IMAGE.url} />
+    <meta property="og:image:type" content={OG_IMAGE.type} />
+    <meta property="og:image:width" content={String(OG_IMAGE.width)} />
+    <meta property="og:image:height" content={String(OG_IMAGE.height)} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content={meta.ogLocale} />
+    {
+      AVAILABLE_LANGS.filter((l) => l !== lang).map((l) => (
+        <meta property="og:locale:alternate" content={LANG_META[l].ogLocale} />
+      ))
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={OG_IMAGE.url} />
+    <meta name="twitter:image:alt" content={title} />
+
+    <script type="application/ld+json" is:inline set:html={jsonLdHtml} />
 
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />

@@ -1,8 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
 import { App } from '../components/App';
+import { DEFAULT_LANG } from '../config/brand';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout>
-  <App client:load />
+<!-- Idioma por defecto (español) en la raíz; el resto de idiomas en src/pages/[lang]/ -->
+<BaseLayout lang={DEFAULT_LANG}>
+  <App client:load lang={DEFAULT_LANG} />
 </BaseLayout>
