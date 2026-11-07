@@ -4,15 +4,63 @@ import {
   CONTACT,
   LEGAL_NAME,
   LOGO,
+  POWERED_BY,
   RUC,
   SHOW_SOCIALS,
 } from '../../config/brand';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { useT } from '../../lib/i18n';
 import { openPrivacy } from '../../lib/ui';
 import { LangSwitch } from './LangSwitch';
 import { WhatsappIcon, useWhatsappHref } from './WhatsappButton';
 
 const YEAR = new Date().getFullYear();
+
+/**
+ * Firma de CorAll, la empresa que desarrolló la web: discreta, al pie y con su logo en blanco.
+ * Si el logo no carga (p. ej. aún no está en el bucket), se muestra el nombre en texto.
+ */
+function PoweredBy({ label }: { label: string }) {
+  const img = useRef<HTMLImageElement>(null);
+  const [failed, setFailed] = useState(false);
+
+  // El error pudo ocurrir antes de hidratar (y entonces onError ya no llega): se revisa al montar
+  useEffect(() => {
+    const el = img.current;
+    if (el?.complete && el.naturalWidth === 0) setFailed(true);
+  }, []);
+
+  const content = (
+    <>
+      <span>{label}</span>
+      {failed ? (
+        <span class="font-semibold text-niebla/80 transition-colors duration-200 group-hover:text-niebla">
+          {POWERED_BY.name}
+        </span>
+      ) : (
+        <img
+          ref={img}
+          src={POWERED_BY.logo}
+          alt={POWERED_BY.name}
+          width={POWERED_BY.width}
+          height={POWERED_BY.height}
+          class="h-[18px] w-auto opacity-70 transition-opacity duration-200 group-hover:opacity-100"
+          loading="lazy"
+          decoding="async"
+          onError={() => setFailed(true)}
+        />
+      )}
+    </>
+  );
+  const cls = 'group flex w-fit items-center gap-2';
+  return POWERED_BY.href ? (
+    <a href={POWERED_BY.href} target="_blank" rel="noopener" class={`${cls} hover:text-niebla`}>
+      {content}
+    </a>
+  ) : (
+    <p class={cls}>{content}</p>
+  );
+}
 
 export function Footer() {
   const t = useT('footer');
@@ -114,7 +162,9 @@ export function Footer() {
       </div>
 
       <div class="border-t border-niebla/10">
-        <div class="container-page flex flex-col gap-3 pt-6 pb-20 text-sm sm:pb-6 text-niebla/60 sm:flex-row sm:justify-between">
+        {/* Espacio para el botón flotante de WhatsApp: abajo en celular y al final (margen del
+            contenedor + el botón) desde sm, para que no tape el "powered by" al llegar al pie */}
+        <div class="container-page flex flex-col gap-3 pt-6 pb-20 text-sm text-niebla/60 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pb-6 sm:pe-[calc(clamp(1.25rem,5vw,4rem)+4rem)] md:pe-[calc(clamp(1.25rem,5vw,4rem)+5.5rem)]">
           <p>
             © {YEAR} <bdi>{LEGAL_NAME}</bdi> ·{' '}
             <bdi dir="ltr" class="whitespace-nowrap">
@@ -122,9 +172,16 @@ export function Footer() {
             </bdi>{' '}
             · {t('rights')}
           </p>
-          <button type="button" class="w-fit hover:text-niebla hover:underline" onClick={openPrivacy}>
-            {t('privacy')}
-          </button>
+          <div class="flex flex-col gap-3 sm:shrink-0 sm:flex-row sm:items-center sm:gap-6">
+            <button
+              type="button"
+              class="w-fit hover:text-niebla hover:underline"
+              onClick={openPrivacy}
+            >
+              {t('privacy')}
+            </button>
+            <PoweredBy label={t('poweredBy')} />
+          </div>
         </div>
       </div>
     </footer>

@@ -5,6 +5,8 @@
  * - LEGAL_NAME: razón social; solo footer, documentos y facturas (no va en el logo).
  * TODO: verificar "Vibrance" en INDECOPI / USPTO / EUIPO (clase 31) y el dominio.
  */
+import { MEDIA_URL } from './site';
+
 export const BRAND_NAME = 'Vibrance';
 export const BRAND_DESCRIPTOR = 'Inca Harvest';
 export const LEGAL_NAME = 'Vibrance Inca Harvest S.A.C.';
@@ -68,6 +70,20 @@ export const LANG_META: Record<Lang, LangMeta> = {
   ja: { label: '日本語', short: 'JA', dir: 'ltr', locale: 'ja-JP', ogLocale: 'ja_JP', hreflang: 'ja' },
   ko: { label: '한국어', short: 'KO', dir: 'ltr', locale: 'ko-KR', ogLocale: 'ko_KR', hreflang: 'ko' },
 };
+
+/**
+ * "Powered by" del footer: CorAll D&R, la empresa que desarrolló la web.
+ * El logo (blanco, para el fondo oscuro del footer) vive en el bucket: se genera con
+ * branding/bucket/generar.mjs y se sube a brand/corall.webp. Si no carga, se muestra el
+ * nombre en texto. Con `href` vacío se muestra sin enlace.
+ */
+export const POWERED_BY = {
+  name: 'CorAll',
+  href: 'https://coralldar.com',
+  logo: `${MEDIA_URL}/brand/corall.webp`,
+  width: 362,
+  height: 72,
+} as const;
 
 /** Muestra una nota visible junto a cifras y logos de ejemplo. Poner en false al tener datos reales. */
 export const SHOW_PLACEHOLDER_NOTES = true;
