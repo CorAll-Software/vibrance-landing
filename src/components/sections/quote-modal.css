@@ -1,0 +1,22 @@
+/* Mariposa de la pantalla de envío: sale volando hacia arriba, junto a la X */
+.butterfly.sent-bf {
+  position: absolute;
+  top: 1.75rem;
+  inset-inline-end: 5.25rem;
+  width: 3.75rem;
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.3));
+  animation: sent-fly 4s ease-in-out infinite alternate;
+}
+@keyframes sent-fly {
+  from {
+    transform: translate(0, 6px) rotate(-6deg);
+  }
+  to {
+    transform: translate(-6px, -8px) rotate(6deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sent-bf {
+    animation: none;
+  }
+}

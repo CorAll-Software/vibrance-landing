@@ -136,7 +136,7 @@ export function MapPeru({
       [0, 1, 2].forEach((n) => tl.add(phaseMapPeru(el, n)));
     }, el);
     return () => ctx.revert();
-  }, []);
+  }, [managed]);
 
   const setRef = (el: HTMLElement | null) => {
     host.current = el;

@@ -60,7 +60,7 @@ export function Basket({
       );
     }, el);
     return () => ctx.revert();
-  }, []);
+  }, [managed]);
 
   const setRef = (el: HTMLDivElement | null) => {
     host.current = el;

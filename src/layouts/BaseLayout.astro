@@ -40,6 +40,7 @@ const description = es.seo.description;
         var force = dev || new URLSearchParams(location.search).has('intro');
         var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
         if ((!seen || force) && !reduced) document.documentElement.setAttribute('data-intro', '');
+        if (!reduced) document.documentElement.setAttribute('data-hero-prep', '');
       } catch (e) {}
     </script>
     <style is:inline>
