@@ -1,0 +1,131 @@
+/* ---------- Escena fija (escritorio) ---------- */
+.nosotros-section .vibe {
+  --p: 1; /* avance de llenado de la frase; completa mientras la escena se reproduce */
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  margin-top: 7rem;
+  overflow: hidden;
+}
+.nosotros-section .vibe-track {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  will-change: transform;
+}
+.nosotros-section .vibe-panel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+.nosotros-section .vibe-green,
+.nosotros-section .vibe-reveal {
+  position: absolute;
+  inset: 0;
+}
+.nosotros-section .vibe-green {
+  display: grid;
+  place-items: center;
+  background: var(--color-palta);
+}
+.nosotros-section .vibe-intro {
+  padding-inline: 1.5rem;
+  text-align: center;
+  font-size: clamp(1.75rem, min(4vw, 8svh), 3.5rem);
+  line-height: 1.1;
+  color: var(--color-niebla);
+}
+/* El círculo que crece deja ver, "limpiando" el verde, la frase sobre fondo claro */
+.nosotros-section .vibe-reveal {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  background: var(--color-niebla);
+  clip-path: circle(0% at 50% 50%);
+}
+.nosotros-section .vibe-quote {
+  max-width: 20ch;
+  padding-inline: 1.5rem;
+  text-align: center;
+  font-size: clamp(2rem, min(6vw, 11svh), 5.25rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--color-palta);
+}
+.nosotros-section .vibe-bf {
+  display: block;
+  width: clamp(2.25rem, 7svh, 3.25rem);
+  margin-top: clamp(1rem, 3svh, 2rem);
+}
+.nosotros-section .vibe-next {
+  background: var(--color-palta);
+  color: var(--color-niebla);
+}
+/* Ya reproducida: un bloque normal con la frase, como la banda original */
+.nosotros-section .vibe.is-done {
+  height: auto;
+  margin-top: 5rem;
+  padding-block: 3.5rem 4.5rem;
+  border-top: 1px solid rgb(30 59 47 / 0.15);
+}
+.nosotros-section .is-done .vibe-track {
+  display: block;
+  width: 100%;
+}
+.nosotros-section .is-done .vibe-panel {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.nosotros-section .is-done .vibe-green,
+.nosotros-section .is-done .vibe-next {
+  display: none;
+}
+.nosotros-section .is-done .vibe-reveal {
+  position: static;
+  clip-path: none;
+  background: none;
+}
+/* Ya reproducida: la mariposa llega cuando la frase está completa (como en .quote-bf) */
+.nosotros-section .is-done .vibe-bf {
+  opacity: clamp(0, calc(var(--p) * 5 - 3), 1);
+  transform: translateY(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * -2.5rem))
+    rotate(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * 25deg));
+}
+
+.nosotros-section .quote-band {
+  position: relative;
+  margin-top: 7rem;
+  padding-top: 4.5rem;
+  border-top: 1px solid rgb(30 59 47 / 0.15);
+  text-align: center;
+  --p: 1; /* avance del scroll (0–1); sin animación queda completa */
+}
+.nosotros-section .quote-text {
+  max-width: 20ch;
+  margin-inline: auto;
+  font-size: clamp(2.4rem, 6vw, 5.25rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--color-palta);
+}
+/* Cada palabra pasa de tenue a plena según el avance (n = palabras, i = posición) */
+.nosotros-section .qw {
+  opacity: clamp(0.14, calc(var(--p) * (var(--n) + 3) - var(--i)), 1);
+  transition: opacity 0.15s linear;
+}
+.nosotros-section .qw--space {
+  opacity: 1;
+}
+/* La mariposa llega cuando la frase está completa */
+.nosotros-section .quote-bf {
+  display: block;
+  width: 3.25rem;
+  margin: 2rem auto 0;
+  opacity: clamp(0, calc(var(--p) * 5 - 3), 1);
+  transform: translateY(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * -2.5rem))
+    rotate(calc((1 - clamp(0, calc(var(--p) * 5 - 3), 1)) * 25deg));
+}

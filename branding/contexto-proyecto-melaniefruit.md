@@ -72,10 +72,10 @@ Es un logo **de relleno**, hecho solo para la maqueta y no pensado como identida
 5. **Eslogan** en español e inglés.
 6. **Imagen y tono:** cercano al campo y confiable para importadores. Debe sentirse **premium agroexportador** y no "frutería".
 
-## 7. Cómo se integra en la web (Angular)
+## 7. Cómo se integra en la web (Astro)
 
-- El nombre de la marca se cambia en un solo lugar: `src/app/core/config/brand.ts` (`BRAND_NAME`).
-- Los colores son tokens de Tailwind en `src/styles.css`, dentro de `@theme` (`--color-palta`, etc.).
-- El logo está como SVG en línea en `src/app/layout/header/header.html`, y el loader en `src/app/layout/loader/loader.ts`.
-- Los textos están en `public/i18n/es.json` y `en.json`.
+- El nombre de la marca se cambia en un solo lugar: `src/config/brand.ts` (`BRAND_NAME`).
+- Los colores son tokens de Tailwind en `src/styles/global.css`, dentro de `@theme` (`--color-palta`, etc.).
+- El logo está como SVG en línea en `src/components/layout/Header.tsx`, y el loader en `src/components/layout/Loader.tsx`.
+- Los textos están en `src/i18n/es.json` y `en.json` (y el resto de idiomas).
 - **Entregables ideales:** SVG optimizados (símbolo, horizontal y monocromo), favicon `.ico` o `.png`, e imagen Open Graph de 1200×630.

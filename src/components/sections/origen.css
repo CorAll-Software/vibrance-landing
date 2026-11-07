@@ -1,0 +1,455 @@
+/* ---------- Parte 1: "Nace en el desierto que florece" ---------- */
+.origen .origen-intro {
+  position: relative;
+  overflow: hidden;
+  padding-block: 6rem 5rem;
+}
+/* Montañas del Perú: se ven en los bordes y se difuminan hacia el centro */
+.origen .origen-mountains {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: min(60%, 34rem);
+  background: url('/svg/andes.svg') center bottom / 100% auto no-repeat;
+  opacity: 0.9;
+  --fade: linear-gradient(
+    to right,
+    #000 0%,
+    rgb(0 0 0 / 0.9) 8%,
+    rgb(0 0 0 / 0.5) 17%,
+    rgb(0 0 0 / 0.15) 26%,
+    transparent 33%,
+    transparent 67%,
+    rgb(0 0 0 / 0.15) 74%,
+    rgb(0 0 0 / 0.5) 83%,
+    rgb(0 0 0 / 0.9) 92%,
+    #000 100%
+  );
+  -webkit-mask-image: var(--fade);
+  mask-image: var(--fade);
+  pointer-events: none;
+}
+.origen .intro-grid {
+  position: relative; /* por encima de las montañas */
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+.origen .intro-title {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1.05;
+}
+.origen .intro-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.75rem;
+  max-width: 34rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  line-height: 1.5;
+}
+/* Aviso a productores aliados, bajo el último párrafo: mariposa de la marca + texto */
+.origen .partner-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-top: 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: rgb(30 59 47 / 0.85);
+}
+.origen .partner-bf {
+  flex: none;
+  width: 2rem;
+  margin-top: 0.1rem;
+  filter: drop-shadow(0 3px 5px rgb(20 42 32 / 0.2));
+}
+.origen .partner-mail {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Tarjeta con dos caras: se voltea (eje vertical) al pasar al segundo párrafo */
+.origen .origen-frame {
+  position: relative;
+  width: min(100%, 24rem);
+  aspect-ratio: 4 / 5;
+  max-height: 70svh;
+  margin-inline: auto;
+  perspective: 1400px;
+}
+.origen .flip-card {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.origen .flip-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 24px 60px rgb(20 42 32 / 0.25);
+  background: var(--color-palta);
+}
+.origen .flip-back {
+  transform: rotateY(180deg);
+}
+/* Mariposa grande que cruza la parte 1 (solo escritorio, la mueve origen.ts) */
+.origen .intro-bf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: clamp(5.5rem, 8vw, 8rem);
+  visibility: hidden;
+  filter: drop-shadow(0 10px 14px rgb(20 42 32 / 0.25));
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .origen .origen-intro {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-block: calc(72px + 2rem) 3rem; /* header fijo */
+  }
+  .origen .intro-grid {
+    width: 100%;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 5rem;
+  }
+  .origen .origen-frame {
+    margin-inline: 0 auto;
+  }
+}
+
+/* ---------- Parte 2: de dónde viene nuestra fruta (móvil y "reducir movimiento": una columna) ---------- */
+/* ---------- Base (móvil y "reducir movimiento"): todo en una columna ---------- */
+.origen .origen-pin {
+  position: relative;
+  overflow: hidden;
+  padding-block: 6rem 5rem;
+}
+/* Mapa del mundo de fondo: visible en los laterales, desvanecido hacia el centro */
+.origen .origen-world {
+  display: none;
+}
+.origen .origen-inner {
+  position: relative; /* por encima del fondo y de las mariposas viajeras */
+}
+.origen .origen-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.origen .origen-head {
+  display: grid;
+}
+.origen .origen-title {
+  /* Mismo tamaño que el título de la parte 1 */
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1.05;
+}
+.origen .beats {
+  display: none;
+}
+.origen .caption {
+  max-width: 34ch;
+  text-align: center;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: rgb(30 59 47 / 0.8);
+}
+.origen .origen-stage {
+  position: relative;
+  display: grid;
+  gap: 3rem;
+}
+.origen .stage-map {
+  width: 100%;
+  max-width: 24rem;
+  margin-inline: auto;
+}
+.origen .stage-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
+}
+/* En una columna, la frase va entre la cesta y los mercados */
+.origen .visual {
+  display: contents;
+}
+.origen .carrier {
+  order: 1;
+}
+.origen .caption {
+  order: 2;
+}
+.origen .markets {
+  order: 3;
+}
+
+/* Mariposa con la cesta colgando de dos hilos */
+.origen .carrier {
+  position: relative;
+  width: min(13rem, 60vw);
+  aspect-ratio: 240 / 320;
+}
+.origen .carrier-bob {
+  position: absolute;
+  inset: 0;
+  animation: bob 3.2s ease-in-out infinite alternate;
+}
+@keyframes bob {
+  from {
+    transform: translateY(-6px) rotate(-1.5deg);
+  }
+  to {
+    transform: translateY(6px) rotate(1.5deg);
+  }
+}
+.origen .carrier-strings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.origen .carrier-bf {
+  position: absolute;
+  left: 20%;
+  top: 0;
+  width: 60%;
+}
+.origen .carrier-basket {
+  position: absolute;
+  left: 0;
+  top: 25%;
+  width: 100%;
+}
+
+/* A dónde puede llegar */
+.origen .markets {
+  width: 100%;
+  max-width: 26rem;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  background: rgb(247 248 245 / 0.55);
+  border: 1px solid rgb(30 59 47 / 0.1);
+}
+
+.origen .flyer {
+  visibility: hidden;
+  z-index: 5;
+  filter: drop-shadow(0 6px 6px rgb(20 42 32 / 0.25));
+  will-change: transform;
+}
+.origen .flyer svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .origen .origen-pin {
+    padding-block: 8rem 6rem;
+  }
+  .origen .origen-world {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: url('/svg/world-dots.svg') center / max(110%, 1500px) auto no-repeat;
+    opacity: 0.85;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      rgb(0 0 0 / 0.35) 22%,
+      transparent 36%,
+      transparent 64%,
+      rgb(0 0 0 / 0.35) 78%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0%,
+      rgb(0 0 0 / 0.35) 22%,
+      transparent 36%,
+      transparent 64%,
+      rgb(0 0 0 / 0.35) 78%,
+      #000 100%
+    );
+    pointer-events: none;
+  }
+  .origen .origen-stage {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+/* ---------- Escena fija (escritorio): mismo media query que SCENE_MQ en origen.ts ---------- */
+@media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .origen .origen-pin {
+    height: 100svh;
+    padding-block: calc(72px + 3.25rem) 2rem; /* header fijo + aire para bajar el título */
+  }
+  .origen .origen-inner {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    row-gap: 1.5rem;
+  }
+
+  /* Cabecera: solo el título y el indicador de momentos */
+  .origen .origen-title {
+    font-size: clamp(2.25rem, 6vw, 3.5rem);
+  }
+  .origen .beats {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    max-width: 12rem;
+  }
+  .origen .beat {
+    position: relative;
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: rgb(30 59 47 / 0.18);
+    overflow: hidden;
+  }
+  .origen .beat-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--color-palta);
+  }
+  /* Escenario: dos columnas iguales, cada pieza centrada */
+  .origen .origen-stage {
+    min-height: 0;
+    align-items: center;
+  }
+  /* El mapa usa el alto disponible: (alto de pantalla − header, título y márgenes) ÷ 1,25
+     (proporción del mapa), contando la leyenda; con tope para no opacar el resto */
+  .origen .stage-map {
+    max-width: min(28rem, calc((100svh - 330px) * 0.8));
+  }
+  .origen .stage-right {
+    position: relative;
+    justify-content: center;
+    gap: 1.5rem;
+    height: 100%;
+  }
+  .origen .visual {
+    display: block;
+  }
+  .origen .carrier {
+    width: min(13.5rem, calc((100svh - 350px) * 0.42));
+  }
+  /* El panel de mercados aparece cuando la mariposa se lleva la cesta, centrado en la columna
+     (que tiene el mismo centro que el mapa): queda justo frente al mapa. Se centra con márgenes
+     y no con transform: GSAP anima su `y`. */
+  .origen .markets {
+    --w: min(30rem, 42vw);
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    width: var(--w);
+    max-width: none;
+    height: fit-content;
+    margin-block: auto;
+    margin-left: calc(var(--w) / -2);
+    padding: 1.25rem 1.5rem;
+    visibility: hidden;
+  }
+  .origen .caption {
+    width: 27rem;
+    max-width: 100%;
+    font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  }
+
+  /* Pantallas bajas: el panel de cierre se compacta para no subir sobre el título */
+  @media (max-height: 900px) {
+    .origen .markets {
+      padding: 1rem 1.25rem;
+    }
+    .origen .markets .origen-cta {
+      margin-top: 1rem;
+    }
+  }
+  /* Laptops bajas: centrado exacto quedaría pegado a la frase; sube un poco para dejarle aire */
+  @media (max-height: 820px) {
+    .origen .markets {
+      inset-block: 0 3rem;
+    }
+  }
+  @media (max-height: 760px) {
+    .origen .markets > p {
+      display: none;
+    }
+    .origen .markets h3 {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Mariposas viajeras con su estela punteada */
+  .origen .travelers {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .origen .travelers svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .origen .trail {
+    fill: none;
+    stroke: var(--color-palta);
+    stroke-opacity: 0.55;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-dasharray: 12 14;
+  }
+  .origen .trail-reveal {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 16;
+  }
+  .origen .traveler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 44px;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origen .carrier-bob {
+    animation: none;
+  }
+}
+
+/* ---------- Parte 1 fija (escritorio): mismo media query que SCENE_MQ en origen.ts ---------- */
+@media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .origen .origen-intro {
+    height: 100svh;
+    min-height: 0;
+    padding-block: calc(72px + 2rem) 2rem; /* header fijo */
+  }
+  /* Las montañas solo se desplazan un poco mientras la parte 1 está fija (ver origen.ts).
+     Capa de todo el alto y el dibujo con su proporción real, apoyado abajo: las cumbres no se cortan */
+  .origen .origen-mountains {
+    height: 100%;
+    background-size: max(100%, 1100px) auto;
+    will-change: transform;
+  }
+  /* Los párrafos se apilan en la misma celda: uno a la vez */
+  .origen .intro-lines {
+    display: grid;
+  }
+  .origen .intro-line {
+    grid-area: 1 / 1;
+  }
+}

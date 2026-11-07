@@ -1,0 +1,87 @@
+.app-modal {
+  margin: auto;
+  width: min(100% - 2rem, 40rem);
+  max-height: min(100dvh - 2rem, 54rem);
+  padding: 0;
+  border: 0;
+  border-radius: 1.5rem;
+  background: var(--color-niebla);
+  color: var(--color-palta);
+  /* El scroll vive en el panel (más abajo), para que quede dentro de las esquinas redondeadas */
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition:
+    opacity 240ms ease,
+    transform 300ms var(--ease-out-soft),
+    overlay 300ms allow-discrete,
+    display 300ms allow-discrete;
+}
+.app-modal--wide {
+  width: min(100% - 2rem, 72rem);
+}
+.app-modal[open] {
+  opacity: 1;
+  transform: none;
+}
+@starting-style {
+  .app-modal[open] {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+.app-modal::backdrop {
+  transition:
+    opacity 240ms ease,
+    overlay 300ms allow-discrete,
+    display 300ms allow-discrete;
+  opacity: 0;
+}
+.app-modal[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .app-modal[open]::backdrop {
+    opacity: 0;
+  }
+}
+.app-modal__panel {
+  position: relative;
+  max-height: min(100dvh - 2rem, 54rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Scroll discreto: delgado, sin carril visible y en el verde de la marca */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(30 59 47 / 0.3) transparent;
+}
+@supports not (scrollbar-color: auto) {
+  .app-modal__panel::-webkit-scrollbar {
+    width: 8px;
+  }
+  .app-modal__panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .app-modal__panel::-webkit-scrollbar-thumb {
+    background: rgb(30 59 47 / 0.3);
+    border-radius: 999px;
+  }
+}
+/* Fijo arriba a la derecha aunque se recorra el contenido (no ocupa espacio: margen negativo) */
+.app-modal__close {
+  position: sticky;
+  top: 1rem;
+  z-index: 2;
+  margin: 1rem 1rem -3.75rem auto;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.9);
+  color: var(--color-palta);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.12);
+  transition: transform 200ms var(--ease-out-soft);
+}
+.app-modal__close:hover {
+  transform: rotate(90deg);
+}

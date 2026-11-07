@@ -30,14 +30,8 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
+.astro/
 /coverage
-/libpeerconnection.log
-testem.log
-/typings
-__screenshots__/
 
 # System files
 .DS_Store
@@ -49,3 +43,6 @@ branding/_video-previews/
 
 # Videos comprimidos: se sirven desde el bucket R2 vibrance-prod-public (ver media.config.ts)
 public/media/**/*.mp4
+
+# Instrucciones locales de Claude Code
+CLAUDE.local.md

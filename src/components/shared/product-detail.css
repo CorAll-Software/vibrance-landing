@@ -1,0 +1,74 @@
+/* Móvil y tablet: foto arriba en banda, contenido debajo */
+.detail__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 34svh;
+  width: 100%;
+}
+.detail__body {
+  padding: 1.5rem 1.25rem 1.75rem;
+}
+@media (min-width: 640px) {
+  .detail__media {
+    aspect-ratio: 21 / 9;
+  }
+  .detail__body {
+    padding: 2rem 2.5rem 2.5rem;
+  }
+}
+/*
+ * Escritorio y laptops: dos columnas y todo a la vista sin scroll. Los datos van en una
+ * fila de 4 y los tamaños y espacios se ajustan a la altura de la pantalla (svh).
+ */
+@media (min-width: 1024px) {
+  .detail {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+  .detail__media {
+    aspect-ratio: auto;
+    height: auto;
+    max-height: none;
+    min-height: 100%;
+  }
+  .detail__body {
+    padding: clamp(1.25rem, 3.5svh, 2.5rem) clamp(1.5rem, 2.5vw, 2.5rem);
+  }
+  .detail__title {
+    font-size: clamp(1.75rem, 4.5svh, 2.25rem);
+  }
+  .detail__summary {
+    margin-top: 0.25rem;
+    font-size: 1rem;
+  }
+  .detail__facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 1.25rem;
+    margin-top: clamp(0.75rem, 2.5svh, 1.5rem);
+    font-size: 0.9375rem;
+    line-height: 1.35;
+  }
+  .detail__note {
+    margin-top: clamp(0.5rem, 1.5svh, 1rem);
+    font-size: 0.8125rem;
+  }
+  .detail__block {
+    margin-top: clamp(0.75rem, 2.2svh, 1.5rem);
+    padding-top: clamp(0.75rem, 2.2svh, 1.25rem);
+    font-size: 0.9375rem;
+  }
+  .detail__cta {
+    margin-top: clamp(1rem, 3svh, 2rem);
+  }
+}
+/* Laptops muy bajas (p. ej. 1366×768 con escala al 125 %): un poco más compacto */
+@media (min-width: 1024px) and (max-height: 620px) {
+  .detail__title {
+    font-size: 1.5rem;
+  }
+  .detail__summary,
+  .detail__facts,
+  .detail__block {
+    font-size: 0.875rem;
+  }
+}
