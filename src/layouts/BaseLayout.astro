@@ -132,14 +132,13 @@ const jsonLdHtml = JSON.stringify(jsonLd).replace(/</g, '\u003c');
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" as="image" href="/media/hero/hero-1-poster.webp" fetchpriority="high" />
 
-    <!-- Intro de marca: si se va a mostrar (primera visita), tapa la página desde el primer cuadro
-         para que no se vea el contenido antes de que el loader monte. Misma lógica que Loader.tsx. -->
-    <script is:inline define:vars={{ dev: import.meta.env.DEV }}>
+    <!-- Intro de marca (en cada carga, salvo con "reducir movimiento"): tapa la página desde el
+         primer cuadro para que no se vea el contenido antes de que el loader monte. Misma lógica
+         que Loader.tsx. -->
+    <script is:inline>
       try {
-        var seen = localStorage.getItem('intro-seen') === '1';
-        var force = dev || new URLSearchParams(location.search).has('intro');
         var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if ((!seen || force) && !reduced) document.documentElement.setAttribute('data-intro', '');
+        if (!reduced) document.documentElement.setAttribute('data-intro', '');
         if (!reduced) document.documentElement.setAttribute('data-hero-prep', '');
       } catch (e) {}
     </script>
