@@ -30,6 +30,7 @@ Landing de **Vibrance Inca Harvest S.A.C.** (Lima, Perú): comercializadora de f
 - [Cómo correrlo en local](#cómo-correrlo-en-local)
 - [Scripts](#scripts)
 - [Dónde cambiar el contenido](#dónde-cambiar-el-contenido)
+- [Renderizado y SEO](#renderizado-y-seo)
 - [Flujo de trabajo](#flujo-de-trabajo)
 - [Estado del proyecto](#estado-del-proyecto)
 
@@ -85,8 +86,8 @@ El logo cuenta la historia de Vibrance en un solo vistazo: el sol que sale sobre
 ```text
 vibrance-landing/
 ├── src/
-│   ├── pages/                 Páginas de Astro (index.astro)
-│   ├── layouts/               Layout base (head, metas, favicon)
+│   ├── pages/                 Una página por idioma (index.astro y [lang]/) y robots.txt
+│   ├── layouts/               Layout base (head: SEO, Open Graph, hreflang, JSON-LD, favicon)
 │   ├── components/
 │   │   ├── layout/            Header, loader, footer, selector de idioma e indicador de scroll
 │   │   ├── sections/          Hero, origen, nosotros, proceso, productos, datos, cómo trabajamos, contacto y cotización
@@ -100,7 +101,7 @@ vibrance-landing/
 │   ├── brand/                 Logo, favicon e íconos
 │   ├── media/                 Imágenes y video
 │   └── fonts/                 Tipografías propias
-└── branding/                  Materiales de marca y contexto del proyecto
+└── branding/                  Materiales de marca, contexto del proyecto y archivos para el bucket (branding/bucket/)
 ```
 
 ## Cómo correrlo en local
@@ -137,9 +138,37 @@ npm start          # http://localhost:4321
 | Cifras y certificaciones | `src/data/cifras.data.ts` |
 | Destinos y zonas de cultivo | `src/data/destinos.data.ts` y `mercados.data.ts` |
 | Imágenes y video | `src/config/media.config.ts` y `public/media/` |
+| Dominio, bucket de medios e imagen para redes | `src/config/site.ts` y `astro.config.mjs` |
+| "Powered by" del footer (CorAll) | `brand.ts` (`POWERED_BY`) |
 | Envío del formulario de cotización | `src/lib/quote.ts` |
 
 Lo provisional está marcado con `TODO: dato real de la clienta`.
+
+## Renderizado y SEO
+
+**Estrategia: SSG (generación estática).** `astro build` genera un HTML por idioma con todo el contenido ya escrito; nginx lo sirve tal cual y Preact solo se "hidrata" encima para las animaciones y la parte interactiva.
+
+| Opción | Por qué no / por qué sí |
+|---|---|
+| CSR (lo que había con Angular) | Buscadores y previews de redes recibían un HTML casi vacío. |
+| SSR | Exige un servidor Node para una landing cuyo contenido no cambia por visita. |
+| **SSG** | HTML completo sin depender de JavaScript, sin servidor y cacheable en CDN. |
+
+- **Una URL por idioma:** `/` (español, idioma por defecto y `x-default`), `/en/`, `/zh/`, `/fr/`, `/it/`, `/ar/`, `/he/`, `/ja/`, `/ko/`. Cada una tiene su `<title>`, `description`, `lang`/`dir` (árabe y hebreo en RTL), canónica y `hreflang` hacia las demás.
+- **El selector de idioma sigue cambiando en vivo**, y además actualiza la URL y la cabecera. En la raíz se respeta el idioma guardado o el del navegador; los buscadores siempre ven el idioma de la URL que piden.
+- **Redes:** Open Graph y Twitter Card con imagen de 1200×630 en el bucket.
+- **Datos estructurados (JSON-LD):** `Organization` (razón social, RUC, correo, Lima), `WebSite` y `WebPage`. Sin teléfono, como pidió la clienta.
+- **`sitemap-index.xml`** (con `hreflang` de cada idioma) y **`robots.txt`** se generan en el build.
+- **Dominio:** sale de `site` en `astro.config.mjs` (hoy `https://vibrance.corall.dev`, porque la clienta aún no compra dominio). Cuando lo tenga, se cambia ahí o se compila con la variable `SITE_URL` (en Docker, `--build-arg SITE_URL=…`).
+
+### Imágenes en el bucket
+
+Las imágenes nuevas no van en `public/`: se suben al bucket R2 `vibrance-prod-public` (`https://media-vibrance.corall.dev`). `node branding/bucket/generar.mjs` las genera en `branding/bucket/` con la misma estructura de carpetas del bucket:
+
+| Archivo | Uso |
+|---|---|
+| `seo/og-vibrance.jpg` | Imagen para redes (Open Graph / Twitter) |
+| `brand/corall.webp` | Logo de CorAll del "powered by" del footer |
 
 ## Flujo de trabajo
 
