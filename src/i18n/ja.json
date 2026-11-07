@@ -1,0 +1,409 @@
+{
+  "_comment": "TODO: revisar con un traductor nativo — traducción inicial de la versión en inglés.",
+  "seo": {
+    "title": "{{brand}} · 輸入業者向けに厳選したペルー産フルーツ",
+    "description": "ブルーベリー、アボカド、ぶどう、マンゴー、マンダリン、生姜を海外の輸入業者・卸売業者へ届けるペルーの商社です。"
+  },
+  "common": {
+    "close": "閉じる",
+    "skip": "本文へスキップ",
+    "loading": "読み込み中",
+    "placeholderNote": "サンプルデータです（確認待ち）。",
+    "skip_intro": "イントロをスキップ",
+    "whatsapp": "WhatsAppでお問い合わせ",
+    "whatsappMessage": "こんにちは。Vibranceのペルー産果物の見積もりを希望します。",
+    "buyers": "バイヤー",
+    "partners": "提携生産者"
+  },
+  "nav": {
+    "label": "メインナビゲーション",
+    "sections": "ページのセクション",
+    "origen": "産地",
+    "proceso": "プロセス",
+    "productos": "製品",
+    "datos": "データ",
+    "contacto": "お問い合わせ",
+    "nosotros": "私たちについて",
+    "como": "取引の流れ",
+    "cta": "見積もりを依頼",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "switchLang": "言語を切り替える",
+    "home": "ホーム"
+  },
+  "hero": {
+    "title": "世界のために選んだペルーのフルーツ",
+    "subtitle": "生産者を選び、品質を管理し、ブルーベリー、アボカド、ぶどう、マンゴー、マンダリン、生姜の輸出を手がけています。",
+    "ctaProducts": "製品を見る",
+    "ctaQuote": "見積もりを依頼",
+    "scroll": "スクロールして見る"
+  },
+  "origen": {
+    "heading": "花ひらく砂漠から",
+    "lines": [
+      "太平洋とアンデス山脈のあいだに、太陽と山の水が果実に味と色、そして良い日持ちを与える谷があります。",
+      "私たちは栽培しません。選びます。基準を満たす沿岸部と中央ジャングルの生産者と協力し、輸入業者はペルーの複数の果物と産地をひとつの窓口で扱えます。"
+    ],
+    "imageAlt": "ペルー沿岸の砂漠に広がる緑の農地",
+    "mapTitle": "フルーツの産地",
+    "mapText": "それぞれの作物に適した気候を持つ、これらの地域の生産者から調達しています。",
+    "mapLabel": "製品の産地を示すペルーの地図",
+    "zonas": {
+      "piura": {
+        "name": "ピウラ",
+        "crops": "マンゴー、ぶどう"
+      },
+      "la_libertad": {
+        "name": "ラ・リベルタ",
+        "crops": "ブルーベリー、アボカド"
+      },
+      "lima": {
+        "name": "リマ",
+        "crops": "マンダリン、アボカド"
+      },
+      "junin": {
+        "name": "フニン",
+        "crops": "生姜、マンダリン"
+      },
+      "ica": {
+        "name": "イカ",
+        "crops": "ぶどう、アボカド、マンダリン"
+      }
+    },
+    "regions": {
+      "costa": "海岸",
+      "sierra": "アンデス山地",
+      "selva": "アマゾン"
+    },
+    "ports": {
+      "paita": "パイタ",
+      "callao": "カヤオ"
+    },
+    "legendPort": "積出港",
+    "legendRoute": "港へのルート",
+    "treeLabel": "ブルーベリー、アボカド、ぶどう、マンゴー、みかん、しょうがが実り、Vibranceのかごに落ちるイラストの木。",
+    "closeTitle": "この産地から、あなたの食卓へ",
+    "closeText": "必要な果物をお知らせください。供給状況と貴国への輸入可否を確認いたします。",
+    "partner": "生産者の方で、私たちのパートナーになりませんか？適正な価格と透明性のある取引で、あなたの果物を世界へお届けします。ご連絡先："
+  },
+  "proceso": {
+    "heading": "生産者から御社の倉庫まで",
+    "intro": "すべての貨物が揃って、期日どおりに、書類も整った状態で届くよう、5つの工程を管理しています。",
+    "progress": "ステップ {{current}} / {{total}}",
+    "steps": {
+      "productores": {
+        "title": "生産者の選定",
+        "text": "品質、トレーサビリティ、各市場の要件への適合性で生産者を選びます。",
+        "alt": "提携生産者の畑"
+      },
+      "calidad": {
+        "title": "品質管理",
+        "text": "輸出を承認する前に、各ロットのサイズ、糖度（Brix）、熟度、状態を確認します。",
+        "alt": "品質検査中のフルーツ"
+      },
+      "empaque": {
+        "title": "梱包",
+        "text": "認証済みの梱包施設で、お客様ごとの形式とラベル表示に合わせて梱包を手配します。",
+        "alt": "梱包施設のフルーツの箱"
+      },
+      "frio": {
+        "title": "コールドチェーン",
+        "text": "予冷したフルーツを、港または空港まで温度管理したまま輸送します。",
+        "alt": "温度管理された冷蔵室"
+      },
+      "envio": {
+        "title": "書類と出荷",
+        "text": "植物検疫証明書・原産地証明書と通関書類を手配し、海上または航空で出荷します。",
+        "alt": "出荷トラックへの果物ケースの積み込み"
+      }
+    }
+  },
+  "productos": {
+    "heading": "取扱製品",
+    "intro": "サイズ別に選別し、各市場に合わせて梱包したペルー産の生鮮品です。",
+    "viewDetail": "{{name}}の詳細を見る",
+    "season": "シーズン",
+    "varieties": "品種",
+    "sizes": "サイズ",
+    "presentations": "荷姿",
+    "packaging": "梱包",
+    "availability": "供給時期",
+    "availableIn": "供給月：{{months}}",
+    "available": "供給あり",
+    "notAvailable": "収穫なし",
+    "quoteThis": "{{name}}の見積もりを依頼",
+    "months": [
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月",
+      "6月",
+      "7月",
+      "8月",
+      "9月",
+      "10月",
+      "11月",
+      "12月"
+    ],
+    "monthsLong": [
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月",
+      "6月",
+      "7月",
+      "8月",
+      "9月",
+      "10月",
+      "11月",
+      "12月"
+    ],
+    "items": {
+      "arandano": {
+        "name": "ブルーベリー",
+        "summary": "しっかりとして甘く、大粒。",
+        "season": "8月〜1月",
+        "varieties": "Biloxi, Ventura, Emerald",
+        "presentations": "125 g・170 g・500 g クラムシェル",
+        "packaging": "1.5 kg・3.7 kg ケース",
+        "alt": "新鮮なブルーベリー"
+      },
+      "palta": {
+        "name": "ハスアボカド",
+        "summary": "クリーミーで、熟すと皮が黒くなります。",
+        "season": "3月〜9月",
+        "varieties": "Hass",
+        "presentations": "バラまたはネット入りの生果",
+        "packaging": "4 kg・10 kg ケース",
+        "alt": "半分に切ったハスアボカド"
+      },
+      "uva": {
+        "name": "生食用ぶどう",
+        "summary": "シャキッとした房、種ありと種なし。",
+        "season": "11月〜4月",
+        "varieties": "Red Globe, Sweet Globe, Autumn Crisp",
+        "presentations": "袋・クラムシェル",
+        "packaging": "8.2 kg ケース",
+        "alt": "緑のぶどうの房"
+      },
+      "mango": {
+        "name": "マンゴー",
+        "summary": "繊維が少なく、香り豊かで鮮やかな色。",
+        "season": "11月〜3月",
+        "varieties": "Kent, Edward",
+        "presentations": "サイズ選別済みの生果",
+        "packaging": "4 kg ケース",
+        "alt": "熟したマンゴー"
+      },
+      "mandarina": {
+        "name": "マンダリン",
+        "summary": "皮がむきやすく、果汁たっぷりで色鮮やか。",
+        "season": "3月〜10月",
+        "varieties": "W. Murcott, Tango, Satsuma",
+        "presentations": "サイズ選別済みの生果",
+        "packaging": "10 kg ケース",
+        "alt": "新鮮なマンダリン"
+      },
+      "kion": {
+        "name": "生姜",
+        "summary": "香り高くピリッとした根茎。洗浄・選別済み。",
+        "season": "通年",
+        "varieties": "黄生姜",
+        "presentations": "生、洗浄・風乾済み",
+        "packaging": "13.6 kg（30 lb）ケース",
+        "alt": "新鮮な生姜"
+      }
+    },
+    "markets": "検疫プロトコルが有効な市場",
+    "marketsNote": "その他の仕向地はお問い合わせください。見積もり前にプロトコルを確認します。",
+    "quoteNote": "品種・サイズ・荷姿はお見積もりごとに調整します。"
+  },
+  "datos": {
+    "heading": "数字で見る私たちの供給",
+    "intro": "ペルーの複数の製品を、一年を通じてひとつの窓口で調達できます。",
+    "stats": {
+      "productos": {
+        "label": "生鮮品"
+      },
+      "meses": {
+        "label": "供給のある月数（年間）"
+      },
+      "regiones": {
+        "label": "産地"
+      },
+      "mercados": {
+        "label": "ペルー産果物の植物検疫プロトコルが有効な市場"
+      }
+    },
+    "mapTitle": "輸出できる市場",
+    "mapText": "少なくとも1つの製品で植物検疫プロトコルが有効な市場です。各ポイントにカーソルを合わせると製品数が表示されます。",
+    "mapLabel": "製品を輸出できる市場を示す世界地図",
+    "destinos": {
+      "usa": "アメリカ合衆国",
+      "canada": "カナダ",
+      "mexico": "メキシコ",
+      "ue": "欧州連合",
+      "reino_unido": "イギリス",
+      "china": "中国",
+      "corea": "韓国",
+      "japon": "日本"
+    },
+    "certTitle": "認証",
+    "marketProducts": "輸出可能な製品：{{n}}",
+    "accessTitle": "製品別の市場アクセス",
+    "accessText": "すべての製品がすべての国に輸出できるわけではありません。この表はプロトコルが有効な市場を示しています。それ以外の場合は、見積もり前に状況を確認します。",
+    "accessCaption": "製品ごとの植物検疫プロトコルが有効な市場",
+    "accessProduct": "製品",
+    "accessYes": "輸出可",
+    "accessAsk": "要相談",
+    "certText": "BRCGS・HACCP・GMPの認証を受け、SENASAの認可とFDAへの登録を済ませた選果・包装施設と提携しています。各出荷の施設と認証は、お見積もりの際にご案内します。",
+    "certs": {
+      "brcgs": {
+        "name": "BRCGS",
+        "desc": "食品安全"
+      },
+      "haccp": {
+        "name": "HACCP",
+        "desc": "重要管理点"
+      },
+      "bpm": {
+        "name": "GMP",
+        "desc": "適正製造規範"
+      },
+      "senasa": {
+        "name": "SENASA",
+        "desc": "認可施設"
+      },
+      "fda": {
+        "name": "FDA",
+        "desc": "登録施設（米国）"
+      },
+      "eti": {
+        "name": "Ethical Trading Initiative",
+        "desc": "エシカル・トレード"
+      }
+    }
+  },
+  "nosotros": {
+    "kicker": "私たちについて",
+    "heading": "すべての出荷に、法的な裏付けと保険を",
+    "bio": "法務のバックグラウンドを持ち、リスク管理と保険の分野で15年以上の経験を持つチームです。",
+    "ceoQuote": "すべての出荷に、ペルーの大地への愛が息づいています。法的な裏付けと保険付きで。",
+    "signature": "Vibrance Inca Harvest チーム",
+    "illustrationAlt": "ブランドのイラスト：太陽、鳥、蝶、ミツバチに囲まれた木",
+    "pillars": {
+      "contracts": "生産者・商社・輸入者の間の明確な契約",
+      "insurance": "すべての出荷に貨物輸送保険",
+      "credit": "信用状と信用保険の経験"
+    },
+    "quote": "Vibranceは、愛で振動する会社です。",
+    "vibeIntro": "私たちを動かすもの",
+    "storyTitle": "Vibranceの誕生",
+    "story": {
+      "p1": "Vibrance Inca Harvestは、ありったけの愛情と期待から生まれ、輸出に秩序と透明性をもたらし、ほかの輸出業者を支えるという明確な目的を持っています。",
+      "p2": "大地と神が授けてくれる果実に対して、農家や農園主がより公正な価格を受け取れるようにしたいと考えています。",
+      "p3": "私たちは愛の波動とともに生まれました。世界に対してとても寛大なペルーの人々の心から前向きな変化を生み出し、同時に、人と事業の両面に良い影響を与える収益性のある企業でありたいと願っています。"
+    }
+  },
+  "como": {
+    "heading": "取引の流れ",
+    "intro": "見積もりと出荷のための基本条件を、最初から明確にお伝えします。",
+    "items": {
+      "incoterms": {
+        "q": "インコタームズ",
+        "a": "FOB、CFR、CIFに対応しています。"
+      },
+      "volume": {
+        "q": "最小ロット",
+        "a": "1注文につき40フィートのリーファーコンテナ1本。航空便は商品により異なります。"
+      },
+      "payment": {
+        "q": "お支払い方法",
+        "a": "信用状、または前払い80%・残金20%。その他の条件はご相談ください。"
+      },
+      "port": {
+        "q": "出荷港",
+        "a": "カヤオ港(Callao)。"
+      }
+    },
+    "inco": {
+      "hint": "インコタームズを選ぶと、Vibrance が担当する区間がわかります。",
+      "insurance": "海上保険",
+      "us": "Vibrance が負担",
+      "you": "お客様が負担",
+      "stops": {
+        "plant": "選果・梱包施設",
+        "port": "カヤオ港",
+        "board": "本船上",
+        "dest": "お客様の仕向港"
+      },
+      "fob": {
+        "name": "Free On Board",
+        "desc": "カヤオ港で本船に積み込むまでを担当します。それ以降の運賃と保険はお客様のご負担です。"
+      },
+      "cfr": {
+        "name": "Cost and Freight",
+        "desc": "仕向港までの海上運賃も当社が負担します。危険は貨物が本船に積み込まれた時点でお客様に移転します。"
+      },
+      "cif": {
+        "name": "Cost, Insurance and Freight",
+        "desc": "仕向港までの海上運賃と海上保険を当社が負担します。危険は貨物が本船に積み込まれた時点でお客様に移転します。"
+      }
+    }
+  },
+  "contacto": {
+    "slogan": "ペルーの最高を、ひと箱ごとに。",
+    "text": "ご希望の果物、数量、仕向地をお知らせください。ご提案をお送りします。",
+    "cta": "見積もりを依頼"
+  },
+  "form": {
+    "title": "見積もりを依頼",
+    "intro": "必要事項をご記入ください。48営業時間以内にご返信します。",
+    "required": "は必須項目です",
+    "name": "お名前",
+    "company": "会社名",
+    "country": "仕向国",
+    "email": "メールアドレス",
+    "phone": "電話 / WhatsApp",
+    "volume": "数量またはコンテナ本数",
+    "incoterm": "インコタームズ",
+    "incotermPlaceholder": "インコタームズを選択",
+    "destPort": "仕向港",
+    "shipDate": "出荷予定日",
+    "product": "ご希望の製品",
+    "productPlaceholder": "製品を選択",
+    "productSeveral": "複数の製品",
+    "message": "メッセージ",
+    "messagePlaceholder": "おおよその数量、仕向地、時期など…",
+    "errors": {
+      "required": "この項目を入力してください。",
+      "email": "有効なメールアドレスを入力してください（例：name@company.com）。",
+      "pattern": "有効な電話番号を入力してください(例:+51 999 999 999)。",
+      "summary": "{{n}}件の項目を修正してください。赤いメッセージをご確認ください。",
+      "privacy": "送信するにはプライバシーポリシーへの同意が必要です。"
+    },
+    "submit": "送信する",
+    "sending": "送信中…",
+    "successTitle": "送信しました",
+    "successText": "お問い合わせを受け付けました。48営業時間以内に {{email}} へ、貴国向けの最新プロトコルとあわせてご連絡します。",
+    "errorTitle": "送信できませんでした",
+    "errorText": "接続の問題により送信できませんでした。インターネット接続を確認して再度お試しください。入力内容は失われません。",
+    "retry": "再試行",
+    "again": "別の依頼を送る",
+    "privacyBefore": "",
+    "privacyLink": "プライバシーポリシー",
+    "privacyAfter": "を読み、同意します。",
+    "successTextPhone": "お問い合わせを受け付けました。48営業時間以内に {{email}} または {{phone}} へ、貴国向けの最新プロトコルとあわせてご連絡します。"
+  },
+  "footer": {
+    "tagline": "世界の輸入業者・卸売業者向けのペルー産生鮮フルーツ商社。",
+    "contact": "お問い合わせ",
+    "follow": "フォロー",
+    "language": "言語",
+    "privacy": "プライバシーポリシー",
+    "rights": "All rights reserved.",
+    "poweredBy": "制作"
+  }
+}

@@ -1,0 +1,55 @@
+.butterfly {
+  display: block;
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+.butterfly .bf-inner {
+  position: absolute;
+  inset: 0;
+  perspective: 600px;
+}
+.butterfly .wing {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+.butterfly .wing--r {
+  left: 50%;
+  transform-origin: 0 50%;
+  animation: bf-flap-r 0.22s ease-in-out infinite alternate;
+}
+.butterfly .wing--l {
+  right: 50%;
+  transform-origin: 100% 50%;
+  animation: bf-flap-l 0.22s ease-in-out infinite alternate;
+}
+@keyframes bf-flap-r {
+  to {
+    transform: rotateY(64deg);
+  }
+}
+@keyframes bf-flap-l {
+  to {
+    transform: rotateY(-64deg);
+  }
+}
+.butterfly .body {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12.5%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+}
+.butterfly svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+@media (prefers-reduced-motion: reduce) {
+  .butterfly .wing {
+    animation: none;
+  }
+}
