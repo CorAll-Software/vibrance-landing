@@ -47,7 +47,7 @@ export function tList(key: string): string[] {
   return Array.isArray(value) ? (value as string[]) : [];
 }
 
-/** Devuelve un traductor con prefijo, equivalente a `*transloco="let t; prefix: 'x'"`. */
+/** Devuelve un traductor con prefijo opcional (`useT('origen')` → `t('title')` = `origen.title`). */
 export function useT(prefix?: string) {
   // Leer lang/dicts aquí suscribe al componente a los cambios de idioma
   void lang.value;

@@ -11,8 +11,7 @@
   }
 }
 
-/* Antes de que cargue el JS el titular queda oculto (como en la versión Angular, que no pintaba
-   nada hasta arrancar): la entrada de Hero.tsx lo anima y retira este atributo. */
+/* Antes de que cargue el JS el titular queda oculto: la entrada de Hero.tsx lo anima y retira este atributo. */
 html[data-hero-prep] .word,
 html[data-hero-prep] .hero-fade {
   opacity: 0;

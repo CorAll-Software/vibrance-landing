@@ -71,7 +71,7 @@ const MAX_LENGTH: Partial<Record<FieldName, number>> = {
   destPort: 80,
 };
 
-// Mismo patrón de correo que Validators.email de Angular
+// Patrón de correo (RFC 5322 simplificado)
 const EMAIL =
   /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 // + opcional, luego dígitos, espacios, paréntesis, puntos o guiones (al menos 6 dígitos)

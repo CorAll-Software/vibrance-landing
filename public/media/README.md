@@ -11,8 +11,8 @@ Ahí están, por sección, la imagen y el video (ruta local o link directo `http
 Recomendado para videos: 1080p (Full HD), sin audio. Un link 4K pesa 10–20 veces más y
 hace lenta la carga, sobre todo en celular.
 
-Los originales en 4K que se guarden en `public/media/videos/` **no se publican** (excluidos en
-`angular.json` → assets → ignore) ni se suben a git (`.gitignore`).
+Los originales en 4K que se guarden en `public/media/videos/` **no se publican** (excluidos de la
+imagen en `.dockerignore`) ni se suben a git (`.gitignore`).
 
 ## Videos del hero en 4 calidades
 
