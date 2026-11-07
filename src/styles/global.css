@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@source not "../../legacy-angular";
 
 /* Outfit (wordmark de Vibrance), servida desde public/fonts para no agregar dependencias */
 @font-face {
