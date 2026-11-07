@@ -1,0 +1,19 @@
+.scroll-cue span {
+  animation: cue 1.8s var(--ease-out-soft) infinite;
+}
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Antes de que cargue el JS el titular queda oculto (como en la versión Angular, que no pintaba
+   nada hasta arrancar): la entrada de Hero.tsx lo anima y retira este atributo. */
+html[data-hero-prep] .word,
+html[data-hero-prep] .hero-fade {
+  opacity: 0;
+}

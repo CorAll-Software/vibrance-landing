@@ -1,0 +1,59 @@
+---
+import '@fontsource-variable/hanken-grotesk/index.css';
+import '../styles/global.css';
+import es from '../i18n/es.json';
+import { BRAND_NAME } from '../config/brand';
+
+const title = es.seo.title.replace('{{brand}}', BRAND_NAME);
+const description = es.seo.description;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1E3B2F" />
+
+    <!-- Open Graph (se actualiza por idioma desde src/lib/i18n.ts) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/media/campo.webp" />
+    <meta property="og:locale" content="es_PE" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" as="image" href="/media/hero/hero-1-poster.webp" fetchpriority="high" />
+
+    <!-- Intro de marca: si se va a mostrar (primera visita), tapa la página desde el primer cuadro
+         para que no se vea el contenido antes de que el loader monte. Misma lógica que Loader.tsx. -->
+    <script is:inline define:vars={{ dev: import.meta.env.DEV }}>
+      try {
+        var seen = localStorage.getItem('intro-seen') === '1';
+        var force = dev || new URLSearchParams(location.search).has('intro');
+        var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if ((!seen || force) && !reduced) document.documentElement.setAttribute('data-intro', '');
+        if (!reduced) document.documentElement.setAttribute('data-hero-prep', '');
+      } catch (e) {}
+    </script>
+    <style is:inline>
+      html[data-intro] body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: radial-gradient(circle at 50% 46%, #26493b 0%, #1e3b2f 55%);
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

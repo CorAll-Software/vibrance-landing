@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-# Dokploy: build de Angular y nginx sirviendo dist/ en el puerto 8080.
+# Dokploy: build estático de Astro (SSG) y nginx sirviendo dist/ en el puerto 8080.
 # Los videos no van en la imagen: se sirven desde el bucket R2 vibrance-prod-public.
 
 FROM node:24-alpine AS build
@@ -12,6 +12,6 @@ RUN npm run build \
 
 FROM nginxinc/nginx-unprivileged:1.29-alpine-slim
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/MelanieFruit/browser /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 8080
 HEALTHCHECK --interval=15s --timeout=3s --retries=5 CMD wget -qO- http://127.0.0.1:8080/ >/dev/null || exit 1

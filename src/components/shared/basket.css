@@ -1,0 +1,21 @@
+.basket {
+  display: block;
+  position: relative;
+  aspect-ratio: 1;
+}
+.basket .basket-fruit {
+  width: var(--fruit-size);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  filter: drop-shadow(0 3px 3px rgb(20 42 32 / 0.25));
+}
+.basket .basket-fruit svg {
+  width: 100%;
+  height: 100%;
+}
+.basket .label {
+  font-family: var(--font-brand, inherit);
+  font-size: 15px;
+  font-weight: 600;
+  fill: #1e3b2f;
+}
