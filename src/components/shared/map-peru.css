@@ -1,0 +1,143 @@
+.map-peru {
+  display: block;
+}
+
+.map-peru .port-label {
+  font-family: var(--font-sans, inherit);
+  font-size: 13px;
+  font-weight: 600;
+  fill: #1e3b2f;
+  paint-order: stroke;
+  stroke: rgb(216 196 155 / 0.9);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+/* Pin de cada región: misma línea que las alas (borde oscuro grueso, luz arriba a la izquierda) */
+/* El tamaño del pin acompaña al del mapa (en mapas pequeños no se pisan entre sí) */
+.map-peru .map-box {
+  container-type: inline-size;
+  --pin: clamp(1.75rem, 11cqw, 2.5rem);
+}
+.map-peru .anchor {
+  width: var(--pin);
+  height: var(--pin);
+  /* La punta del pin queda sobre la región */
+  translate: -50% calc(-100% - var(--pin) * 0.18);
+}
+.map-peru .pin {
+  position: absolute;
+  inset: 0;
+  border: 3px solid #1e3b2f;
+  border-radius: 50% 50% 50% 0;
+  background: radial-gradient(circle at 35% 30%, #fffdf6 0%, #f6ecd4 60%, #e6d3a8 100%);
+  box-shadow: 0 6px 14px rgb(20 42 32 / 0.3);
+  rotate: -45deg;
+  transition:
+    translate 250ms var(--ease-out-soft, ease),
+    box-shadow 250ms ease;
+}
+.map-peru .pin__icon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  rotate: 45deg;
+}
+/* La fruta queda centrada en el pin: el contenedor y el SVG llenan el mismo espacio
+   (antes el SVG medía el 70 % de un contenedor de 28 px y se corría arriba a la izquierda).
+   El 56 % conserva el tamaño que ya tenían. */
+.map-peru .pin__icon > span {
+  display: block;
+  width: 56%;
+  height: 56%;
+}
+.map-peru .pin__icon svg {
+  width: 100%;
+  height: 100%;
+}
+.map-peru .marker:hover .pin,
+.map-peru .marker:focus-visible .pin,
+.map-peru .zone.is-open .pin {
+  translate: 0 -3px;
+  box-shadow: 0 10px 18px rgb(20 42 32 / 0.32);
+}
+.map-peru .marker:focus-visible {
+  outline: none;
+}
+.map-peru .marker:focus-visible .pin {
+  outline: 3px solid var(--color-mandarina);
+  outline-offset: 2px;
+}
+/* Mini tarjeta */
+.map-peru .zone:hover,
+.map-peru .zone:focus-within,
+.map-peru .zone.is-open {
+  z-index: 10;
+}
+.map-peru .card {
+  bottom: 100%;
+  margin-bottom: 0.75rem;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease,
+    visibility 0s linear 200ms;
+}
+/* Puente invisible entre el marcador y la tarjeta: el cursor puede pasar a la tarjeta sin cerrarla */
+.map-peru .card::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 0.75rem;
+}
+.map-peru .card.card--below::after {
+  top: auto;
+  bottom: 100%;
+}
+.map-peru .card.card--below {
+  bottom: auto;
+  top: 100%;
+  margin-bottom: 0;
+  margin-top: 0.75rem;
+  transform: translateY(-6px);
+}
+.map-peru .card[data-align='center'] {
+  left: 50%;
+  margin-left: -8rem;
+}
+.map-peru .card[data-align='start'] {
+  left: -0.75rem;
+}
+.map-peru .card[data-align='end'] {
+  right: -0.75rem;
+}
+.map-peru .zone:hover .card,
+.map-peru .zone.is-open .card {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+/* Cada fruta de la tarjeta abre su detalle */
+.map-peru .fruit-link {
+  transition: background-color 200ms ease;
+}
+.map-peru .fruit-link:hover,
+.map-peru .fruit-link:focus-visible {
+  background: rgb(30 59 47 / 0.08);
+}
+.map-peru .fruit-link:focus-visible {
+  outline: 2px solid var(--color-mandarina);
+  outline-offset: -2px;
+}
+.map-peru .fruit-link__arrow {
+  color: rgb(30 59 47 / 0.45);
+  transition: transform 200ms ease;
+}
+.map-peru .fruit-link:hover .fruit-link__arrow {
+  transform: translateX(2px);
+}
