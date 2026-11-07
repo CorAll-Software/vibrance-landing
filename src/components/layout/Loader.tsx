@@ -16,7 +16,6 @@ import {
 
 gsap.registerPlugin(MotionPathPlugin);
 
-const SEEN_KEY = 'intro-seen';
 const GLINTS = Array.from({ length: 10 }, (_, i) => i);
 
 /** Desplazamiento (desde el centro de la pantalla) y escala para posarse en el símbolo. */
@@ -57,7 +56,7 @@ function burst(glints: Element[]): void {
 }
 
 /**
- * Intro de marca (≈3,7 s, solo la primera vez que se visita la web):
+ * Intro de marca (≈3,7 s, en cada carga de la página):
  * la semilla se asienta, se agrieta y se abre con luz; sale una mariposa que vuela
  * hasta el sol del logo en el header y se funde con él; luego entra la página.
  *
@@ -74,19 +73,10 @@ export function Loader() {
   const finished = useRef(false);
   const ctxRef = useRef<gsap.Context | undefined>(undefined);
 
-  // Decide si se muestra (solo en el cliente, tras hidratar)
+  // Decide si se muestra (solo en el cliente, tras hidratar): en cada carga, salvo con
+  // "reducir movimiento"
   useEffect(() => {
-    let seen = false;
-    try {
-      seen = localStorage.getItem(SEEN_KEY) === '1';
-      localStorage.setItem(SEEN_KEY, '1');
-    } catch {
-      /* almacenamiento no disponible */
-    }
-    // En desarrollo (astro dev) o con ?intro en la URL se muestra siempre, aunque ya se haya visto
-    const force = import.meta.env.DEV || new URLSearchParams(location.search).has('intro');
-
-    if ((seen && !force) || scroll.reducedMotion.value) {
+    if (scroll.reducedMotion.value) {
       introDone.value = true;
       document.documentElement.removeAttribute('data-intro');
       return;
