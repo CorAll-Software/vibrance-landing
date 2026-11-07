@@ -1,4 +1,4 @@
-import { LEGAL_NAME, RUC } from '../core/config/brand';
+import { LEGAL_NAME, RUC } from '../config/brand';
 
 /**
  * Texto de la política de privacidad (anexo del tercer informe de la clienta).

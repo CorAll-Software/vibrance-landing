@@ -1,4 +1,4 @@
-import { PRODUCTOS } from '../core/config/media.config';
+import { PRODUCTOS } from '../config/media.config';
 
 /**
  * Catálogo de productos: arándano, palta, uva, mango, mandarina y kion

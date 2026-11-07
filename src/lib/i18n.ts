@@ -1,11 +1,12 @@
 import { signal, computed } from '@preact/signals';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import es from '../i18n/es.json';
 import { AVAILABLE_LANGS, BRAND_NAME, DEFAULT_LANG, LANG_META, type Lang } from '../config/brand';
 
 type Dict = Record<string, unknown>;
 
 const STORAGE_KEY = 'lang';
-const loaders = import.meta.glob<{ default: Dict }>('../i18n/*.json');
+const loaders = import.meta.glob<{ default: Dict }>(['../i18n/*.json', '!../i18n/es.json']);
 
 /** Idioma activo. Empieza en el idioma por defecto para que la hidratación coincida con el HTML estático. */
 export const lang = signal<Lang>(DEFAULT_LANG);
@@ -93,9 +94,7 @@ function updateHead(l: Lang): void {
   setMeta('property', 'og:description', description);
   setMeta('property', 'og:locale', meta.ogLocale);
   // Los textos cambian de largo (y de dirección): recalcula las animaciones por scroll
-  import('gsap/ScrollTrigger').then(({ ScrollTrigger }) =>
-    requestAnimationFrame(() => ScrollTrigger.refresh()),
-  );
+  requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
 /** Cambia el idioma en tiempo real (9 idiomas, incluidos RTL) y actualiza título, metas, lang y dir. */

@@ -31,6 +31,26 @@ const description = es.seo.description;
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" as="image" href="/media/hero/hero-1-poster.webp" fetchpriority="high" />
+
+    <!-- Intro de marca: si se va a mostrar (primera visita), tapa la página desde el primer cuadro
+         para que no se vea el contenido antes de que el loader monte. Misma lógica que Loader.tsx. -->
+    <script is:inline define:vars={{ dev: import.meta.env.DEV }}>
+      try {
+        var seen = localStorage.getItem('intro-seen') === '1';
+        var force = dev || new URLSearchParams(location.search).has('intro');
+        var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if ((!seen || force) && !reduced) document.documentElement.setAttribute('data-intro', '');
+      } catch (e) {}
+    </script>
+    <style is:inline>
+      html[data-intro] body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 99;
+        background: radial-gradient(circle at 50% 46%, #26493b 0%, #1e3b2f 55%);
+      }
+    </style>
   </head>
   <body>
     <slot />

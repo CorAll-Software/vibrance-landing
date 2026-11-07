@@ -1,4 +1,4 @@
-import { PROCESO, VideoSrc } from '../core/config/media.config';
+import { PROCESO, type VideoSrc } from '../config/media.config';
 
 /**
  * Etapas del proceso de una comercializadora (la empresa no cultiva): del productor al importador.

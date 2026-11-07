@@ -1,5 +1,5 @@
-import { DESTINATIONS, MarketId } from './destinos.data';
-import { PRODUCTS, ProductId } from './productos.data';
+import { DESTINATIONS, type MarketId } from './destinos.data';
+import { PRODUCTS, type ProductId } from './productos.data';
 
 /**
  * Acceso fitosanitario por producto y mercado.
