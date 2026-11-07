@@ -7,6 +7,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm npm ci
 COPY . .
+# Dominio público (canónicas, hreflang, sitemap, robots.txt). Vacío = el de astro.config.mjs.
+ARG SITE_URL=""
+ENV SITE_URL=$SITE_URL
 RUN npm run build \
     && find dist -type f -regex '.*\.\(js\|css\|html\|svg\|json\|txt\|xml\|webmanifest\)$' -size +1k -exec gzip -9 -k {} +
 

@@ -88,6 +88,9 @@
   height: 120px;
   margin: -60px 0 0 -80px;
   will-change: transform, opacity;
+  /* Oculta desde el primer cuadro (como la semilla): GSAP la prepara en un efecto que corre
+     después de pintar, y sin esto se veía la mariposa completa antes de la semilla */
+  visibility: hidden;
 }
 .loader .bf-inner {
   position: absolute;

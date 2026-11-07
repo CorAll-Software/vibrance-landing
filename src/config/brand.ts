@@ -5,6 +5,8 @@
  * - LEGAL_NAME: razón social; solo footer, documentos y facturas (no va en el logo).
  * TODO: verificar "Vibrance" en INDECOPI / USPTO / EUIPO (clase 31) y el dominio.
  */
+import { MEDIA_URL } from './site';
+
 export const BRAND_NAME = 'Vibrance';
 export const BRAND_DESCRIPTOR = 'Inca Harvest';
 export const LEGAL_NAME = 'Vibrance Inca Harvest S.A.C.';
@@ -24,11 +26,12 @@ export const RUC = '20615112446';
  */
 export type WorldGreen = 'hoja' | 'vivo' | 'lima';
 export const WORLD_GREEN: WorldGreen = 'hoja';
+// Rutas absolutas: la web tiene una carpeta por idioma (/en/, /zh/…) y una ruta relativa se rompería
 export const LOGO = {
   /** Para fondos claros (header sólido). */
-  light: `brand/logo-mundo/completo-${WORLD_GREEN}-claro.svg`,
+  light: `/brand/logo-mundo/completo-${WORLD_GREEN}-claro.svg`,
   /** Para fondos oscuros (header sobre el hero, loader, footer). */
-  dark: `brand/logo-mundo/completo-${WORLD_GREEN}-oscuro.svg`,
+  dark: `/brand/logo-mundo/completo-${WORLD_GREEN}-oscuro.svg`,
   width: 400,
   height: 270,
 } as const;
@@ -51,19 +54,36 @@ export interface LangMeta {
   /** Locale para Intl (números). En árabe se fuerzan dígitos latinos para las cifras. */
   locale: string;
   ogLocale: string;
+  /** Código BCP 47 para `<html lang>` y `hreflang` (el chino es simplificado: zh-Hans). */
+  hreflang: string;
 }
 
+// prettier-ignore
 export const LANG_META: Record<Lang, LangMeta> = {
-  es: { label: 'Español', short: 'ES', dir: 'ltr', locale: 'es-PE', ogLocale: 'es_PE' },
-  en: { label: 'English', short: 'EN', dir: 'ltr', locale: 'en-US', ogLocale: 'en_US' },
-  zh: { label: '中文', short: 'ZH', dir: 'ltr', locale: 'zh-CN', ogLocale: 'zh_CN' },
-  fr: { label: 'Français', short: 'FR', dir: 'ltr', locale: 'fr-FR', ogLocale: 'fr_FR' },
-  it: { label: 'Italiano', short: 'IT', dir: 'ltr', locale: 'it-IT', ogLocale: 'it_IT' },
-  ar: { label: 'العربية', short: 'AR', dir: 'rtl', locale: 'ar-AE-u-nu-latn', ogLocale: 'ar_AE' },
-  he: { label: 'עברית', short: 'HE', dir: 'rtl', locale: 'he-IL', ogLocale: 'he_IL' },
-  ja: { label: '日本語', short: 'JA', dir: 'ltr', locale: 'ja-JP', ogLocale: 'ja_JP' },
-  ko: { label: '한국어', short: 'KO', dir: 'ltr', locale: 'ko-KR', ogLocale: 'ko_KR' },
+  es: { label: 'Español', short: 'ES', dir: 'ltr', locale: 'es-PE', ogLocale: 'es_PE', hreflang: 'es' },
+  en: { label: 'English', short: 'EN', dir: 'ltr', locale: 'en-US', ogLocale: 'en_US', hreflang: 'en' },
+  zh: { label: '中文', short: 'ZH', dir: 'ltr', locale: 'zh-CN', ogLocale: 'zh_CN', hreflang: 'zh-Hans' },
+  fr: { label: 'Français', short: 'FR', dir: 'ltr', locale: 'fr-FR', ogLocale: 'fr_FR', hreflang: 'fr' },
+  it: { label: 'Italiano', short: 'IT', dir: 'ltr', locale: 'it-IT', ogLocale: 'it_IT', hreflang: 'it' },
+  ar: { label: 'العربية', short: 'AR', dir: 'rtl', locale: 'ar-AE-u-nu-latn', ogLocale: 'ar_AE', hreflang: 'ar' },
+  he: { label: 'עברית', short: 'HE', dir: 'rtl', locale: 'he-IL', ogLocale: 'he_IL', hreflang: 'he' },
+  ja: { label: '日本語', short: 'JA', dir: 'ltr', locale: 'ja-JP', ogLocale: 'ja_JP', hreflang: 'ja' },
+  ko: { label: '한국어', short: 'KO', dir: 'ltr', locale: 'ko-KR', ogLocale: 'ko_KR', hreflang: 'ko' },
 };
+
+/**
+ * "Powered by" del footer: CorAll D&R, la empresa que desarrolló la web.
+ * El logo (blanco, para el fondo oscuro del footer) vive en el bucket: se genera con
+ * branding/bucket/generar.mjs y se sube a brand/corall.webp. Si no carga, se muestra el
+ * nombre en texto. Con `href` vacío se muestra sin enlace.
+ */
+export const POWERED_BY = {
+  name: 'CorAll',
+  href: 'https://coralldar.com',
+  logo: `${MEDIA_URL}/brand/corall.webp`,
+  width: 362,
+  height: 72,
+} as const;
 
 /** Muestra una nota visible junto a cifras y logos de ejemplo. Poner en false al tener datos reales. */
 export const SHOW_PLACEHOLDER_NOTES = true;

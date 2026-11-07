@@ -1,6 +1,7 @@
 import { useEffect } from 'preact/hooks';
 import { initActiveSection } from '../lib/active-section';
-import { initLang } from '../lib/i18n';
+import type { Lang } from '../config/brand';
+import { initLang, seedLang, type Dict } from '../lib/i18n';
 import { initReveals } from '../lib/reveal';
 import * as scroll from '../lib/smooth-scroll';
 import { Footer } from './layout/Footer';
@@ -20,8 +21,18 @@ import { QuoteModal } from './sections/QuoteModal';
 import { PrivacyModal } from './shared/PrivacyModal';
 import { ProductDetail } from './shared/ProductDetail';
 
+interface Props {
+  /** Idioma de la página (cada idioma es un HTML estático: /, /en/, /zh/…). */
+  lang: Lang;
+  /** Diccionario del idioma; solo hace falta si no es el idioma por defecto (ese ya va en el bundle). */
+  dict?: Dict;
+}
+
 /** Raíz de la página: una sola isla de Preact (se pre-renderiza en el build y se hidrata en el cliente). */
-export function App() {
+export function App({ lang, dict }: Props) {
+  // Antes de pintar a los hijos: así el HTML del build y la hidratación salen en el mismo idioma
+  seedLang(lang, dict);
+
   useEffect(() => {
     scroll.initMotionPreference();
     initActiveSection();

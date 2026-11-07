@@ -2,9 +2,12 @@ import './lang-switch.css';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { AVAILABLE_LANGS, LANG_META, type Lang } from '../../config/brand';
 import { lang, setLang, useT } from '../../lib/i18n';
+import { langPath } from '../../lib/routes';
 
 /**
  * Selector de idioma desplegable (9 idiomas, cambio en tiempo real sin recargar).
+ * Cada opción es un enlace a la URL de su idioma (/en/, /zh/…): con un clic normal cambia en vivo
+ * y con Ctrl/Cmd o clic central abre esa página en otra pestaña.
  * Accesible: Esc cierra, flechas arriba/abajo recorren la lista, clic fuera cierra,
  * el foco vuelve al botón al elegir.
  */
@@ -16,7 +19,7 @@ export function LangSwitch({ dropUp = false, class: cls = '' }: { dropUp?: boole
   const current = lang.value;
 
   const options = () =>
-    Array.from(host.current?.querySelectorAll<HTMLButtonElement>('[role="option"] button') ?? []);
+    Array.from(host.current?.querySelectorAll<HTMLAnchorElement>('[role="option"] a') ?? []);
 
   const close = (returnFocus = false) => {
     if (!open) return;
@@ -36,7 +39,7 @@ export function LangSwitch({ dropUp = false, class: cls = '' }: { dropUp?: boole
   const move = (event: Event, step: number) => {
     event.preventDefault();
     const items = options();
-    const i = items.indexOf(document.activeElement as HTMLButtonElement);
+    const i = items.indexOf(document.activeElement as HTMLAnchorElement);
     items[(i + step + items.length) % items.length]?.focus();
   };
 
@@ -112,18 +115,24 @@ export function LangSwitch({ dropUp = false, class: cls = '' }: { dropUp?: boole
         >
           {AVAILABLE_LANGS.map((l) => (
             <li key={l} role="option" aria-selected={current === l}>
-              <button
-                type="button"
+              <a
+                href={langPath(l)}
+                hrefLang={LANG_META[l].hreflang}
                 class={`flex w-full items-center justify-between gap-4 rounded-xl px-3 py-2.5 text-start text-sm transition-colors hover:bg-palta/5 focus-visible:bg-palta/5 ${current === l ? 'font-semibold' : ''}`}
-                lang={l}
+                lang={LANG_META[l].hreflang}
                 dir={LANG_META[l].dir}
-                onClick={() => choose(l)}
+                onClick={(e) => {
+                  // Clic normal: cambio en vivo. Con Ctrl/Cmd/Shift o clic central se abre la URL
+                  if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                  e.preventDefault();
+                  choose(l);
+                }}
               >
                 <span>{LANG_META[l].label}</span>
                 <span class="text-xs text-palta/50" dir="ltr">
                   {LANG_META[l].short}
                 </span>
-              </button>
+              </a>
             </li>
           ))}
         </ul>

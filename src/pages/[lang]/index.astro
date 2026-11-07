@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { App } from '../../components/App';
+import { AVAILABLE_LANGS, DEFAULT_LANG, type Lang } from '../../config/brand';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadDict } from '../../lib/dicts';
+
+// Una página estática por idioma (/en/, /zh/, /fr/…); el español vive en la raíz
+export const getStaticPaths = (() =>
+  AVAILABLE_LANGS.filter((l) => l !== DEFAULT_LANG).map((lang) => ({
+    params: { lang },
+  }))) satisfies GetStaticPaths;
+
+const lang = Astro.params.lang as Lang;
+const dict = await loadDict(lang);
+---
+
+<BaseLayout lang={lang}>
+  <App client:load lang={lang} dict={dict} />
+</BaseLayout>
