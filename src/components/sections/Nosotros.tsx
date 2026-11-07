@@ -21,26 +21,6 @@ const MAGNET_MAX_SPEED = 250;
 /** Breve espera con el scroll lento antes de acomodar la página. */
 const MAGNET_IDLE_MS = 80;
 
-/** La escena se reproduce una sola vez por visitante (como la intro de la mariposa). */
-const SEEN_KEY = 'vibe-seen';
-function sceneSeen(): boolean {
-  if (typeof window === 'undefined') return true;
-  // En desarrollo (astro dev) o con ?intro en la URL se muestra siempre (una vez por carga)
-  if (import.meta.env.DEV || new URLSearchParams(location.search).has('intro')) return false;
-  try {
-    return localStorage.getItem(SEEN_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
-function markSeen(): void {
-  try {
-    localStorage.setItem(SEEN_KEY, '1');
-  } catch {
-    /* almacenamiento no disponible */
-  }
-}
-
 const PILLARS = ['contracts', 'insurance', 'credit'] as const;
 const STORY = ['p1', 'p2', 'p3'] as const;
 
@@ -180,15 +160,14 @@ function buildScene(vibe: HTMLElement): () => void {
     );
   };
   /**
-   * Una sola vez: tras reproducirse (o saltarse por el menú), la escena deja de estar fija y
+   * Una vez por carga: tras reproducirse (o saltarse por el menú), la escena deja de estar fija y
    * queda como un bloque con la frase (al volver a subir se llena palabra por palabra con el
-   * scroll). También se recuerda para las próximas visitas, igual que la intro de la mariposa.
+   * scroll). Al recargar la página se vuelve a ver, igual que la intro de la mariposa.
    */
   let released = false;
   const release = () => {
     if (released) return;
     released = true;
-    markSeen();
     unlock();
     st.kill();
     magnet.kill();
@@ -307,13 +286,13 @@ export function Nosotros() {
   const vibe = useRef<HTMLDivElement>(null);
   const band = useRef<HTMLElement>(null);
   /**
-   * true si se usa la escena fija (se decide al cargar en el cliente; si ya se vio, va la frase
-   * simple). En el HTML estático empieza en false para que la hidratación coincida.
+   * true si se usa la escena fija (se decide al cargar en el cliente según la pantalla). En el
+   * HTML estático empieza en false para que la hidratación coincida.
    */
   const [scene, setScene] = useState(false);
 
   useEffect(() => {
-    setScene(window.matchMedia(SCENE_MQ).matches && !sceneSeen());
+    setScene(window.matchMedia(SCENE_MQ).matches);
   }, []);
 
   // Se arma tras decidir el modo (y con el DOM de ese modo ya pintado)
